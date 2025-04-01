@@ -1,0 +1,2 @@
+rootProject.name = "PayThunder Hello World"
+include ':app'
