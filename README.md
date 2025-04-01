@@ -66,4 +66,4 @@ Desarrollar una aplicación multiplataforma (móvil y escritorio) para la gesti�
    - Semana 4-5: Implementación de la aplicación móvil (UI y funcionalidades básicas).
    - Semana 6-7: Implementación de la aplicación de escritorio (UI y funcionalidades básicas).
    - Semana 8-9: Integración de aplicaciones con el backend y pruebas.
-   - Semana 10: Ajustes finales y despliegue.
+   - Semana 10: Ajustes finales y despliegue y 200 eurillos pa cada uno :).
