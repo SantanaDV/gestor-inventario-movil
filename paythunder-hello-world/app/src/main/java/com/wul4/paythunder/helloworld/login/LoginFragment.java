@@ -18,6 +18,9 @@ import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.helloworld.R;
+import com.wul4.paythunder.helloworld.Utils.ApiClient;
+import com.wul4.paythunder.helloworld.Utils.ApiService;
+import com.wul4.paythunder.helloworld.request.LoginRequest;
 
 
 public class LoginFragment extends Fragment {
@@ -36,27 +39,12 @@ public class LoginFragment extends Fragment {
 
         // Inflamos el layout
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-
-
-        /*No funcionaba el hide del actionbar
-        ActionBar actionBar = getActivity().getActionBar();
-        if (actionBar != null){
-            actionBar.hide();
-        }
-
-        /No funciona
-        Ocultamos el boton de atras de la pantalla de login.
-        if (getActivity() instanceof AppCompatActivity) {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().hide();
-            }
-        }*/
+        // Obtenemos las referencias a los elementos de la interfaz
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
         btnSignIn = view.findViewById(R.id.btnSignIn);
 
+        // Configuramos el botón de inicio de sesión
         btnSignIn.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -65,11 +53,14 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             }
 
+            // Crear la petición de login
+            LoginRequest loginRequest = new LoginRequest(email,password);
 
-            //IMPLEMENTAR LÓGICA DE LLAMADA A API DE LOGIN
-            //GUARDAR EL TOKEN PARA LAS DISTINTAS PETICIONES
-            //GUARDAR EL TOKEN EN EL SHARED PREFERENCES.
-            //y vamos a la pantalla de home
+
+            // Obtener la instancia del servicio API
+            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+
 
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_home);
@@ -81,7 +72,7 @@ public class LoginFragment extends Fragment {
     }
 
     /**
-     * Ocultamos tanto en el onResume como en el onStop el actionbara
+     * Ocultamos tanto en el onResume como en el onStop el actionbar
      */
     @Override
     public void onResume() {
