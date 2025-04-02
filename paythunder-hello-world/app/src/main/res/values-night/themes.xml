@@ -14,7 +14,7 @@
             shortEdges <!-- default, shortEdges, never -->
         </item>
 
-        <item name="colorPrimary">#9D0F03</item>
+        <item name="colorPrimary">#F82011</item>
         <item name="colorPrimaryVariant">@color/red_primary_variant</item>
         <item name="colorOnPrimary">@color/red_on_primary</item>
         <!-- Secondary brand color para modo noche -->
