@@ -63,7 +63,7 @@ public class LoginFragment extends Fragment {
 
             //Hacemos la llamada al login
 
-            Call<Lo>
+
 
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_home);
