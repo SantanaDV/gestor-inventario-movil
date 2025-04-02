@@ -3,6 +3,7 @@ package com.wul4.paythunder.helloworld.login;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,9 @@ public class LoginFragment extends Fragment {
             // Obtener la instancia del servicio API
             ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
+            //Hacemos la llamada al login
 
+            Call<Lo>
 
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_home);
