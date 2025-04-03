@@ -13,23 +13,69 @@ import androidx.lifecycle.ViewModelProvider;
 import com.wul4.paythunder.gestorInventario.databinding.FragmentHomeBinding;
 
 
+// La clase HomeFragment es un Fragment que representa la pantalla principal de la aplicación.
 public class HomeFragment extends Fragment {
+
+    // binding es una instancia de FragmentHomeBinding que se utiliza para acceder a las vistas
+    // definidas en el layout del fragmento.
 
     private FragmentHomeBinding binding;
 
+    //declaro los TextView que voy a usar para mostrar los datos
+    private TextView textViewTotalProductos;
+    private TextView textViewExistencias;
+    private TextView textViewFaltantes;
+    private TextView textViewUsuariosActivos;
+
+    // Este método es llamado cuando el fragmento necesita crear su vista.
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
+        // Se infla el layout del fragmento utilizando FragmentHomeBinding.
+        // Esto permite acceder a las vistas definidas en el layout a través de la variable binding.
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
+        //obtengo las referenicas de los TextView desde el binding
+        textViewTotalProductos = binding.textView2;
+        textViewExistencias = binding.textView3;
+        textViewFaltantes = binding.textView4;
+        textViewUsuariosActivos = binding.textView5;
+
+        //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+        // Se obtiene la vista raíz del fragmento.
         final TextView textView = binding.textHome;
+
+        // Se observa el LiveData<String> que contiene el texto que se mostrará en el TextView.
+        // Cuando el valor del LiveData cambia, se actualiza automáticamente el texto del TextView.
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        // Observar los datos del ViewModel y actualizar los TextView
+        homeViewModel.getTotalProductos().observe(getViewLifecycleOwner(), total -> {
+            textViewTotalProductos.setText(String.valueOf(total));
+        });
+
+        homeViewModel.getExistencias().observe(getViewLifecycleOwner(), existencias -> {
+            textViewExistencias.setText(String.valueOf(existencias));
+        });
+
+        homeViewModel.getFaltantes().observe(getViewLifecycleOwner(), faltantes -> {
+            textViewFaltantes.setText(String.valueOf(faltantes));
+        });
+
+        homeViewModel.getUsuariosActivos().observe(getViewLifecycleOwner(), usuariosActivos -> {
+            textViewUsuariosActivos.setText(String.valueOf(usuariosActivos));
+        });
+
+        // Se devuelve la vista raíz del fragmento.
         return root;
     }
 
+    // Este método es llamado cuando la vista del fragmento es destruida.
     @Override
     public void onDestroyView() {
         super.onDestroyView();

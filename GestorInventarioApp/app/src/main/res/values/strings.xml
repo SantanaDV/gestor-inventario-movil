@@ -14,4 +14,10 @@
 
 
     <string name="menu_login" translatable="false">Login</string>
+    <string name="todo">TODO</string>
+    <string name="total_productos">Total Productos</string>
+    <string name="textview">TextView</string>
+    <string name="en_existencia">En Existencia</string>
+    <string name="sinExistencias">Sin existencias</string>
+    <string name="textview4" />
 </resources>
