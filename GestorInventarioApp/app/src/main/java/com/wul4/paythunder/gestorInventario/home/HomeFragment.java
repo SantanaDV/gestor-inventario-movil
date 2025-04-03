@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.Utils.ApiHome;
 import com.wul4.paythunder.gestorInventario.databinding.FragmentHomeBinding;
 import com.wul4.paythunder.gestorInventario.response.HomeResponse;
 import com.wul4.paythunder.gestorInventario.response.LoginResponse;
@@ -52,6 +54,12 @@ public class HomeFragment extends Fragment {
         //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        // Crea el servicio de la API para Home (ApiHome)
+        ApiHome apiHome = ApiClient.getClient().create(ApiHome.class);
+// Crea una instancia de HomeResponse pasando el ViewModel y el servicio
+        HomeResponse homeResponse = new HomeResponse(homeViewModel, apiHome);
+// Ejecuta la llamada a la API para actualizar los datos
+        homeResponse.fetchData();
 
 
         // Se obtiene la vista raíz del fragmento.
