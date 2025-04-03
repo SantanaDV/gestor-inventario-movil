@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -51,6 +52,15 @@ public class LoginFragment extends Fragment {
 
         // Inflamos el layout
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        //Desabilitamos el boton de retroceso en el fragmento de login
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Aquí no hacemos nada, evitando que se ejecute la acción de retroceso
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         // Obtenemos las referencias a los elementos de la interfaz
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
