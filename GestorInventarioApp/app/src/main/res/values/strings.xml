@@ -20,4 +20,5 @@
     <string name="en_existencia">En Existencia</string>
     <string name="sinExistencias">Sin existencias</string>
     <string name="textview4" />
+    <string name="cerrar_sesión">Cerrar sesión</string>
 </resources>

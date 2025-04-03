@@ -3,7 +3,6 @@ package com.wul4.paythunder.gestorInventario.login;
 
 
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -24,7 +23,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.Utils.ApiService;
+import com.wul4.paythunder.gestorInventario.Utils.ApiAuth;
 import com.wul4.paythunder.gestorInventario.request.LoginRequest;
 import com.wul4.paythunder.gestorInventario.response.LoginResponse;
 
@@ -37,6 +36,7 @@ import retrofit2.Response;
 public class LoginFragment extends Fragment {
 
     private TextInputEditText etEmail, etPassword;
+    private CheckBox cbRememberMe;
     private MaterialButton btnSignIn;
     Log log;
 
@@ -55,6 +55,20 @@ public class LoginFragment extends Fragment {
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
         btnSignIn = view.findViewById(R.id.btnSignIn);
+        cbRememberMe = view.findViewById(R.id.cbRememberMe);
+        //Obtenemos las preferencias compartidas
+        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        //Obtenemos del shared preferences las credenciales guardadas
+        String emailGuardado = preferences.getString("email", "");
+        String passwordGuardado = preferences.getString("password", "");
+
+        //Si hay credenciales guardadas las mostramos en los campos de texto y activamos el campo de recordar
+        if (!emailGuardado.isEmpty() && !passwordGuardado.isEmpty()) {
+            etEmail.setText(emailGuardado);
+            etPassword.setText(passwordGuardado);
+            cbRememberMe.setChecked(true);
+        }
 
         // Configuramos el botón de inicio de sesión
         btnSignIn.setOnClickListener(v -> {
@@ -74,14 +88,14 @@ public class LoginFragment extends Fragment {
              *  Obtenemos la instancia del servicio API y implementammos la interfaz con las distintas peticiones
              *  ahora tenemos un objeto que nos permite hacer llamadas a la api mediante Retrofit que se encarga de construir las peticiones HTTP
              */
-            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+            ApiAuth apiAuth = ApiClient.getClient().create(ApiAuth.class);
 
             /**
              * Hacemos la llamada al login
              * Call es una representación de la petición HTTP que al ejecutarse devolvera un objeto en este caso un LoginResponse (la respuesta de la llamada al Json
-             * Se llama al metood login de la interfaz ApiService y se le pasa la petición de login como parametro esto configura una peticion POST a la URL en este caso
+             * Se llama al metood login de la interfaz ApiAuth y se le pasa la petición de login como parametro esto configura una peticion POST a la URL en este caso
              */
-            Call<LoginResponse> call = apiService.login(loginRequest);
+            Call<LoginResponse> call = apiAuth.login(loginRequest);
 
             /**
              * Ejecutamos la llamada asincrona (en segundo plano) para no bloquear el hilo principal.
@@ -99,9 +113,18 @@ public class LoginFragment extends Fragment {
                         //Se tiene una respuesta exitosa
                         String token = response.body().getToken();
 
-                        //Lo guardamos en el shared preferences
-                        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        //guardamos en el shared preferences el token
                         preferences.edit().putString("token", token).apply();
+
+                        //Si guardar contrasena y email estan marcadas guardamos ambas en el preferences
+                        if(cbRememberMe.isChecked()){
+                           preferences.edit().putString("email", email).apply();
+                           preferences.edit().putString("password", password).apply();
+                        }else{
+                            //  si no está marcado, eliminamos las credenciales guardadas
+                           preferences.edit().remove("email").apply();
+                           preferences.edit().remove("password").apply();
+                        }
 
 
                         //Navegamos al fragmento de home
