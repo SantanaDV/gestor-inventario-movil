@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD:GestorInventarioApp/app/src/main/res/layout/fragment_home.xml
-    tools:context="com.wul4.paythunder.gestorInventario.HomeActivity">
-=======
-    tools:context="com.wul4.paythunder.helloworld.home.HomeFragment">
+    tools:context="com.wul4.paythunder.gestorInventario.HomeFragment">
 
->>>>>>> e21d536 (03/04):paythunder-hello-world/app/src/main/res/layout/fragment_home.xml
+<!--    tools:context="com.wul4.paythunder.helloworld.home.HomeFragment">-->
+
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="61dp"

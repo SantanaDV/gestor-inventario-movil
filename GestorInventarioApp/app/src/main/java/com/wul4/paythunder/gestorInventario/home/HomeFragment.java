@@ -10,7 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+
 import com.wul4.paythunder.gestorInventario.databinding.FragmentHomeBinding;
+import com.wul4.paythunder.gestorInventario.response.HomeResponse;
+import com.wul4.paythunder.gestorInventario.response.LoginResponse;
+
+import retrofit2.Call;
 
 
 // La clase HomeFragment es un Fragment que representa la pantalla principal de la aplicación.
@@ -46,6 +51,8 @@ public class HomeFragment extends Fragment {
 
         //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+
 
         // Se obtiene la vista raíz del fragmento.
         final TextView textView = binding.textHome;
