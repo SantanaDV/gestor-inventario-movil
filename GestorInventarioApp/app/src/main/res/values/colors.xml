@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- PayThunder Colors -->
+    <color name="ptRed">#D60B51</color>
+    <color name="ptRedToPurple">#9E186A</color>
+    <color name="ptPurple">#662482</color>
+    <color name="ptPurpleToBlue">#3361B2</color>
+    <color name="ptBlue">#009EE2</color>
+    <color name="ptText">#3C3C3B</color>
+
+    <!-- PayThunder Dark Colors -->
+    <color name="ptDarkRed">#A5093F</color>
+    <color name="ptDarkRedToPurple">#72114C</color>
+    <color name="ptDarkPurple">#47195A</color>
+    <color name="ptDarkPurpleToBlue">#284B8A</color>
+    <color name="ptDarkBlue">#007AAF</color>
+    <color name="ptDarkText">#222222</color>
+
+
+
+    <!-- Colores base para el tema rojo -->
+    <color name="red_primary">#F82011</color>         <!-- Rojo 500 -->
+    <color name="red_primary_variant">#D32F2F</color>  <!-- Rojo 700 -->
+    <color name="red_on_primary">#FFFFFF</color>         <!-- Texto sobre rojo -->
+
+    <color name="red_secondary">#FFCDD2</color>          <!-- Rojo claro, secundario -->
+    <color name="red_secondary_variant">#EF9A9A</color>  <!-- Variante del secundario -->
+    <color name="red_on_secondary">#000000</color>
+
+</resources>
