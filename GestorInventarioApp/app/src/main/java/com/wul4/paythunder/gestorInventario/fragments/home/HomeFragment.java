@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
     private TextView textViewTotalProductos;
     private TextView textViewExistencias;
     private TextView textViewFaltantes;
-    private TextView textViewUsuariosActivos;
+    private TextView textViewContarUsuarios;
 
     // Este método es llamado cuando el fragmento necesita crear su vista.
     @Override
@@ -43,10 +43,10 @@ public class HomeFragment extends Fragment {
 
 
         //obtengo las referenicas de los TextView desde el binding
-        textViewTotalProductos = binding.textView2;
-        textViewExistencias = binding.textView3;
-        textViewFaltantes = binding.textView4;
-        textViewUsuariosActivos = binding.textView5;
+        textViewTotalProductos = binding.textTotalProductos;
+        textViewExistencias = binding.textExistencias;
+        textViewFaltantes = binding.textFaltantes;
+        textViewContarUsuarios = binding.texContarUsuarios;
 
         //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
 
 
         // Se obtiene la vista raíz del fragmento.
-        final TextView textView = binding.textHome;
+        final TextView textView = binding.textTotalProductos;
 
         // Se observa el LiveData<String> que contiene el texto que se mostrará en el TextView.
         // Cuando el valor del LiveData cambia, se actualiza automáticamente el texto del TextView.
@@ -79,9 +79,11 @@ public class HomeFragment extends Fragment {
             textViewFaltantes.setText(String.valueOf(faltantes));
         });
 
-        homeViewModel.getUsuariosActivos().observe(getViewLifecycleOwner(), usuariosActivos -> {
-            textViewUsuariosActivos.setText(String.valueOf(usuariosActivos));
+        homeViewModel.getContarUsuarios().observe(getViewLifecycleOwner(), contarUsuarios -> {
+            textViewContarUsuarios.setText(String.valueOf(contarUsuarios));
         });
+
+
 
         // Se devuelve la vista raíz del fragmento.
         return root;

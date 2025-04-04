@@ -18,6 +18,7 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<Integer> existencias = new MutableLiveData<>();
     private final MutableLiveData<Integer> faltantes = new MutableLiveData<>();
     private final MutableLiveData<Integer> usuariosActivos = new MutableLiveData<>();
+    private final MutableLiveData<Integer> contarUsuarios = new MutableLiveData<>();
 
 
     //El constructor vacío, no inicializa los valores de los MutableLiveData.
@@ -43,9 +44,11 @@ public class HomeViewModel extends ViewModel {
         return faltantes;
     }
 
-    public LiveData<Integer> getUsuariosActivos() {
-        return usuariosActivos;
-    }
+    //public LiveData<Integer> getUsuariosActivos() {
+      //  return usuariosActivos;
+   // }
+
+    public LiveData<Integer> getContarUsuarios(){ return contarUsuarios;}
 
     // Se agregaron métodos para asignar los valores desde fuera de la clase.
     // Estos métodos pueden ser utilizados por HomeRequest
@@ -63,8 +66,9 @@ public class HomeViewModel extends ViewModel {
         this.faltantes.setValue(faltantes);
     }
 
-    public void setUsuariosActivos(int usuariosActivos) {
-        this.usuariosActivos.setValue(usuariosActivos);
+
+    public void setContarUsuarios(int contarUsuarios){
+        this.contarUsuarios.setValue(contarUsuarios);
     }
 }
 

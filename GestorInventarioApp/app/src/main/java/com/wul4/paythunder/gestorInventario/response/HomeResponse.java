@@ -28,7 +28,7 @@ public class HomeResponse {
         fetchTotalProductos();
         fetchExistencias();
         fetchFaltantes();
-        fetchUsuariosActivos();
+        fetchContarUsuarios();
     }
 
     private void fetchTotalProductos() {
@@ -91,22 +91,22 @@ public class HomeResponse {
         });
     }
 
-    private void fetchUsuariosActivos() {
-        apiHome.getUsuariosActivos().enqueue(new Callback<Integer>() {
+    private void fetchContarUsuarios() {
+        apiHome.getContarUsuarios().enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    homeViewModel.setUsuariosActivos(response.body());
+                    homeViewModel.setContarUsuarios(response.body());
                 } else {
                     // Manejar el caso en que la respuesta no sea exitosa
-                    homeViewModel.setUsuariosActivos(-1); // Valor por defecto en caso de error
+                    homeViewModel.setContarUsuarios(-1); // Valor por defecto en caso de error
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
                 // Manejar el error
-                homeViewModel.setUsuariosActivos(-1); // Valor por defecto en caso de error
+                homeViewModel.setContarUsuarios(-1); // Valor por defecto en caso de error
             }
         });
     }

@@ -9,7 +9,7 @@ import retrofit2.http.GET;
  */
 
 public interface ApiHome {
-    @GET("api/totalProductos")
+    @GET("api/producto")
     Call<Integer>getTotalProductos();
 
     @GET("api/existencias")
@@ -18,6 +18,9 @@ public interface ApiHome {
     @GET("api/faltantes")
     Call<Integer> getFaltantes();
 
-    @GET("api/usuariosActivos")
-    Call<Integer> getUsuariosActivos();
+   // @GET("api/usuariosA")
+   // Call<Integer> getUsuariosActivos();
+
+    @GET("api/usuario/contarUsuarios")
+    Call<Integer> getContarUsuarios();
 }

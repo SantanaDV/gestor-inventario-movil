@@ -15,16 +15,22 @@
 
     <string name="menu_login" translatable="false">Login</string>
     <string name="todo">TODO</string>
-    <string name="total_productos">Total Productos</string>
+    <string name="total_productos">TOTAL PRODUCTOS</string>
     <string name="textview">TextView</string>
-    <string name="en_existencia">En Existencia</string>
-    <string name="sinExistencias">Sin existencias</string>
+    <string name="textviewexistencias">EXISTENCIAS</string>
+    <string name="sinExistencias">SIN EXISTENCIAS</string>
     <string name="textview4" />
     <string name="cerrar_sesión">Cerrar sesión</string>
+<<<<<<< Updated upstream
     <string name="registrarse">¿Registrarse?</string>
     <string name="formulario_de_registro">FORMULARIO DE REGISTRO</string>
     <string name="confirmar_contrase_a">Confirmar Contraseña</string>
     <string name="contrasena">Contraseña</string>
     <string name="email">Email</string>
     <string name="nombre_completo">Nombre Completo</string>
+=======
+    <string name="textviewproductos">TextViewProductos</string>
+    <string name="textviewtotalproductos">TOTAL PRODUCTOS</string>
+
+>>>>>>> Stashed changes
 </resources>
