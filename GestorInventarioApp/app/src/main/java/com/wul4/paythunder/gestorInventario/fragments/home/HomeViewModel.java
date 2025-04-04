@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.home;
+package com.wul4.paythunder.gestorInventario.fragments.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

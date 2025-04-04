@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.slideshow;
+package com.wul4.paythunder.gestorInventario.fragments.slideshow;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

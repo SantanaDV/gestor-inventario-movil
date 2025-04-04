@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.gallery;
+package com.wul4.paythunder.gestorInventario.fragments.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

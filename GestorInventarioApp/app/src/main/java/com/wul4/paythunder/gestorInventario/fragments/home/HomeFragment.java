@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.home;
+package com.wul4.paythunder.gestorInventario.fragments.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.Utils.ApiHome;
+import com.wul4.paythunder.gestorInventario.Utils.interfaces.ApiHome;
 import com.wul4.paythunder.gestorInventario.databinding.FragmentHomeBinding;
 import com.wul4.paythunder.gestorInventario.response.HomeResponse;
-import com.wul4.paythunder.gestorInventario.response.LoginResponse;
-
-import retrofit2.Call;
 
 
 // La clase HomeFragment es un Fragment que representa la pantalla principal de la aplicación.

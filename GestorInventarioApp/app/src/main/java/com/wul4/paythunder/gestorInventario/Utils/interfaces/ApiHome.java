@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.Utils;
+package com.wul4.paythunder.gestorInventario.Utils.interfaces;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

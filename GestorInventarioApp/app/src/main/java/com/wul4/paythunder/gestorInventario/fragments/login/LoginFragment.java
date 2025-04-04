@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.login;
+package com.wul4.paythunder.gestorInventario.fragments.login;
 
 
 
@@ -24,7 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.Utils.ApiAuth;
+import com.wul4.paythunder.gestorInventario.Utils.interfaces.ApiAuth;
 import com.wul4.paythunder.gestorInventario.request.LoginRequest;
 import com.wul4.paythunder.gestorInventario.response.LoginResponse;
 

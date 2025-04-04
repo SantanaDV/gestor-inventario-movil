@@ -1,7 +1,8 @@
-package com.wul4.paythunder.gestorInventario.Utils;
+package com.wul4.paythunder.gestorInventario.Utils.interfaces;
 
 
 
+import com.wul4.paythunder.gestorInventario.entities.Usuario;
 import com.wul4.paythunder.gestorInventario.request.LoginRequest;
 import com.wul4.paythunder.gestorInventario.response.LoginResponse;
 
@@ -13,5 +14,6 @@ public interface ApiAuth {
     @POST("login")
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
-
+    @POST("registro")
+    Call<Usuario> register(@Body Usuario UsuarioRequest);
 }

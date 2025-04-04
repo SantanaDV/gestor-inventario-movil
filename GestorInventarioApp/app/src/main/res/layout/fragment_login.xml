@@ -10,31 +10,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_horizontal">
+        android:padding="24dp">
 
         <!-- Título principal -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iniciar Sesión"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnBackground"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="Iniciar Sesión"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <!-- Subtítulo -->
         <TextView
             android:id="@+id/tvSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:text="Accede a tu cuenta"
-            android:textSize="16sp"
             android:textColor="?attr/colorOnBackground"
-            android:layout_marginBottom="24dp" />
+            android:textSize="16sp" />
 
         <!-- Campo de Email -->
         <com.google.android.material.textfield.TextInputLayout
@@ -48,7 +49,7 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +65,7 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
+                android:hint="@string/contrasena"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,25 +95,26 @@
         </LinearLayout>
 
         <!-- Botón de Iniciar Sesión -->
+
+        <!-- Mensaje de Error (inicialmente oculto) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="?attr/colorPrimary"
             android:text="Iniciar Sesión"
             android:textAllCaps="false"
-            android:textSize="16sp"
-            android:backgroundTint="?attr/colorPrimary"
             android:textColor="?attr/colorOnPrimary"
-            android:layout_marginBottom="24dp" />
+            android:textSize="16sp" />
 
-        <!-- Mensaje de Error (inicialmente oculto) -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Email o contraseña incorrectos"
             android:textColor="@android:color/holo_red_dark"
-            android:visibility="gone"
-            android:layout_marginTop="8dp"/>
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>
