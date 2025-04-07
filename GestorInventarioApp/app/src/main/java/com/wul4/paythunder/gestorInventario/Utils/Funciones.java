@@ -1,6 +1,10 @@
 package com.wul4.paythunder.gestorInventario.Utils;
 
 
+import android.widget.EditText;
+
+import androidx.appcompat.widget.AppCompatEditText;
+
 import java.util.regex.Pattern;
 
 /**
@@ -15,7 +19,7 @@ public class Funciones {
      * @return boolean
      */
     public static boolean stringNumerosYLetras(String contrasena) {
-        String regex = "^[a-zA-Z0-9]+$";
+        String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$";;
         return contrasena.matches(regex);
     }
 
@@ -47,6 +51,15 @@ public class Funciones {
     public static boolean comprobarFormatoCorreo(String email) {
         String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return Pattern.matches(regex, email);
+    }
+
+    /**
+     * Comprueba que el editText esta vacio
+     * @param editText
+     * @return boolean
+     */
+    public static boolean editTextEmpty(EditText editText){
+        return  editText.getText().toString().isEmpty();
     }
 
 }

@@ -21,16 +21,16 @@
     <string name="sinExistencias">SIN EXISTENCIAS</string>
     <string name="textview4" />
     <string name="cerrar_sesión">Cerrar sesión</string>
-<<<<<<< Updated upstream
+
     <string name="registrarse">¿Registrarse?</string>
     <string name="formulario_de_registro">FORMULARIO DE REGISTRO</string>
     <string name="confirmar_contrase_a">Confirmar Contraseña</string>
     <string name="contrasena">Contraseña</string>
     <string name="email">Email</string>
     <string name="nombre_completo">Nombre Completo</string>
-=======
+
     <string name="textviewproductos">TextViewProductos</string>
     <string name="textviewtotalproductos">TOTAL PRODUCTOS</string>
 
->>>>>>> Stashed changes
+
 </resources>
