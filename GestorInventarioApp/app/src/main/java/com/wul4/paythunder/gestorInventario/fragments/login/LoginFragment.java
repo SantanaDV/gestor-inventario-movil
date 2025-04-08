@@ -1,8 +1,6 @@
 package com.wul4.paythunder.gestorInventario.fragments.login;
 
 
-
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,8 +21,9 @@ import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.Utils.interfaces.ApiAuth;
+import com.wul4.paythunder.gestorInventario.utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.SimpleTextWatcher;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
 import com.wul4.paythunder.gestorInventario.request.LoginRequest;
 import com.wul4.paythunder.gestorInventario.response.LoginResponse;
 
@@ -39,7 +38,10 @@ public class LoginFragment extends Fragment {
     private TextInputEditText etEmail, etPassword;
     private CheckBox cbRememberMe;
     private MaterialButton btnSignIn;
-    Log log;
+    private SharedPreferences preferences;
+    private LoginViewModel loginViewModel;
+
+    private Log log;
 
 
     public LoginFragment() {
@@ -52,6 +54,9 @@ public class LoginFragment extends Fragment {
 
         // Inflamos el layout
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        //Inicializamos el viewModel
+        loginViewModel = new LoginViewModel();
 
         //Desabilitamos el boton de retroceso en el fragmento de login
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -66,8 +71,36 @@ public class LoginFragment extends Fragment {
         etPassword = view.findViewById(R.id.etPassword);
         btnSignIn = view.findViewById(R.id.btnSignIn);
         cbRememberMe = view.findViewById(R.id.cbRememberMe);
+
+        //Si hay algo en el viewModel lo mostramos en los campos de texto
+        if (loginViewModel.getUsername().getValue() != null) {
+            etEmail.setText(loginViewModel.getUsername().getValue());
+        }
+        if (loginViewModel.getPassword().getValue() != null) {
+            etPassword.setText(loginViewModel.getPassword().getValue());
+        }
+
+        //Actualizamos el viewmodel con los valores de los campos de texto en el momento
+        //Utilizamos una clase abstracta para simplificar el código
+        etEmail.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                loginViewModel.setUsername(s.toString());
+            }
+        });
+
+        etPassword.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                loginViewModel.setPassword(s.toString());
+            }
+        });
+
+        //Desactivamos el menu de settings en el fragmento de login
+
+
         //Obtenemos las preferencias compartidas
-        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        preferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
         //Obtenemos del shared preferences las credenciales guardadas
         String emailGuardado = preferences.getString("email", "");
@@ -91,7 +124,6 @@ public class LoginFragment extends Fragment {
 
             // Creamos una instancia de LoginRequest con los datos ingresados en la petición de login
             LoginRequest loginRequest = new LoginRequest(email, password);
-
 
 
             /**
@@ -127,13 +159,13 @@ public class LoginFragment extends Fragment {
                         preferences.edit().putString("token", token).apply();
 
                         //Si guardar contrasena y email estan marcadas guardamos ambas en el preferences
-                        if(cbRememberMe.isChecked()){
-                           preferences.edit().putString("email", email).apply();
-                           preferences.edit().putString("password", password).apply();
-                        }else{
+                        if (cbRememberMe.isChecked()) {
+                            preferences.edit().putString("email", email).apply();
+                            preferences.edit().putString("password", password).apply();
+                        } else {
                             //  si no está marcado, eliminamos las credenciales guardadas
-                           preferences.edit().remove("email").apply();
-                           preferences.edit().remove("password").apply();
+                            preferences.edit().remove("email").apply();
+                            preferences.edit().remove("password").apply();
                         }
 
 
@@ -179,5 +211,12 @@ public class LoginFragment extends Fragment {
     public void onStop() {
         super.onStop();
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    }
+
+    @Override
+    public void onPause() {
+        loginViewModel.setPassword(etPassword.getText().toString());
+        loginViewModel.setUsername(etEmail.getText().toString());
+        super.onPause();
     }
 }

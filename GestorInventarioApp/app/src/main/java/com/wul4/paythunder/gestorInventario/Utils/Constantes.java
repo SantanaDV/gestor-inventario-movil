@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.Utils;
+package com.wul4.paythunder.gestorInventario.utils;
 
 import android.view.View;
 

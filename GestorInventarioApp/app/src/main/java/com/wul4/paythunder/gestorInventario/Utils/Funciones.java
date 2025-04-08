@@ -1,9 +1,7 @@
-package com.wul4.paythunder.gestorInventario.Utils;
+package com.wul4.paythunder.gestorInventario.utils;
 
 
 import android.widget.EditText;
-
-import androidx.appcompat.widget.AppCompatEditText;
 
 import java.util.regex.Pattern;
 

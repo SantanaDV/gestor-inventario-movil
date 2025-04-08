@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.Activities;
+package com.wul4.paythunder.gestorInventario.activities;
 
 
 import android.content.Context;
@@ -11,8 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,10 +20,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.Utils.Constantes;
+import com.wul4.paythunder.gestorInventario.utils.Constantes;
 import com.wul4.paythunder.gestorInventario.databinding.ActivityMainBinding;
 
 
@@ -39,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    //Flag para decidir si mostrar el menú de opciones
+    private boolean mostrarMenu = true;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -54,32 +53,52 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-           startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
 
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+
         // Definir los destinos de nivel superior
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_almacenshow)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
         //Hacemos invisible el boton de registrarse entodas las vistas menos en el LoginFragment
-        navController.addOnDestinationChangedListener((controller,destination,arguments)->
+        navController.addOnDestinationChangedListener((controller, destination, arguments) ->
         {
-            if(destination.getId()==R.id.loginFragment){
+            boolean isLogin = destination.getId() == R.id.loginFragment;
+            //  Ocultar menú de opciones al entrar a login, pasando el flag a false
+            mostrarMenu = !isLogin;
+            invalidateOptionsMenu(); // Fuerza recreación del menú
+
+            //Mostrar o ocultar en función de la vista
+            binding.appBarMain.fab.setVisibility(isLogin ? View.GONE : View.VISIBLE);
+            //Mostramos u ocultamos la Toolbar
+            if (isLogin) {
                 binding.appBarMain.fab.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 binding.appBarMain.fab.setVisibility(View.GONE);
             }
+
+            // Mostrar u ocultar el NavigationView (menu lateral)
+            binding.navView.setVisibility(isLogin ? View.GONE : View.VISIBLE);
+
+            /*//Bloqueamos el drawer cuando estamos en el loginFragment para desactivar el boton de menu del C70
+            DrawerLayout drawerLayout = binding.drawerLayout;
+            if (isLogin) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }*/
+
         });
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
 
 
         //Configuramos el listener para la opción de cerrar sesión del menu lateral
@@ -116,9 +135,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        if (mostrarMenu) {
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

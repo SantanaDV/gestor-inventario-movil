@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.Activities;
+package com.wul4.paythunder.gestorInventario.activities;
 
 
 
@@ -12,13 +12,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ProgressBar;
 
 
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.Utils.Constantes;
-import com.wul4.paythunder.gestorInventario.Utils.Utils;
+import com.wul4.paythunder.gestorInventario.utils.Constantes;
+import com.wul4.paythunder.gestorInventario.utils.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -2,7 +2,7 @@ package com.wul4.paythunder.gestorInventario.response;
 
 import androidx.annotation.NonNull;
 
-import com.wul4.paythunder.gestorInventario.Utils.interfaces.ApiHome;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiHome;
 import com.wul4.paythunder.gestorInventario.fragments.home.HomeViewModel;
 //import com.wul4.paythunder.gestorInventario.request.ApiHome;
 

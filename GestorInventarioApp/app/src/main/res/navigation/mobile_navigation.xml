@@ -25,11 +25,19 @@
         android:id="@+id/nav_gallery"
         android:name="com.wul4.paythunder.gestorInventario.fragments.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_self"
+            app:destination="@id/nav_gallery" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.wul4.paythunder.gestorInventario.fragments.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_almacenshow"
+        android:name="com.wul4.paythunder.gestorInventario.fragments.almacen.AlmacenFragment"
+        android:label="@string/menu_almacen"
+        tools:layout="@layout/fragment_almacen">
+        <action
+            android:id="@+id/action_nav_almacenshow_self"
+            app:destination="@id/nav_almacenshow" />
+    </fragment>
 </navigation>

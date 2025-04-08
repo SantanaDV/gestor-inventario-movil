@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green_card">#B3A5F892</color>
+    <color name="red_card">#B2F89292</color>
 
     <!-- PayThunder Colors -->
     <color name="ptRed">#D60B51</color>

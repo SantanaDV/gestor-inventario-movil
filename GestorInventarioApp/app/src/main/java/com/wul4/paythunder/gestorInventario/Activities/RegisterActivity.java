@@ -1,9 +1,9 @@
-package com.wul4.paythunder.gestorInventario.Activities;
+package com.wul4.paythunder.gestorInventario.activities;
 
 
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -12,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.Utils.Funciones;
-import com.wul4.paythunder.gestorInventario.Utils.interfaces.ApiAuth;
+import com.wul4.paythunder.gestorInventario.utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.Funciones;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
 import com.wul4.paythunder.gestorInventario.entities.Usuario;
 
 import retrofit2.Call;
@@ -38,7 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
         etFullName = findViewById(R.id.etFullName);
         btnRegister = findViewById(R.id.btnRegister);
 
-        //Creamos el objeto de ApiAuth
+        //Ocultamos el teclado para que al abrir el login no se vea tan feo
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        //Ocultamos tambien el menu de settings
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
 
 
         //Comprobamos las distintas restricciones de contrasena
