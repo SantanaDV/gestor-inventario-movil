@@ -6,9 +6,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
+
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.wul4.paythunder.gestorInventario.BuildConfig;
 
@@ -228,5 +236,44 @@ public class Utils {
         gradientDrawable.setGradientType(GradientDrawable.SWEEP_GRADIENT);
         gradientDrawable.setColors(gradientColors);
         return gradientDrawable;
+    }
+
+    public static void setFullscreen(Activity activity) {
+        if (activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    /** PARA LA PANTALLA COMPLETA **/
+                    Window window = activity.getWindow();
+                    window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+                    View decorView = window.getDecorView();
+                    decorView.setSystemUiVisibility(Constantes.uiOptions);
+
+                    // https://developer.android.com/develop/ui/views/layout/immersive?hl=es-419#java
+
+                    WindowInsetsControllerCompat windowInsetsController =
+                            WindowCompat.getInsetsController(activity.getWindow(), activity.getWindow().getDecorView());
+                    // Configure the behavior of the hidden system bars.
+                    windowInsetsController.setSystemBarsBehavior(
+                            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    );
+
+                    // Add a listener to update the behavior of the toggle fullscreen button when
+                    // the system bars are hidden or revealed.
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                        decorView.setOnApplyWindowInsetsListener((view, windowInsets) -> {
+                            // You can hide the caption bar even when the other system bars are visible.
+                            // To account for this, explicitly check the visibility of navigationBars()
+                            // and statusBars() rather than checking the visibility of systemBars().
+                            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+
+                            return view.onApplyWindowInsets(windowInsets);
+                        });
+                    }
+                    /** **/
+                }
+            });
+        }
     }
 }

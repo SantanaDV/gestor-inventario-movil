@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.utils.Funciones;
+import com.wul4.paythunder.gestorInventario.utils.Utils;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
 import com.wul4.paythunder.gestorInventario.entities.Usuario;
 
@@ -30,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Utils.setFullscreen(this);
 
         //Cogemos las referencias del layout
         etEmail = findViewById(R.id.etEmail);
@@ -121,5 +123,17 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.setFullscreen(this);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        Utils.setFullscreen(this);
     }
 }

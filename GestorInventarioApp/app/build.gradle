@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+    //Debug de retrofit
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    //multidex
     implementation 'androidx.multidex:multidex:2.0.1'
     //Carga de imagenes de forma asincrona
     implementation 'com.github.bumptech.glide:glide:4.15.1'

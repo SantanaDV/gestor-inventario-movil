@@ -20,10 +20,11 @@
 
         <activity
             android:name=".activities.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale|layoutDirection"
             android:exported="false" />
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale|layoutDirection"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,7 @@
         </activity>
         <activity
             android:name=".activities.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="orientation|keyboardHidden|screenSize|locale|layoutDirection"
             android:exported="true"
             android:theme="@style/Theme.GestorInventario.NoActionBar">
             <intent-filter>
