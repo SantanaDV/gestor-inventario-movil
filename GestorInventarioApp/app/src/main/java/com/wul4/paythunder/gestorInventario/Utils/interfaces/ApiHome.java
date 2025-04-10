@@ -10,17 +10,18 @@ import retrofit2.http.GET;
 
 public interface ApiHome {
     @GET("api/producto")
-    Call<Integer>getTotalProductos();
+    Call<Integer> getProductos();
 
-    @GET("api/existencias")
-    Call<Integer> getExistencias();
+    //@GET("api/existencias")
+    @GET("/obtenerProductoQR/{codigo_qr}")
+    Call<Integer> getConexistencias();
 
     @GET("api/faltantes")
-    Call<Integer> getFaltantes();
+    Call<Integer> getConfaltantes();
 
    // @GET("api/usuariosA")
    // Call<Integer> getUsuariosActivos();
 
     @GET("api/usuario/contarUsuarios")
-    Call<Integer> getContarUsuarios();
+    Call<Integer> getTotal_usuarios();
 }

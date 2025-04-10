@@ -170,9 +170,10 @@ public class LoginFragment extends Fragment {
 
 
                         //Navegamos al fragmento de home
-                        NavController navController = Navigation.findNavController(v);
-                        navController.navigate(R.id.nav_home);
-
+                        if (v != null){
+                            NavController navController = Navigation.findNavController(v);
+                            navController.navigate(R.id.nav_home);
+                        }
                     } else {
                         Toast.makeText(getContext(), "usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                     }

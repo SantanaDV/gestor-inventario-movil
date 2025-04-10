@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 
 import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.utils.Constantes;
-import com.wul4.paythunder.gestorInventario.utils.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setBackground(Utils.getPTGradientDrawable());
+        progressBar.setBackground(com.wul4.paythunder.gestorInventario.utils.Utils.getPTGradientDrawable());
 
         preferences = getSharedPreferences(Constantes.PREFERENCES_NAME, MODE_PRIVATE);
         prefEditor = preferences.edit();

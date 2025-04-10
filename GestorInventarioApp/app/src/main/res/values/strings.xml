@@ -38,6 +38,7 @@
     <string name="editar">editar</string>
     <string name="borrar">borrar</string>
     <string name="descripcion_producto">descripción del producto</string>
+    <string name="total_usuarios">total_usuarios</string>
 
 
 </resources>

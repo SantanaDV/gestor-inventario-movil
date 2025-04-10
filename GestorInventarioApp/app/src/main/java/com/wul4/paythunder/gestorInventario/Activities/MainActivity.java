@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this, com.wul4.paythunder.gestorInventario.activities.RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.loginFragment);
     }
+
 
 
 }

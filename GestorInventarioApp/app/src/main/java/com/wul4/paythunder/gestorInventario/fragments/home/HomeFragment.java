@@ -26,10 +26,10 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     //declaro los TextView que voy a usar para mostrar los datos
-    private TextView textViewTotalProductos;
-    private TextView textViewExistencias;
-    private TextView textViewFaltantes;
-    private TextView textViewContarUsuarios;
+    private TextView Productos;
+    private TextView Conexistencias;
+    private TextView Confaltantes;
+    private TextView Total_usuarios;
 
     // Este método es llamado cuando el fragmento necesita crear su vista.
     @Override
@@ -43,10 +43,10 @@ public class HomeFragment extends Fragment {
 
 
         //obtengo las referenicas de los TextView desde el binding
-        textViewTotalProductos = binding.textTotalProductos;
-        textViewExistencias = binding.textExistencias;
-        textViewFaltantes = binding.textFaltantes;
-        textViewContarUsuarios = binding.texContarUsuarios;
+        Productos = binding.Productos;
+        Conexistencias = binding.conexistencias;
+        Confaltantes = binding.confaltantes;
+        Total_usuarios = binding.totalUsuarios;
 
         //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -60,27 +60,28 @@ public class HomeFragment extends Fragment {
 
 
         // Se obtiene la vista raíz del fragmento.
-        final TextView textView = binding.textTotalProductos;
+        final TextView textView = binding.Productos;
 
         // Se observa el LiveData<String> que contiene el texto que se mostrará en el TextView.
         // Cuando el valor del LiveData cambia, se actualiza automáticamente el texto del TextView.
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Observar los datos del ViewModel y actualizar los TextView
-        homeViewModel.getTotalProductos().observe(getViewLifecycleOwner(), total -> {
-            textViewTotalProductos.setText(String.valueOf(total));
+        homeViewModel.getProductos().observe(getViewLifecycleOwner(), total -> {
+            Productos.setText(String.valueOf(total));
         });
 
-        homeViewModel.getExistencias().observe(getViewLifecycleOwner(), existencias -> {
-            textViewExistencias.setText(String.valueOf(existencias));
+        homeViewModel.getConexistencias().observe(getViewLifecycleOwner(), existencias -> {
+            Conexistencias.setText(String.valueOf(existencias));
         });
 
-        homeViewModel.getFaltantes().observe(getViewLifecycleOwner(), faltantes -> {
-            textViewFaltantes.setText(String.valueOf(faltantes));
+        homeViewModel.getConfaltantes().observe(getViewLifecycleOwner(), faltantes -> {
+            Confaltantes.setText(String.valueOf(faltantes));
         });
 
-        homeViewModel.getContarUsuarios().observe(getViewLifecycleOwner(), contarUsuarios -> {
-            textViewContarUsuarios.setText(String.valueOf(contarUsuarios));
+        homeViewModel.getTotal_usuarios().observe(getViewLifecycleOwner(), UsuariosActivos -> {
+            Total_usuarios.setText(String.valueOf(UsuariosActivos));
+
         });
 
 

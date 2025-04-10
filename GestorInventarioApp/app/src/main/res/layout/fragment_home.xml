@@ -4,140 +4,156 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--    tools:context="com.wul4.paythunder.gestorInventario.HomeFragment">-->
-
-    <!--    tools:context="com.wul4.paythunder.helloworld.home.HomeFragment">-->
-
 
     <ImageView
         android:id="@+id/total_productos"
         android:layout_width="61dp"
         android:layout_height="58dp"
+        android:layout_marginLeft="16dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/productos"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="75dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="75dp"
+        android:layout_marginStart="16dp" />
 
     <TextView
-        android:id="@+id/textTotalProductos"
+        android:id="@+id/TotalProductos"
         android:layout_width="158dp"
         android:layout_height="45dp"
-        android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="84dp"
         android:background="#FFFF0000"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="@string/textviewtotalproductos"
+        android:text="TOTAL PRODUCTOS"
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/total_productos"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/total_productos"
+        app:layout_constraintBottom_toBottomOf="@+id/total_productos"
+        android:layout_marginStart="25dp" />
 
     <TextView
         android:id="@+id/Productos"
-        android:layout_width="71dp"
-        android:layout_height="43dp"
-        android:text="TextViewproductos"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="86dp"
-        tools:ignore="DuplicateIds,HardcodedText,MissingConstraints" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Productos"
+        app:layout_constraintStart_toEndOf="@+id/TotalProductos"
+        app:layout_constraintTop_toTopOf="@+id/TotalProductos"
+        app:layout_constraintBottom_toBottomOf="@+id/TotalProductos"
+        android:layout_marginStart="16dp" />
 
     <ImageView
         android:id="@+id/imageExistencias"
         android:layout_width="61dp"
         android:layout_height="58dp"
+        android:layout_marginLeft="16dp"
         android:contentDescription="TODO"
         android:src="@drawable/existencias"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="163dp"
-        tools:ignore="ContentDescription,HardcodedText,MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/total_productos"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/textExistencias"
         android:layout_width="158dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
         android:background="#FFFF0000"
         android:fontFamily="sans-serif-black"
         android:textColor="@color/white"
         android:gravity="center"
         android:text="EXISTENCIAS"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="176dp"
-        />
+        app:layout_constraintStart_toEndOf="@+id/imageExistencias"
+        app:layout_constraintTop_toTopOf="@+id/imageExistencias"
+        app:layout_constraintBottom_toBottomOf="@+id/imageExistencias"
+        android:layout_marginStart="25dp" />
 
     <TextView
-        android:id="@+id/textconexistencias"
-        android:layout_width="71dp"
-        android:layout_height="43dp"
-        android:text="TextViewconexistencias"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="178dp" />
+        android:id="@+id/conexistencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="conexistencias"
+        app:layout_constraintStart_toEndOf="@+id/textExistencias"
+        app:layout_constraintTop_toTopOf="@+id/textExistencias"
+        app:layout_constraintBottom_toBottomOf="@+id/textExistencias"
+        android:layout_marginStart="16dp" />
 
     <ImageView
         android:id="@+id/imageFaltantes"
         android:layout_width="61dp"
         android:layout_height="58dp"
+        android:layout_marginLeft="16dp"
         android:contentDescription="TODO"
         android:src="@drawable/criticos"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="249dp"
-        tools:ignore="ContentDescription,HardcodedText,MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/imageExistencias"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/textFaltantes"
         android:layout_width="158dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
         android:background="#FFFF0000"
         android:fontFamily="sans-serif-black"
         android:textColor="@color/white"
         android:gravity="center"
         android:text="SIN EXISTENCIAS"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="262dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageFaltantes"
+        app:layout_constraintTop_toTopOf="@+id/imageFaltantes"
+        app:layout_constraintBottom_toBottomOf="@+id/imageFaltantes"
+        android:layout_marginStart="25dp" />
 
     <TextView
-        android:id="@+id/textconfaltantes"
-        android:layout_width="71dp"
-        android:layout_height="43dp"
-        android:text="TextViewconfaltantes"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="262dp" />
+        android:id="@+id/confaltantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="confaltantes"
+        app:layout_constraintStart_toEndOf="@+id/textFaltantes"
+        app:layout_constraintTop_toTopOf="@+id/textFaltantes"
+        app:layout_constraintBottom_toBottomOf="@+id/textFaltantes"
+        android:layout_marginStart="16dp" />
 
     <ImageView
         android:id="@+id/imageUsuariosActivos"
         android:layout_width="61dp"
         android:layout_height="58dp"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/usuarios"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="336dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/imageFaltantes"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/texContarUsuarios"
         android:layout_width="158dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
         android:background="#FFFF0000"
         android:fontFamily="sans-serif-black"
         android:textColor="@color/white"
         android:gravity="center"
         android:text="USUARIOS ACTIVOS"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="349dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageUsuariosActivos"
+        app:layout_constraintTop_toTopOf="@+id/imageUsuariosActivos"
+        app:layout_constraintBottom_toBottomOf="@+id/imageUsuariosActivos"
+        android:layout_marginStart="25dp" />
 
     <TextView
-        android:id="@+id/textusuarios"
-        android:layout_width="71dp"
-        android:layout_height="43dp"
-        android:text="TextViewusuarios"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="349dp" />
-
+        android:id="@+id/total_usuarios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="total_usurious"
+        app:layout_constraintStart_toEndOf="@+id/texContarUsuarios"
+        app:layout_constraintTop_toTopOf="@+id/texContarUsuarios"
+        app:layout_constraintBottom_toBottomOf="@+id/texContarUsuarios"
+        android:layout_marginStart="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
