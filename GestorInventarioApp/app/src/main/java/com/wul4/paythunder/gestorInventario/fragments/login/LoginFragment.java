@@ -125,75 +125,8 @@ public class LoginFragment extends Fragment {
             // Creamos una instancia de LoginRequest con los datos ingresados en la petición de login
             LoginRequest loginRequest = new LoginRequest(email, password);
 
-
-            /**
-             *  Obtenemos la instancia del servicio API y implementammos la interfaz con las distintas peticiones
-             *  ahora tenemos un objeto que nos permite hacer llamadas a la api mediante Retrofit que se encarga de construir las peticiones HTTP
-             */
-            ApiAuth apiAuth = ApiClient.getClient().create(ApiAuth.class);
-
-            /**
-             * Hacemos la llamada al login
-             * Call es una representación de la petición HTTP que al ejecutarse devolvera un objeto en este caso un LoginResponse (la respuesta de la llamada al Json
-             * Se llama al metood login de la interfaz ApiAuth y se le pasa la petición de login como parametro esto configura una peticion POST a la URL en este caso
-             */
-            Call<LoginResponse> call = apiAuth.login(loginRequest);
-
-            /**
-             * Ejecutamos la llamada asincrona (en segundo plano) para no bloquear el hilo principal.
-             * Utilizamos la interfaz Callback para manejar la respuesta de la llamada.
-             */
-            call.enqueue(new Callback<LoginResponse>() {
-                /**
-                 * Se ejecuta cuando la llamada HTTP es exitosa. en caso contrario da un mensaje de error
-                 * @param call
-                 * @param response
-                 */
-                @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        //Se tiene una respuesta exitosa
-                        String token = response.body().getToken();
-
-                        //guardamos en el shared preferences el token
-                        preferences.edit().putString("token", token).apply();
-
-                        //Si guardar contrasena y email estan marcadas guardamos ambas en el preferences
-                        if (cbRememberMe.isChecked()) {
-                            preferences.edit().putString("email", email).apply();
-                            preferences.edit().putString("password", password).apply();
-                        } else {
-                            //  si no está marcado, eliminamos las credenciales guardadas
-                            preferences.edit().remove("email").apply();
-                            preferences.edit().remove("password").apply();
-                        }
-
-
-                        //Navegamos al fragmento de home
-                        if (v != null){
-                            NavController navController = Navigation.findNavController(v);
-                            navController.navigate(R.id.nav_home);
-                        }
-                    } else {
-                        Toast.makeText(getContext(), "usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                /**
-                 * Se ejecuta cuando la llamada HTTP falla.
-                 * @param call
-                 * @param t
-                 */
-                @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    // Fallo en la llamada (problema de red, etc.)
-                    Toast.makeText(getContext(), "Ha habido un error al iniciar sesión, pongase en contacto con un administrador", Toast.LENGTH_SHORT).show();
-                    Log.i("LoginFragment", "Error: " + t.getMessage());
-
-                }
-            });
-
-
+            //Intenamos el login
+            intentarLogin(loginRequest, v, 3);
         });
 
         return view;
@@ -220,4 +153,84 @@ public class LoginFragment extends Fragment {
         loginViewModel.setUsername(etEmail.getText().toString());
         super.onPause();
     }
+
+    /**
+     * Metodo que intenta hacer el login con los datos ingresados en los campos de texto
+     * Se reintenta en caso de problemas de conexión
+     *
+     * @param loginRequest
+     * @param view
+     * @param intentosRestantes
+     */
+
+    private void intentarLogin(LoginRequest loginRequest, View view, int intentosRestantes) {
+        /**
+         *  Obtenemos la instancia del servicio API y implementammos la interfaz con las distintas peticiones
+         *  ahora tenemos un objeto que nos permite hacer llamadas a la api mediante Retrofit que se encarga de construir las peticiones HTTP
+         */
+        ApiAuth apiAuth = ApiClient.getClient().create(ApiAuth.class);
+        /**
+         * Hacemos la llamada al login
+         * Call es una representación de la petición HTTP que al ejecutarse devolvera un objeto en este caso un LoginResponse (la respuesta de la llamada al Json
+         * Se llama al metood login de la interfaz ApiAuth y se le pasa la petición de login como parametro esto configura una peticion POST a la URL en este caso
+         */
+        Call<LoginResponse> call = apiAuth.login(loginRequest);
+
+        /**
+         * Ejecutamos la llamada asincrona (en segundo plano) para no bloquear el hilo principal.
+         * Utilizamos la interfaz Callback para manejar la respuesta de la llamada.
+         */
+        call.enqueue(new Callback<LoginResponse>() {
+            /**
+             * Se ejecuta cuando la llamada HTTP es exitosa. en caso contrario da un mensaje de error
+             * @param call
+             * @param response
+             */
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String token = response.body().getToken();
+
+                    // Guardar token
+                    preferences.edit().putString("token", token).apply();
+
+                    // Guardar email/contraseña si está marcado
+                    if (cbRememberMe.isChecked()) {
+                        preferences.edit().putString("email", loginRequest.getEmail()).apply();
+                        preferences.edit().putString("password", loginRequest.getContrasena()).apply();
+                    } else {
+                        preferences.edit().remove("email").apply();
+                        preferences.edit().remove("password").apply();
+                    }
+
+                    // Ir al home
+                    NavController navController = Navigation.findNavController(view);
+                    navController.navigate(R.id.nav_home);
+
+                } else {
+                    Toast.makeText(getContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            /**
+             * Se ejecuta cuando la llamada HTTP falla, se intenta el login por si hubiera mala conexion.
+             * @param call
+             * @param t
+             */
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.i("LoginFragment", "Error al conectar (intentos restantes: " + intentosRestantes + "): " + t.getMessage());
+
+                if (intentosRestantes > 0) {
+                    // Reintentar tras 2 segundos
+                    new android.os.Handler().postDelayed(() -> {
+                        intentarLogin(loginRequest, view, intentosRestantes - 1);
+                    }, 2000);
+                } else {
+                    Toast.makeText(getContext(), "No se pudo conectar. Revisa la red o contacta con el administrador.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 }

@@ -1,24 +1,38 @@
 package com.wul4.paythunder.gestorInventario.utils;
 
+import static java.security.AccessController.getContext;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 
+import androidx.annotation.Nullable;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.wul4.paythunder.gestorInventario.BuildConfig;
+import com.wul4.paythunder.gestorInventario.R;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -275,5 +289,43 @@ public class Utils {
                 }
             });
         }
+    }
+
+    /**
+     * Sobrecarga de metodo para establecer la pantalla completa en un fragmento
+     * validando que el fragmento no sea nulo y que la actividad no sea nula
+     *
+     * @param fragment
+     */
+
+    public static void setFullscreen(Fragment fragment) {
+        if (fragment != null && fragment.getActivity() != null) {
+            setFullscreen(fragment.getActivity());
+        }
+    }
+
+    public static void cargaDeImagenesConReintento(Fragment fragment, ImageView imageView, String url, int intentosRestantes) {
+
+        Glide.with(fragment)
+                .load(url)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (intentosRestantes > 0) {
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                cargaDeImagenesConReintento(fragment, imageView, url, intentosRestantes - 1);
+                            }, 3000);
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(imageView);
     }
 }

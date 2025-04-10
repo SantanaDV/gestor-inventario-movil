@@ -20,9 +20,12 @@ import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.databinding.FragmentAlmacenBinding;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
+import com.wul4.paythunder.gestorInventario.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 
 public class AlmacenFragment extends Fragment {
@@ -75,17 +78,17 @@ public class AlmacenFragment extends Fragment {
         p1.setNombre("Producto Activo 1");
         p1.setCantidad(10);
         p1.setEstado("activo");
-        p1.setUrl_img("producto1.jpg");
+        p1.setUrl_img("1743679342907_Camiseta_lisa.jpg");
         p1.setCategoria("Categoría A");
         productos.add(p1);
 
 
         Producto p2 = new Producto();
         p2.setId_producto(2);
-        p2.setNombre("Producto Desactivado 1");
+        p2.setNombre("Producto Desactivadooooooooooo 1");
         p2.setCantidad(0);
         p2.setEstado("desactivado");
-        p2.setUrl_img("producto2.jpg");
+        p2.setUrl_img("1743679342907_Camiseta_lisa.jpg");
         p2.setCategoria("Categoría B");
         productos.add(p2);
 
@@ -115,95 +118,59 @@ public class AlmacenFragment extends Fragment {
         mostrarProductos(activos, inactivos);
     }
 
+
     /**
-     * Método que, dado dos listas de productos, infla el layout de cada producto y lo añade
-     * a la columna correspondiente (activos o inactivos).
-     *
-     * @param activos Lista de productos activos.
-     * @param inactivos Lista de productos inactivos.
+     * Metodo auxiliar para mostrar los productos en función del estado
+     * @param activos
+     * @param inactivos
      */
+
     private void mostrarProductos(List<Producto> activos, List<Producto> inactivos) {
-        // Obtenemos las referencias a las columnas del layout a través del binding.
-        LinearLayout columnaActivos = binding.columnaActivos;
-        LinearLayout columnaInactivos = binding.columnaInactivos;
-
-        // Limpiamos cualquier vista previa en las columnas
-        columnaActivos.removeAllViews();
-        columnaInactivos.removeAllViews();
-
-        // Obtenemos el LayoutInflater para inflar cada tarjeta de producto.
+        binding.columnaActivos.removeAllViews();
+        binding.columnaInactivos.removeAllViews();
+        //Obtenemos el LayoutInflater para inflar las tarjetas
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
+        // Mostrar productos activos
+        agregarProductosAColumna(activos, binding.columnaActivos, inflater);
+
+        // Mostrar productos inactivos
+        agregarProductosAColumna(inactivos, binding.columnaInactivos, inflater);
+    }
 
 
-        // Iteramos sobre la lista de productos activos
-        for (Producto p : activos) {
-            // Inflamos el layout de tarjeta para cada producto sin adjuntarlo aún al padre.
-            View itemView = inflater.inflate(R.layout.item_producto, columnaActivos, false);
-
-            //Pintamos el background de la card en función del estado
+    /**
+     * Metodo auxiliar para agregar productos a una columna
+     * @param productos
+     * @param columna
+     * @param inflater
+     */
+    private void agregarProductosAColumna(List<Producto> productos, LinearLayout columna, LayoutInflater inflater) {
+        for (Producto p : productos) {
+            View itemView = inflater.inflate(R.layout.item_producto, columna, false);
+            //Aplicamos el color de fondo correspondiente rojo inactivo y verde activo
             paintBackgroundCard(itemView, p.getEstado());
-
-            // Obtenemos las referencias a los elementos de la tarjeta
+            //Obtenemos los elementos de la tarjeta
             TextView tvNombre = itemView.findViewById(R.id.tvNombre);
             TextView tvDetalles = itemView.findViewById(R.id.tvDetalles);
             ImageView imgProducto = itemView.findViewById(R.id.imgProducto);
 
-            // Asignamos datos al TextView
             tvNombre.setText(p.getNombre());
             tvDetalles.setText("Cantidad: " + p.getCantidad() + " / Categoría: " + p.getCategoria());
-
-            // Construimos la URL de la imagen, mediante la URL del producto
-            //Esta es de prueba, hay que cambiarla
-            String urlImagen = ApiClient.getClient().baseUrl() + "imagen/1743679342907_Camiseta_lisa.jpg";
-            // Cargamos la imagen en el ImageView con Glide
-            Glide.with(getContext())
-                    .load(urlImagen)
-                    .placeholder(R.drawable.ic_placeholder) // el placeholder es una imagen temporal de carga o en caso de falla
-                    .centerCrop()
-                    .into(imgProducto);
-
-            // Activamos el menu contextual al hacer click largo en la tarjeta
-            itemView.setOnLongClickListener(v -> {
-                showContextMenu(p, v);
-                return true;
-            });
-
-            // Añadimos la tarjeta a la columna de activos
-            columnaActivos.addView(itemView);
-        }
-
-        // Repetimos el proceso para los productos inactivos:
-        for (Producto p : inactivos) {
-            View itemView = inflater.inflate(R.layout.item_producto, columnaInactivos, false);
-
-            //Pintamos el background de la card en función del estado
-           paintBackgroundCard(itemView, p.getEstado());
-
-            // Obtenemos las referencias a los elementos de la tarjeta
-            TextView tvNombre = itemView.findViewById(R.id.tvNombre);
-            TextView tvDetalles = itemView.findViewById(R.id.tvDetalles);
-            ImageView imgProducto = itemView.findViewById(R.id.imgProducto);
-
-
-            tvNombre.setText(p.getNombre());
-            tvDetalles.setText("Cantidad: " + p.getCantidad() + " / Categoría: " + p.getCategoria());
-
+            //Cargamos la imagen con reintento con el directorio de la imagen en el back
             String urlImagen = ApiClient.getClient().baseUrl() + "imagen/" + p.getUrl_img();
-            Glide.with(getContext())
-                    .load("http://localhost:8080/imagen/1743679342907_Camiseta_lisa.jpg")
-                    .placeholder(R.drawable.ic_placeholder)
-                    .into(imgProducto);
-
-            //Activamos el menu contextual al hacer click largo en la tarjeta
+            Utils.cargaDeImagenesConReintento(this, imgProducto, urlImagen, 3);
+            //Configuramos el listener para el long click para poder editar o borrar el producto
             itemView.setOnLongClickListener(v -> {
                 showContextMenu(p, v);
                 return true;
             });
 
-            columnaInactivos.addView(itemView);
+            columna.addView(itemView);
         }
     }
+
+
 
     /**
      * Método para editar un producto.

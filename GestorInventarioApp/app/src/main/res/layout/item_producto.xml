@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:contentDescription="@string/descripcion_producto" />
 
     <!-- Nombre del producto -->
@@ -21,14 +23,18 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginTop="4dp"
-        android:textSize="16sp" />
+        android:maxLines="1"
+        android:textSize="16sp"
+        android:ellipsize="end"/>
 
     <!-- Cantidad, Categoría y QR -->
     <TextView
         android:id="@+id/tvDetalles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textSize="12sp"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="2dp"
+        android:ellipsize="end"/>
 
 </LinearLayout>

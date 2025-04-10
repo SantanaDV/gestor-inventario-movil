@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //Utilizamos el metodo de Utils para poner la pantalla completa
         Utils.setFullscreen(this);
 
         //Cogemos las referencias del layout
