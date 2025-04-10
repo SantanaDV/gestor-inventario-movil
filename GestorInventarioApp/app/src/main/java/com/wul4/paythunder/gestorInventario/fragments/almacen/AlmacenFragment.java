@@ -22,13 +22,14 @@ import com.wul4.paythunder.gestorInventario.databinding.FragmentAlmacenBinding;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.utils.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.internal.Util;
 
 
-public class AlmacenFragment extends Fragment {
+public class AlmacenFragment extends Fragment  {
 
     //Clase binding generada a partir del fragment_almacen.xml
     private FragmentAlmacenBinding binding;
@@ -160,6 +161,12 @@ public class AlmacenFragment extends Fragment {
             //Cargamos la imagen con reintento con el directorio de la imagen en el back
             String urlImagen = ApiClient.getClient().baseUrl() + "imagen/" + p.getUrl_img();
             Utils.cargaDeImagenesConReintento(this, imgProducto, urlImagen, 3);
+            //Configuramos el listener para el click para mostrar el detalle del producto
+            itemView.setOnClickListener(v -> {
+                DetalleProductoDialogFragment dialog = DetalleProductoDialogFragment.newInstance(p);
+                dialog.show(getParentFragmentManager(), "DetalleProducto");
+            });
+
             //Configuramos el listener para el long click para poder editar o borrar el producto
             itemView.setOnLongClickListener(v -> {
                 showContextMenu(p, v);

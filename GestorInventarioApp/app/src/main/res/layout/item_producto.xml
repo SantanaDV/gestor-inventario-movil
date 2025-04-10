@@ -11,7 +11,7 @@
         android:id="@+id/imgProducto"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:maxLines="1"
         android:ellipsize="end"
         android:contentDescription="@string/descripcion_producto" />

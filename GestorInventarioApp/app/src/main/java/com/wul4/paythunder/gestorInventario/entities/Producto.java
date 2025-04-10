@@ -1,6 +1,8 @@
 package com.wul4.paythunder.gestorInventario.entities;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
     private int id_producto;
     private String nombre;
     private int cantidad;

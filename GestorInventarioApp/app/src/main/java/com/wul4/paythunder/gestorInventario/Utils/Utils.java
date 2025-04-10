@@ -1,7 +1,5 @@
 package com.wul4.paythunder.gestorInventario.utils;
 
-import static java.security.AccessController.getContext;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -24,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +32,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.wul4.paythunder.gestorInventario.BuildConfig;
 import com.wul4.paythunder.gestorInventario.R;
+import com.wul4.paythunder.gestorInventario.fragments.almacen.DetalleProductoDialogFragment;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -316,6 +316,33 @@ public class Utils {
                         if (intentosRestantes > 0) {
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 cargaDeImagenesConReintento(fragment, imageView, url, intentosRestantes - 1);
+                            }, 3000);
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(imageView);
+    }
+
+    public static void cargaDeImagenesConReintento(Context context, ImageView imageView, String url, int intentosRestantes) {
+
+        Glide.with(context)
+                .load(url)
+                .override(Target.SIZE_ORIGINAL) // o puedes omitirlo si ya defines tamaño por layout
+                .fitCenter()
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (intentosRestantes > 0) {
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                cargaDeImagenesConReintento(context, imageView, url, intentosRestantes - 1);
                             }, 3000);
                         }
                         return false;
