@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
 
         //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
+/*
         // Crea el servicio de la API para Home (ApiHome)
         ApiHome apiHome = ApiClient.getClient().create(ApiHome.class);
 // Crea una instancia de HomeResponse pasando el ViewModel y el servicio
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        // Se devuelve la vista raíz del fragmento.
+        // Se devuelve la vista raíz del fragmento.*/
         return root;
     }
 
