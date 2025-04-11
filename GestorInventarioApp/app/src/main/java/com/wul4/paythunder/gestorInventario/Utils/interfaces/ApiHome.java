@@ -1,6 +1,7 @@
 package com.wul4.paythunder.gestorInventario.utils.interfaces;
 
 import com.wul4.paythunder.gestorInventario.entities.Producto;
+import com.wul4.paythunder.gestorInventario.entities.Usuario;
 
 import java.util.List;
 
@@ -26,13 +27,13 @@ public interface ApiHome {
 
 
     @GET("api/faltantes")
-    Call<Integer> getConfaltantes();
+    Call<List<Producto>> getConfaltantes();
 
    // @GET("api/usuariosA")
    // Call<Integer> getUsuariosActivos();
 
     @GET("api/usuario/contarUsuarios")
-    Call<Integer> getTotal_usuarios();
+    Call<List<Usuario>> getTotal_usuarios();
 
 
 }

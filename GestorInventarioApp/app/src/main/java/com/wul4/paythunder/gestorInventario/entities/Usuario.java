@@ -5,8 +5,6 @@ package com.wul4.paythunder.gestorInventario.entities;
 import java.util.Date;
 
 import java.util.Objects;
-import java.util.Optional;
-
 
 
 public class Usuario {
@@ -17,7 +15,8 @@ public class Usuario {
     private String email;
     private int estado;
 
-    private Date fechaAlta, fecha_baja;
+    private Date fechaAlta;
+    private String fecha_baja;
 
     private String rol;
 
@@ -45,12 +44,12 @@ public class Usuario {
         this.estado = estado;
     }
 
-    public Date getFecha_baja() {
+    public String getFecha_baja() {
         return fecha_baja;
     }
 
     public void setFecha_baja(Date fecha_baja) {
-        this.fecha_baja = fecha_baja;
+        this.fecha_baja = String.valueOf(fecha_baja);
     }
 
     public Date getFechaAlta() {
