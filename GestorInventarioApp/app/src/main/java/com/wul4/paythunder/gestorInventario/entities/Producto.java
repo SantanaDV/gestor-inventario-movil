@@ -9,14 +9,14 @@ public class Producto implements Serializable {
     private String estado;  // "activo" o "desactivado"
     private String codigoQr;
     private String url_img;
-    private String categoria;
+    private Categoria categoria;
 
     // Constructor vacío
     public Producto() {
     }
 
     // Constructor con parámetros (opcional)
-    public Producto(int id_producto, String nombre, int cantidad, String estado, String codigoQr, String url_img, String categoria) {
+    public Producto(int id_producto, String nombre, int cantidad, String estado, String codigoQr, String url_img, Categoria categoria) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -75,11 +75,11 @@ public class Producto implements Serializable {
         this.url_img = url_img;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 

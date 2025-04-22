@@ -219,16 +219,9 @@ public class LoginFragment extends Fragment {
              */
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.i("LoginFragment", "Error al conectar (intentos restantes: " + intentosRestantes + "): " + t.getMessage());
+                Log.i("LoginFragment", "Error al conectar: " + t.getMessage());
+                Toast.makeText(getContext(), "No se pudo conectar. Revisa la red o contacta con el administrador.", Toast.LENGTH_LONG).show();
 
-                if (intentosRestantes > 0) {
-                    // Reintentar tras 2 segundos
-                    new android.os.Handler().postDelayed(() -> {
-                        intentarLogin(loginRequest, view, intentosRestantes - 1);
-                    }, 2000);
-                } else {
-                    Toast.makeText(getContext(), "No se pudo conectar. Revisa la red o contacta con el administrador.", Toast.LENGTH_LONG).show();
-                }
             }
         });
     }

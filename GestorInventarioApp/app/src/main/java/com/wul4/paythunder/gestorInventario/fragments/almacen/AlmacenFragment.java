@@ -43,12 +43,11 @@ public class AlmacenFragment extends Fragment  {
         binding = FragmentAlmacenBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         //Observamos el LiveData del ViewModel y actualizamos la UI de productos (por implementar)
-        /*almacenViewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
+        almacenViewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
+            // Actualizamos la lista de productos en la UI
             procesarProductos(productos);
         });
-*/
-        //Llamamos al método para cargar productos desde la API
-        cargarProductos();
+
 
 
 
@@ -59,42 +58,6 @@ public class AlmacenFragment extends Fragment  {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    /**
-     * Método para cargar los productos.
-     * Este método puede realizar una llamada a la API (normalmente se hace en el ViewModel)
-     * y actualizar el LiveData con la lista de productos.
-     * Para este ejemplo, vamos a simular la carga de datos.
-     */
-    private void cargarProductos() {
-        //Hay que hacer la llamada a la api para obtener los productos
-        //Para este ejemplo, vamos a simular la carga de datos.
-
-        // Simulación: Creamos una lista de productos de ejemplo.
-        List<Producto> productos = new ArrayList<>();
-
-        Producto p1 = new Producto();
-        p1.setId_producto(1);
-        p1.setNombre("Producto Activo 1");
-        p1.setCantidad(10);
-        p1.setEstado("activo");
-        p1.setUrl_img("1743679342907_Camiseta_lisa.jpg");
-        p1.setCategoria("Categoría A");
-        productos.add(p1);
-
-
-        Producto p2 = new Producto();
-        p2.setId_producto(2);
-        p2.setNombre("Producto Desactivadooooooooooo 1");
-        p2.setCantidad(0);
-        p2.setEstado("desactivado");
-        p2.setUrl_img("1743679342907_Camiseta_lisa.jpg");
-        p2.setCategoria("Categoría B");
-        productos.add(p2);
-
-        // Una vez obtenida la lista, la procesa para separarla en activos e inactivos
-        procesarProductos(productos);
     }
 
     /**
@@ -211,7 +174,7 @@ public class AlmacenFragment extends Fragment  {
 
     /**
      * Método para mostrar un menú contextual al hacer long click en la tarjeta de producto,
-     * permitiendo editar o borrar el producto (sin iconos visibles en la tarjeta).
+     * permitiendo editar o borrar el producto.
      *
      * @param producto El producto sobre el que se hizo long click.
      * @param anchorView La vista donde se ancla el menú contextual.

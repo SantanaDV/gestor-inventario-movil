@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * clase HomeRequest para manejar estas solicitudes, desde la API REST.
+ * clase ApiHome para manejar solicitudes de autenticación, desde la API REST.
  * Para ello utilizamos Retrofit para hacer llamadas a una API REST.
  */
 
