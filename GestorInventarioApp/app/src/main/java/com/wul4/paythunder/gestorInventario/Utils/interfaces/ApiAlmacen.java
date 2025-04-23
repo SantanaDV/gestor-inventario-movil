@@ -1,5 +1,6 @@
 package com.wul4.paythunder.gestorInventario.utils.interfaces;
 
+import com.wul4.paythunder.gestorInventario.entities.Categoria;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 
 import java.util.List;
@@ -14,4 +15,7 @@ import retrofit2.http.GET;
 public interface ApiAlmacen {
     @GET("api/producto")
     Call<List<Producto>> getProductos();
+
+    @GET("/api/categoria")
+    Call<List<Categoria>> getCategorias();
 }
