@@ -52,7 +52,7 @@ public class DetalleProductoDialogFragment extends androidx.fragment.app.DialogF
 
         nombre.setText(producto.getNombre());
         detalles.setText("ID: " + producto.getId_producto()
-                + "\nCategoría: " + producto.getCategoria()
+                + "\nCategoría: " + producto.getCategoria().getDescripcion()
                 + "\nCantidad: " + producto.getCantidad()
                 + "\nEstado: " + producto.getEstado());
 

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -17,22 +19,29 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.wul4.paythunder.gestorInventario.R;
+import com.wul4.paythunder.gestorInventario.entities.Categoria;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.databinding.FragmentAlmacenBinding;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.utils.Utils;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.internal.Util;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class AlmacenFragment extends Fragment  {
 
-    //Clase binding generada a partir del fragment_almacen.xml
     private FragmentAlmacenBinding binding;
+    private  int cantidad;
+    private List<Categoria> categorias = new ArrayList<>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,10 +51,24 @@ public class AlmacenFragment extends Fragment  {
         //inflamos el binding con el layout del fragmento
         binding = FragmentAlmacenBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        inflarSpinner(binding);
+        cantidad = -1;
         //Observamos el LiveData del ViewModel y actualizamos la UI de productos (por implementar)
         almacenViewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
             // Actualizamos la lista de productos en la UI
-            procesarProductos(productos);
+            procesarProductos(productos, cantidad, "");
+        });
+        binding.btnFiltrar.setOnClickListener(v -> {
+            if(!(binding.etCantidadMaxima.getText().toString().equals(""))){
+                cantidad = Integer.parseInt(binding.etCantidadMaxima.getText().toString());
+
+            }else{
+                cantidad = -1;
+            }
+            almacenViewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
+                // Actualizamos la lista de productos en la UI
+                procesarProductos(productos, cantidad, binding.spinnerCategoria.getSelectedItem().toString());
+            });
         });
 
 
@@ -60,16 +83,51 @@ public class AlmacenFragment extends Fragment  {
         binding = null;
     }
 
+
+    public void inflarSpinner(FragmentAlmacenBinding binding){
+        List<String> categorias = new ArrayList<>();
+        List<String> nombresCategorias = new ArrayList<>();
+        nombresCategorias.add("");
+        ApiAlmacen apiAlmacen = ApiClient.getClient().create(ApiAlmacen.class);
+        Call<List<Categoria>> call = apiAlmacen.getCategorias();
+        call.enqueue(new retrofit2.Callback<List<Categoria>>() {
+
+            @Override
+            public void onResponse(Call<List<Categoria>> call, Response<List<Categoria>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Categoria> categorias = response.body();
+                    for (Categoria c : categorias) {
+                        nombresCategorias.add(c.getDescripcion());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Categoria>> call, Throwable t) {
+
+            }
+        });
+
+
+
+        binding.spinnerCategoria.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, nombresCategorias));
+    }
+
+
+
     /**
      * Método para separar la lista de productos en activos e inactivos,
      * y luego llamar a mostrarProductos() para inflar las tarjetas en las columnas correspondientes.
      *
      * @param productos Lista completa de productos.
      */
-    private void procesarProductos(List<Producto> productos) {
-        List<Producto> activos = new ArrayList<>();
-        List<Producto> inactivos = new ArrayList<>();
+    private void procesarProductos(List<Producto> productos, int filtroCantidad, String filtroCategoria) {
+        List<Producto> activos;
+        List<Producto> inactivos;
 
+        activos = new ArrayList<>();
+        inactivos = new ArrayList<>();
         for (Producto p : productos) {
             if ("activo".equalsIgnoreCase(p.getEstado())) {
                 activos.add(p);
@@ -79,7 +137,7 @@ public class AlmacenFragment extends Fragment  {
         }
 
         // Llamamos al método que se encargará de inflar las tarjetas y colocarlas en la UI.
-        mostrarProductos(activos, inactivos);
+        mostrarProductos(activos, inactivos, filtroCantidad, filtroCategoria);
     }
 
 
@@ -89,54 +147,84 @@ public class AlmacenFragment extends Fragment  {
      * @param inactivos
      */
 
-    private void mostrarProductos(List<Producto> activos, List<Producto> inactivos) {
+    private void mostrarProductos(List<Producto> activos, List<Producto> inactivos, int filtroCantidad, String filtroCategoria) {
         binding.columnaActivos.removeAllViews();
         binding.columnaInactivos.removeAllViews();
         //Obtenemos el LayoutInflater para inflar las tarjetas
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         // Mostrar productos activos
-        agregarProductosAColumna(activos, binding.columnaActivos, inflater);
+        agregarProductosAColumna(activos, binding.columnaActivos, inflater, filtroCantidad, filtroCategoria);
 
         // Mostrar productos inactivos
-        agregarProductosAColumna(inactivos, binding.columnaInactivos, inflater);
+        agregarProductosAColumna(inactivos, binding.columnaInactivos, inflater, filtroCantidad, filtroCategoria);
     }
 
 
     /**
-     * Metodo auxiliar para agregar productos a una columna
+     * Metodo auxiliar para agregar productos a una columna, que filtra por cantidad y categoría en caso de estar activos
      * @param productos
      * @param columna
      * @param inflater
      */
-    private void agregarProductosAColumna(List<Producto> productos, LinearLayout columna, LayoutInflater inflater) {
+    private void agregarProductosAColumna(List<Producto> productos,
+                                          LinearLayout columna,
+                                          LayoutInflater inflater,
+                                          int filtroCantidad,
+                                          String filtroCategoria) {
+        // Definimos si cada filtro está activo
+        boolean filtroCantidadActivado  = filtroCantidad != -1;
+        boolean filtroCategoriaActivado = filtroCategoria != null && !filtroCategoria.isEmpty();
+
         for (Producto p : productos) {
-            View itemView = inflater.inflate(R.layout.item_producto, columna, false);
-            //Aplicamos el color de fondo correspondiente rojo inactivo y verde activo
-            paintBackgroundCard(itemView, p.getEstado());
-            //Obtenemos los elementos de la tarjeta
-            TextView tvNombre = itemView.findViewById(R.id.tvNombre);
-            TextView tvDetalles = itemView.findViewById(R.id.tvDetalles);
-            ImageView imgProducto = itemView.findViewById(R.id.imgProducto);
+            // coincideCantidad será true si:
+            //   el filtro cantidad está apagado (-1), o
+            //  el producto tiene exactamente esa cantidad
+            boolean coincideCantidad = !filtroCantidadActivado
+                    || p.getCantidad() == filtroCantidad;
 
-            tvNombre.setText(p.getNombre());
-            tvDetalles.setText("Cantidad: " + p.getCantidad() + " / Categoría: " + p.getCategoria());
-            //Cargamos la imagen con reintento con el directorio de la imagen en el back
-            String urlImagen = ApiClient.getClient().baseUrl() + "imagen/" + p.getUrl_img();
-            Utils.cargaDeImagenesConReintento(this, imgProducto, urlImagen, 3);
-            //Configuramos el listener para el click para mostrar el detalle del producto
-            itemView.setOnClickListener(v -> {
-                DetalleProductoDialogFragment dialog = DetalleProductoDialogFragment.newInstance(p);
-                dialog.show(getParentFragmentManager(), "DetalleProducto");
-            });
+            // coincideCategoria será true si:
+            //   el filtro categoría está apagado (""), o
+            //  el producto pertenece a esa categoría
+            boolean coincideCategoria = !filtroCategoriaActivado
+                    || filtroCategoria.equals(p.getCategoria().getDescripcion());
 
-            //Configuramos el listener para el long click para poder editar o borrar el producto
-            itemView.setOnLongClickListener(v -> {
-                showContextMenu(p, v);
-                return true;
-            });
+            // Solo cuando pase ambos (los que estén activos), lo mostramos
+            if (coincideCantidad && coincideCategoria) {
+                View itemView = inflater.inflate(
+                        R.layout.item_producto, columna, false
+                );
+                paintBackgroundCard(itemView, p.getEstado());
 
-            columna.addView(itemView);
+                TextView tvNombre   = itemView.findViewById(R.id.tvNombre);
+                TextView tvDetalles = itemView.findViewById(R.id.tvDetalles);
+                ImageView imgProd   = itemView.findViewById(R.id.imgProducto);
+
+                tvNombre.setText(p.getNombre());
+                tvDetalles.setText(
+                        "Cantidad: " + p.getCantidad() +
+                                " / Categoría: " + p.getCategoria().getDescripcion()
+                );
+
+                String urlImagen = ApiClient
+                        .getClient().baseUrl() +
+                        "imagen/" + p.getUrl_img();
+                Utils.cargaDeImagenesConReintento(
+                        this, imgProd, urlImagen, 3
+                );
+
+                itemView.setOnClickListener(v -> {
+                    DetalleProductoDialogFragment dialog =
+                            DetalleProductoDialogFragment.newInstance(p);
+                    dialog.show(getParentFragmentManager(), "DetalleProducto");
+                });
+                itemView.setOnLongClickListener(v -> {
+                    showContextMenu(p, v);
+                    return true;
+                });
+
+                columna.addView(itemView);
+            }
         }
     }
 
