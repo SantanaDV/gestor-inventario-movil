@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.activities;
+package com.wul4.paythunder.gestorInventario.Activities;
 
 
 import android.os.Bundle;
@@ -12,10 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.utils.Funciones;
-import com.wul4.paythunder.gestorInventario.utils.Utils;
-import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
+import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
+
 import com.wul4.paythunder.gestorInventario.entities.Usuario;
 
 import retrofit2.Call;
@@ -32,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         //Utilizamos el metodo de Utils para poner la pantalla completa
-        Utils.setFullscreen(this);
+        com.wul4.paythunder.gestorInventario.utils.Utils.setFullscreen(this);
 
         //Cogemos las referencias del layout
         etEmail = findViewById(R.id.etEmail);
@@ -53,15 +51,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Comprobamos las distintas restricciones de contrasena
         btnRegister.setOnClickListener(v -> {
-            if (!(Funciones.editTextEmpty(etEmail) || Funciones.editTextEmpty(etPassword) || Funciones.editTextEmpty(etConfirmPassword) || Funciones.editTextEmpty(etFullName))) {
-                if (Funciones.comprobarFormatoCorreo(etEmail.getText().toString())) {
-                    if (Funciones.comprobarCadenasIguales(etPassword.getText().toString(), etConfirmPassword.getText().toString())) {
-                        if (Funciones.stringMayorASeisCaracteres(etPassword.getText().toString())) {
-                            if (Funciones.stringNumerosYLetras(etPassword.getText().toString())) {
+            if (!(com.wul4.paythunder.gestorInventario.utils.Funciones.editTextEmpty(etEmail) || com.wul4.paythunder.gestorInventario.utils.Funciones.editTextEmpty(etPassword) || com.wul4.paythunder.gestorInventario.utils.Funciones.editTextEmpty(etConfirmPassword) || Funciones.editTextEmpty(etFullName))) {
+                if (com.wul4.paythunder.gestorInventario.utils.Funciones.comprobarFormatoCorreo(etEmail.getText().toString())) {
+                    if (com.wul4.paythunder.gestorInventario.utils.Funciones.comprobarCadenasIguales(etPassword.getText().toString(), etConfirmPassword.getText().toString())) {
+                        if (com.wul4.paythunder.gestorInventario.utils.Funciones.stringMayorASeisCaracteres(etPassword.getText().toString())) {
+                            if (com.wul4.paythunder.gestorInventario.utils.Funciones.stringNumerosYLetras(etPassword.getText().toString())) {
 
                                 //En caso de que todo este bien procedemos a registrar al usuario
                                 //Creamos el objeto de Usuario
-                                ApiAuth apiAuth = ApiClient.getClient().create(ApiAuth.class);
+                                com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth apiAuth = ApiClient.getClient().create(com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth.class);
                                 Usuario usuario = new Usuario();
                                 usuario.setEmail(etEmail.getText().toString());
                                 usuario.setContrasena(etPassword.getText().toString());
