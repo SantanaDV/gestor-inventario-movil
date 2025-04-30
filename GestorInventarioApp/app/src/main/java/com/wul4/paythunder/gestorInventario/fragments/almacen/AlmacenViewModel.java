@@ -1,6 +1,6 @@
 package com.wul4.paythunder.gestorInventario.fragments.almacen;
 
-import android.support.annotation.Nullable;
+
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -86,7 +86,7 @@ public class AlmacenViewModel extends ViewModel {
      * @param imagenPart parte con la imagen, o null si no hay
      */
     public void guardarProductoApi(RequestBody productoJson,
-                                   @Nullable MultipartBody.Part imagenPart) {
+                                    MultipartBody.Part imagenPart) {
         Call<Producto> call = apiAlmacen.createOrUpdateProducto(productoJson,
                 imagenPart != null ? imagenPart : MultipartBody.Part.createFormData("imagen",""));
         call.enqueue(new Callback<Producto>() {
