@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.wul4.paythunder.gestorInventario.entities.Categoria;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
@@ -17,6 +18,7 @@ import retrofit2.Response;
 public class AlmacenViewModel extends ViewModel {
 
     private final MutableLiveData<List<Producto>> productos = new MutableLiveData<>();
+    private final MutableLiveData<List<Categoria>> categorias = new MutableLiveData<>();
     private ApiAlmacen apiAlmacen = ApiClient.getClient().create(ApiAlmacen.class);
     private final MutableLiveData<Producto> resultadoEdicion = new MutableLiveData<>();
     public AlmacenViewModel() {
@@ -43,6 +45,26 @@ public class AlmacenViewModel extends ViewModel {
             }
         });
         return productos;
+    }
+
+    public LiveData<List<Categoria>> getCategorias(){
+        Call<List<Categoria>> call = apiAlmacen.getCategorias();
+        call.enqueue(new retrofit2.Callback<List<Categoria>>() {
+
+            @Override
+            public void onResponse(Call<List<Categoria>> call, Response<List<Categoria>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    categorias.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Categoria>> call, Throwable t) {
+                categorias.setValue(Collections.emptyList());
+            }
+        });
+
+        return categorias;
     }
     public LiveData<Producto> getResultadoEdicion() {
         return resultadoEdicion;
