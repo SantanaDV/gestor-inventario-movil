@@ -91,7 +91,6 @@ public class AnadirProductoDialogFragment extends DialogFragment {
 
         btnSubirFoto.setOnClickListener(v -> seleccionarImagenDeGaleria());
 
-
         builder.setView(view)
                 .setTitle("Añadir Producto")
                 .setPositiveButton("Guardar", (dialog, id) -> {
@@ -122,7 +121,6 @@ public class AnadirProductoDialogFragment extends DialogFragment {
     private void seleccionarImagenDeGaleria() {
         galeriaLauncher.launch("image/*");
     }
-
 
 
     private void guardarProducto() throws IOException {
