@@ -122,6 +122,7 @@ public class HomeResponse {
                 }
             }
 
+            
             @Override
             public void onFailure(@NonNull Call<List<Usuario>> call, @NonNull Throwable t) {
                 homeViewModel.setTotal_usuarios(-1);
