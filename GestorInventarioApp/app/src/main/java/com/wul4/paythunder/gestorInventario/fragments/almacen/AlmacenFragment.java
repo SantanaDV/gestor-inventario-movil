@@ -43,19 +43,24 @@ public class AlmacenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAlmacenBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this).get(AlmacenViewModel.class);
-
-
+        viewModel = new ViewModelProvider(requireActivity()).get(AlmacenViewModel.class);
         viewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
             allProductos = productos != null ? productos : Collections.emptyList();
-            aplicarFiltros();    // renderizamos por primera vez
+            aplicarFiltros();
         });
-
-        // 2) Observamos categorías UNA sola vez
         viewModel.getCategorias().observe(getViewLifecycleOwner(), categorias -> {
             allCategorias = categorias != null ? categorias : Collections.emptyList();
             inflarSpinner(allCategorias);
         });
+
+        viewModel.getResultadoCreacion().observe(getViewLifecycleOwner(), creado -> {
+            if (creado != null) {
+                // si se ha creado bien, recargamos
+                viewModel.getProductos();
+                Toast.makeText(requireContext(), "Producto añadido", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         // 3) Botón de filtrar
         binding.btnFiltrar.setOnClickListener(v -> {

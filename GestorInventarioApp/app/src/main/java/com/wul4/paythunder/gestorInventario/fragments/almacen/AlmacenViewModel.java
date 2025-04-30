@@ -1,5 +1,7 @@
 package com.wul4.paythunder.gestorInventario.fragments.almacen;
 
+import android.support.annotation.Nullable;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,7 +14,10 @@ import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
 import java.util.Collections;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AlmacenViewModel extends ViewModel {
@@ -21,6 +26,7 @@ public class AlmacenViewModel extends ViewModel {
     private final MutableLiveData<List<Categoria>> categorias = new MutableLiveData<>();
     private ApiAlmacen apiAlmacen = ApiClient.getClient().create(ApiAlmacen.class);
     private final MutableLiveData<Producto> resultadoEdicion = new MutableLiveData<>();
+    private final MutableLiveData<Producto> resultadoCreacion  = new MutableLiveData<>();
     public AlmacenViewModel() {
 
     }
@@ -69,7 +75,36 @@ public class AlmacenViewModel extends ViewModel {
     public LiveData<Producto> getResultadoEdicion() {
         return resultadoEdicion;
     }
+    public LiveData<Producto> getResultadoCreacion() {
+        return resultadoCreacion;
+    }
 
 
+    /**
+     * Lanza la llamada a la API para crear un producto.
+     * @param productoJson cuerpo JSON ya empaquetado en RequestBody
+     * @param imagenPart parte con la imagen, o null si no hay
+     */
+    public void guardarProductoApi(RequestBody productoJson,
+                                   @Nullable MultipartBody.Part imagenPart) {
+        Call<Producto> call = apiAlmacen.createOrUpdateProducto(productoJson,
+                imagenPart != null ? imagenPart : MultipartBody.Part.createFormData("imagen",""));
+        call.enqueue(new Callback<Producto>() {
+            @Override
+            public void onResponse(Call<Producto> call, Response<Producto> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    resultadoCreacion.setValue(response.body());
+                } else {
+                    // podrías setear null o lanzar un evento de error
+                    resultadoCreacion.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Producto> call, Throwable t) {
+                resultadoCreacion.setValue(null);
+            }
+        });
+    }
 
 }

@@ -1,15 +1,13 @@
 package com.wul4.paythunder.gestorInventario.fragments.almacen;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,11 +25,25 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.entities.Categoria;
+import com.wul4.paythunder.gestorInventario.utils.dto.ProductoCreacionDTO;
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 
 public class AnadirProductoDialogFragment extends DialogFragment {
 
@@ -43,6 +55,8 @@ public class AnadirProductoDialogFragment extends DialogFragment {
     private Switch sActivoNoActivo;
     private ActivityResultLauncher<String> galeriaLauncher;
     private List<Categoria> categorias = new ArrayList<>();
+    private List<String> categoriasString = new ArrayList<>();
+    private AlmacenViewModel almacenViewModel;
 
     @NonNull
     @Override
@@ -50,9 +64,8 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_anadir_producto, null);
-         AlmacenViewModel almacenViewModel =  new ViewModelProvider(this).get(AlmacenViewModel.class);
 
-
+        almacenViewModel = new ViewModelProvider(requireActivity()).get(AlmacenViewModel.class);
         imgProducto = view.findViewById(R.id.imgNuevoProducto);
         etNombre = view.findViewById(R.id.etNombreProducto);
         etCantidad = view.findViewById(R.id.etCantidadProducto);
@@ -61,8 +74,8 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         btnSubirFoto = view.findViewById(R.id.btnSubirFoto);
         btnEscanearQR = view.findViewById(R.id.btnEscanearQR);
         btnLeerNFC = view.findViewById(R.id.btnLeerNFC);
-         sActivoNoActivo = view.findViewById(R.id.id_del_switch);
-       // Observamos el switch
+        sActivoNoActivo = view.findViewById(R.id.id_del_switch);
+        // Observamos el switch
         sActivoNoActivo.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 Toast.makeText(getContext(), "Producto activado", Toast.LENGTH_SHORT).show();
@@ -73,7 +86,7 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         sActivoNoActivo.setChecked(true);
 
         inicializarGaleriaLauncher();
-        almacenViewModel.getCategorias().observe(getViewLifecycleOwner(), categorias -> {
+        almacenViewModel.getCategorias().observe(this, categorias -> {
             // Actualizamos el sppiner de categorias
             cargarCategorias(categorias);
         });
@@ -84,7 +97,13 @@ public class AnadirProductoDialogFragment extends DialogFragment {
 
         builder.setView(view)
                 .setTitle("Añadir Producto")
-                .setPositiveButton("Guardar", (dialog, id) -> guardarProducto())
+                .setPositiveButton("Guardar", (dialog, id) -> {
+                    try {
+                        guardarProducto();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .setNegativeButton("Cancelar", (dialog, id) -> dialog.dismiss());
 
         return builder.create();
@@ -116,66 +135,136 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         Toast.makeText(getContext(), "Funcionalidad NFC aún no disponible", Toast.LENGTH_SHORT).show();
     }
 
-    private void guardarProducto() {
+    private void guardarProducto() throws IOException {
+        // Lectura y validación de campos
         String nombre = etNombre.getText().toString().trim();
         String cantidadStr = etCantidad.getText().toString().trim();
         String codigoQR = etCodigoQR.getText().toString().trim();
         String categoriaSeleccionada = spinnerCategoria.getSelectedItem().toString();
         boolean activado = sActivoNoActivo.isChecked();
-        int cantidad = -1;
 
         if (nombre.isEmpty() || cantidadStr.isEmpty()) {
             Toast.makeText(getContext(), "Nombre y cantidad son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
+        int cantidad;
         try {
-           cantidad = Integer.parseInt(cantidadStr);
-        }catch (NumberFormatException n){
-            Toast.makeText(getContext(),"La cantidad debe ser un número válido", Toast.LENGTH_SHORT).show();
+            cantidad = Integer.parseInt(cantidadStr);
+            if (cantidad < 0) {
+                Toast.makeText(getContext(), "La cantidad debe ser mayor de 0", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (NumberFormatException nfe) {
+            Toast.makeText(getContext(), "La cantidad debe ser un número válido", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(cantidad < 0){
-            Toast.makeText(getContext(),"La cantidad debe ser mayor de 0", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-
-        Producto producto = new Producto();
+        // Construir el objeto Producto
+        ProductoCreacionDTO producto = new ProductoCreacionDTO();
         producto.setNombre(nombre);
         producto.setCantidad(cantidad);
         producto.setCodigoQr(codigoQR);
-        if(activado){
-            producto.setEstado("activo");
-        }else{
-            producto.setEstado("desactivo");
+        producto.setEstado(activado ? "activo" : "desactivo");
+        int categoriaId = categoriasString.lastIndexOf(categoriaSeleccionada);
+        producto.setId_categoria(++categoriaId);
+
+        // Una vez que tenemos el producto, lo subimos a la API
+        // Primero convertimos a un Json y lo embalamos como un RequestBody con el media-type application/json
+        // Todo esto lo hacemos porque Retrofit no convierte automáticamente el objeto Java en JSON
+        Gson gson = new Gson();
+        String productoJson = gson.toJson(producto);
+        RequestBody requestBody = RequestBody.create(
+                productoJson,
+                MediaType.parse("application/json")
+        );
+
+        // Creamos el multipart con la imagen
+        MultipartBody.Part imagenPart = null;
+        // Copiamos la Uri a un File en cache
+        if (imagenUriSeleccionada != null) {
+            // Preparar nombre de fichero con extensión obtenida dinámicamente
+            String ext = obtenerMIMEtype(imagenUriSeleccionada);
+            File imagenFile = new File(
+                    requireContext().getCacheDir(),
+                    "upload_" + System.currentTimeMillis() + "." + ext
+            );
+
+            // Copiar bytes de la URI al fichero temporal
+            try (
+                    InputStream is = requireContext().getContentResolver().openInputStream(imagenUriSeleccionada);
+                    FileOutputStream os = new FileOutputStream(imagenFile)
+            ) {
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, len);
+                }
+            }
+
+            // Crear RequestBody para el binario
+            RequestBody requestFile = RequestBody.create(
+                    imagenFile,
+                    MediaType.parse(
+                            requireContext()
+                                    .getContentResolver()
+                                    .getType(imagenUriSeleccionada)
+                    )
+            );
+
+            // MultipartBody.Part con el nombre “imagen”
+            imagenPart = MultipartBody.Part.createFormData(
+                    "imagen",
+                    imagenFile.getName(),
+                    requestFile
+            );
         }
 
 
-        Categoria categoria = new Categoria();
-        categoria.setDescripcion(categoriaSeleccionada);
-        producto.setCategoria(categoria);
+        // Llamamos al ViewModel para hacer la llamada a Retrofit
+        almacenViewModel.guardarProductoApi(requestBody, imagenPart);
 
-        // Imagen: por ahora, podrías guardar el URI local o mandarlo a backend
-
-        // Aquí llamarías a la API para guardar el producto o actualizar el listado
-        Toast.makeText(getContext(), "Producto guardado: " + nombre, Toast.LENGTH_SHORT).show();
+        // Observamos si ha concluido bien la subida y si no notificamos
+        almacenViewModel.getResultadoCreacion().observe(this, creado -> {
+            if (creado != null) {
+                Toast.makeText(getContext(), "¡Producto creado!", Toast.LENGTH_SHORT).show();
+                dismiss();
+            } else {
+                Toast.makeText(getContext(), "Error al crear producto", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
+
 
     private void cargarCategorias(List<Categoria> categorias) {
 
-        List<String> categoriasString = new ArrayList<>();
-        for (Categoria c: categorias) {
-            categoriasString.add(c.getDescripcion());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                categoriasString
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategoria.setAdapter(adapter);
+     categoriasString = new ArrayList<>();
+    for (Categoria c : categorias) {
+        categoriasString.add(c.getDescripcion());
     }
+
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            categoriasString
+    );
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinnerCategoria.setAdapter(adapter);
+}
+
+private String obtenerMIMEtype(Uri imagenUri) {
+    //Obtenemos el tipo de archivo
+    String mimeType = requireContext().getContentResolver().getType(imagenUri);
+    String extension = null;
+    if (mimeType != null) {
+        extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
+    }
+    //En caso de que haya algun fallo devuelve jpg como extensión por defectp
+    if (extension != null) {
+        return extension;
+    } else {
+        return "jpg";
+    }
+}
 }
