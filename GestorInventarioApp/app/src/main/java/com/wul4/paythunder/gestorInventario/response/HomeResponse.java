@@ -1,7 +1,5 @@
 package com.wul4.paythunder.gestorInventario.response;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.wul4.paythunder.gestorInventario.entities.Producto;
@@ -10,6 +8,7 @@ import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiHome;
 import com.wul4.paythunder.gestorInventario.fragments.home.HomeViewModel;
 //import com.wul4.paythunder.gestorInventario.request.ApiHome;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,42 +39,64 @@ public class HomeResponse {
 
     private void fetchAllDataProductos() {
 
-        apiHome.getProductos().enqueue(new Callback<List<Producto>>() {
+        apiHome.getproductosContados().enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(@NonNull Call<List<Producto>> call, @NonNull Response<List<Producto>> response) {
+            public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int sumaProductos = 0;
-                    for (Producto producto : response.body()) {
-                        sumaProductos++;
-                    }
-                    homeViewModel.setProductos(sumaProductos);
+                    Integer productosContados = response.body();
+
+                    //Filtro por productosContados
+                    //List<Producto>productosContados= new ArrayList<>();
+                    int sumaCantidades = 0;
+
+
+                    sumaCantidades += productosContados;
+                    homeViewModel.setProductosContados(sumaCantidades);//cantidad total
+                    homeViewModel.getproductosContados().getValue();
+
+
+
                 } else {
-                    homeViewModel.setProductos(-1);
+                    homeViewModel.setProductosContados(-1);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Producto>> call, @NonNull Throwable t) {
-                homeViewModel.setProductos(-1);
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+                homeViewModel.setProductosContados(-1);
             }
         });
 
-        apiHome.getConexistencias().enqueue(new Callback<List<Producto>>() {
+/*
+se ha modificado pero aun no sale bien porque no suma las cantidades de los productos activos sino solo los productos en id
+ */
+        apiHome.getlistarConexistencias().enqueue(new Callback<List<Producto>>() {
             @Override
             public void onResponse(@NonNull Call<List<Producto>> call, @NonNull Response<List<Producto>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int sumaProductos = 0;
-                    for (Producto producto : response.body()) {
-                        if ("activo".equalsIgnoreCase(producto.getEstado())) {
-                            sumaProductos++;
+                    List<Producto> productos = response.body();
 
+                    //filtro producto activo
+                    List<Producto> productosFiltrados = new ArrayList<>();
+                    int sumaCantidades = 0;
+                    for (Producto p : productos) {
+                        if (p.getEstado() != null && p.getEstado().equalsIgnoreCase("activo")) {
+                            productosFiltrados.add(p);
+
+
+                            //sumamos las cantidades
+
+                            sumaCantidades += p.getCantidad();
                         }
-                        homeViewModel.setConexistencias(sumaProductos); // Pasás solo el número al ViewModel
                     }
-                } else {
-                    // Manejar el caso en que la respuesta no sea exitosa
-                    homeViewModel.setConexistencias(-1); // Valor por defecto en caso de error
+
+                    homeViewModel.setConexistencias(sumaCantidades);//cantidad total
+                    homeViewModel.getListarConExistencias().setValue(productosFiltrados); //lista contada de productos
+                }else {
+                    homeViewModel.setConexistencias(-1);
                 }
+
             }
 
             @Override
@@ -84,20 +105,28 @@ public class HomeResponse {
             }
         });
 
-        apiHome.getConfaltantes().enqueue(new Callback<List<Producto>>() {
+
+        apiHome.getlistarConFaltantes().enqueue(new Callback<List<Producto>>() {
             @Override
             public void onResponse(@NonNull Call<List<Producto>> call, @NonNull Response<List<Producto>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int sumaProductos = 0;
-                    for (Producto producto : response.body()) {
-                        if ("desactivado".equalsIgnoreCase(producto.getEstado())) {
-                            sumaProductos++;
+                    List<Producto> productos = response.body();
+
+                    List<Producto>productosFiltrados = new ArrayList<>();
+                    int sumaCantidades = 0;
+                    for (Producto p:productos) {
+                        if (p.getEstado() != null && p.getEstado().equalsIgnoreCase("desactivado")) {
+                            productosFiltrados.add(p);
+
+                            sumaCantidades += p.getCantidad();
                         }
-                        homeViewModel.setConfaltantes(sumaProductos);
                     }
+                    homeViewModel.setConfaltantes(sumaCantidades);//cantidad total
+                    homeViewModel.getListarConFaltantes().setValue(productosFiltrados); //lista contada de productos
                 } else {
                     homeViewModel.setConfaltantes(-1);
                 }
+
             }
 
             @Override
@@ -106,20 +135,19 @@ public class HomeResponse {
             }
         });
 
-        apiHome.getTotal_usuarios().enqueue(new Callback<List<Usuario>>() {
+        apiHome.getlistaTotal_usuarios().enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(@NonNull Call<List<Usuario>> call, @NonNull Response<List<Usuario>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int sumaUsuarios = 0;
-                    for (Usuario usuario : response.body()) {
-                        if ("null".equalsIgnoreCase(usuario.getFecha_baja())) {
-                            sumaUsuarios++;
-                        }
-                        homeViewModel.setConfaltantes(sumaUsuarios);
-                    }
+                    List<Usuario> usuarios = response.body();
+                    int sumaUsuarios = usuarios.size();; //contar los productos
+
+                    homeViewModel.setTotal_usuarios(sumaUsuarios);//cantidad total
+                    homeViewModel.getListaTotal_usuarios().setValue(usuarios); //lista contada de productos
                 } else {
-                    homeViewModel.setConfaltantes(-1);
+                    //homeViewModel.setListaTotal_usuarios();
                 }
+
             }
 
             
@@ -130,14 +158,4 @@ public class HomeResponse {
         });
     }
 }
-
-
-
-
-
-
-
-
-
-
 

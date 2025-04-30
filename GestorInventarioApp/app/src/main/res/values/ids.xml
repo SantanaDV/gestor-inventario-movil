@@ -2,11 +2,11 @@
 <resources>
     <item name="button6" type="id" />
     <item name="total_productos" type="id" />
-    <item name="total_usuarios" type="id" />
+    <item name="totalUsuarios" type="id" />
     <item name="textView3" type="id" />
     <item name="textView4" type="id" />
     <item name="button" type="id" />
-    <item name="Productos" type="id"/>
+    <item name="productosContados" type="id"/>
     <item name="conexistencias" type="id"/>
     <item name="confaltantes" type="id"/>
 </resources>

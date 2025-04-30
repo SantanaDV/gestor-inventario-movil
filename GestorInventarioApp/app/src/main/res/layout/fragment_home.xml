@@ -18,7 +18,7 @@
         android:layout_marginStart="16dp" />
 
     <TextView
-        android:id="@+id/TotalProductos"
+        android:id="@+id/Total"
         android:layout_width="158dp"
         android:layout_height="45dp"
         android:layout_marginLeft="25dp"
@@ -29,19 +29,21 @@
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/total_productos"
         app:layout_constraintTop_toTopOf="@+id/total_productos"
-        app:layout_constraintBottom_toBottomOf="@+id/total_productos"
         android:layout_marginStart="25dp" />
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/total_productos"-->
+
 
     <TextView
-        android:id="@+id/Productos"
+        android:id="@+id/productosContados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Productos"
-        app:layout_constraintStart_toEndOf="@+id/TotalProductos"
-        app:layout_constraintTop_toTopOf="@+id/TotalProductos"
-        app:layout_constraintBottom_toBottomOf="@+id/TotalProductos"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@id/productosContados"
+        app:layout_constraintTop_toTopOf="@id/productosContados"
         android:layout_marginStart="16dp" />
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/Total"-->
+
 
     <ImageView
         android:id="@+id/imageExistencias"
@@ -55,6 +57,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="16dp" />
 
+
     <TextView
         android:id="@+id/textExistencias"
         android:layout_width="158dp"
@@ -65,21 +68,23 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:text="EXISTENCIAS"
+        app:layout_constraintBottom_toBottomOf="@+id/imageExistencias"
         app:layout_constraintStart_toEndOf="@+id/imageExistencias"
         app:layout_constraintTop_toTopOf="@+id/imageExistencias"
-        app:layout_constraintBottom_toBottomOf="@+id/imageExistencias"
         android:layout_marginStart="25dp" />
+
 
     <TextView
         android:id="@+id/conexistencias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="conexistencias"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/textExistencias"
-        app:layout_constraintTop_toTopOf="@+id/textExistencias"
         app:layout_constraintBottom_toBottomOf="@+id/textExistencias"
+        app:layout_constraintTop_toTopOf="@+id/textExistencias"
         android:layout_marginStart="16dp" />
+
 
     <ImageView
         android:id="@+id/imageFaltantes"
@@ -88,10 +93,12 @@
         android:layout_marginLeft="16dp"
         android:contentDescription="TODO"
         android:src="@drawable/criticos"
-        app:layout_constraintTop_toBottomOf="@+id/imageExistencias"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageExistencias"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        tools:ignore="MissingConstraints" />
+
 
     <TextView
         android:id="@+id/textFaltantes"
@@ -104,20 +111,22 @@
         android:gravity="center"
         android:text="SIN EXISTENCIAS"
         app:layout_constraintStart_toEndOf="@+id/imageFaltantes"
-        app:layout_constraintTop_toTopOf="@+id/imageFaltantes"
         app:layout_constraintBottom_toBottomOf="@+id/imageFaltantes"
+        app:layout_constraintTop_toTopOf="@+id/imageFaltantes"
         android:layout_marginStart="25dp" />
+
 
     <TextView
         android:id="@+id/confaltantes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="confaltantes"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/textFaltantes"
         app:layout_constraintTop_toTopOf="@+id/textFaltantes"
         app:layout_constraintBottom_toBottomOf="@+id/textFaltantes"
         android:layout_marginStart="16dp" />
+
 
     <ImageView
         android:id="@+id/imageUsuariosActivos"
@@ -125,10 +134,12 @@
         android:layout_height="58dp"
         android:layout_marginLeft="16dp"
         android:src="@drawable/usuarios"
-        app:layout_constraintTop_toBottomOf="@+id/imageFaltantes"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageFaltantes"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        tools:ignore="MissingConstraints" />
+
 
     <TextView
         android:id="@+id/texContarUsuarios"
@@ -145,15 +156,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageUsuariosActivos"
         android:layout_marginStart="25dp" />
 
+
     <TextView
-        android:id="@+id/total_usuarios"
+        android:id="@+id/totalUsuarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="total_usurious"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/texContarUsuarios"
-        app:layout_constraintTop_toTopOf="@+id/texContarUsuarios"
         app:layout_constraintBottom_toBottomOf="@+id/texContarUsuarios"
+        app:layout_constraintTop_toTopOf="@+id/texContarUsuarios"
         android:layout_marginStart="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

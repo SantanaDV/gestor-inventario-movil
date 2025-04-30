@@ -1,7 +1,6 @@
 package com.wul4.paythunder.gestorInventario.activities;
 
 
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -62,10 +61,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         timer.schedule(new FinishTask(), time);
     }
 
+
     private class FinishTask extends TimerTask {
         @Override
         public void run() {
-            Intent activity = new Intent((SplashScreenActivity.this), MainActivity.class);
+            Intent activity = new Intent(SplashScreenActivity.this, MainActivity.class);
             startActivity(activity);
             SplashScreenActivity.this.finish();
         }

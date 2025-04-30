@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,7 +27,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     //declaro los TextView que voy a usar para mostrar los datos
-    private TextView Productos;
+    private TextView productosContados;
+
     private TextView Conexistencias;
     private TextView Confaltantes;
     private TextView Total_usuarios;
@@ -39,44 +41,43 @@ public class HomeFragment extends Fragment {
         // Se infla el layout del fragmento utilizando FragmentHomeBinding.
         // Esto permite acceder a las vistas definidas en el layout a través de la variable binding.
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        return binding.getRoot(); // Inflamos la vista, pero la lógica se mueve a onViewCreated
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        //obtengo las referenicas de los TextView desde el binding
-        Productos = binding.Productos;
+        // Inicializamos TextViews usando ViewBinding
+        productosContados = binding.productosContados;
         Conexistencias = binding.conexistencias;
         Confaltantes = binding.confaltantes;
         Total_usuarios = binding.totalUsuarios;
 
-        //obtengo una instancia del ViewModel, que contiene la lógica de negocio y los datos que se mostrarán en la vista.
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-/*
-        // Crea el servicio de la API para Home (ApiHome)
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); // Inicializar ViewModel
+
+        // Crear instancia del servicio API y del Response que maneja las llamadas
         ApiHome apiHome = ApiClient.getClient().create(ApiHome.class);
-// Crea una instancia de HomeResponse pasando el ViewModel y el servicio
         HomeResponse homeResponse = new HomeResponse(homeViewModel, apiHome);
-// Ejecuta la llamada a la API para actualizar los datos
-        homeResponse.fetchData();
+        homeResponse.fetchAllData(); // Llamada para obtener los datos
 
 
         // Se obtiene la vista raíz del fragmento.
-        final TextView textView = binding.Productos;
+       // final TextView textView = binding.Productos;
 
-        // Se observa el LiveData<String> que contiene el texto que se mostrará en el TextView.
-        // Cuando el valor del LiveData cambia, se actualiza automáticamente el texto del TextView.
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+       // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        // Observar los datos del ViewModel y actualizar los TextView
-        homeViewModel.getProductos().observe(getViewLifecycleOwner(), total -> {
-            Productos.setText(String.valueOf(total));
+        // Observadores para actualizar la UI automáticamente
+        homeViewModel.getproductosContados().observe(getViewLifecycleOwner(), productosCont -> {
+            productosContados.setText(String.valueOf(productosCont));
         });
 
-        homeViewModel.getConexistencias().observe(getViewLifecycleOwner(), existencias -> {
-            Conexistencias.setText(String.valueOf(existencias));
+        homeViewModel.getConexistencias().observe(getViewLifecycleOwner(), conexistencias -> {
+            Conexistencias.setText(String.valueOf(conexistencias));
         });
 
-        homeViewModel.getConfaltantes().observe(getViewLifecycleOwner(), faltantes -> {
-            Confaltantes.setText(String.valueOf(faltantes));
+        homeViewModel.getConfaltantes().observe(getViewLifecycleOwner(), confaltantes -> {
+            Confaltantes.setText(String.valueOf(confaltantes));
         });
 
         homeViewModel.getTotal_usuarios().observe(getViewLifecycleOwner(), UsuariosActivos -> {
@@ -85,9 +86,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-        // Se devuelve la vista raíz del fragmento.*/
-        return root;
     }
 
     // Este método es llamado cuando la vista del fragmento es destruida.
