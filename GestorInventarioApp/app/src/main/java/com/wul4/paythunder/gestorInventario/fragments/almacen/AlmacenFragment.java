@@ -46,8 +46,8 @@ public class AlmacenFragment extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //Obtenemos la instancia del ViewModel asociado al fragmento
-        AlmacenViewModel almacenViewModel =
-                new ViewModelProvider(this).get(AlmacenViewModel.class);
+        AlmacenViewModel.AlmacenViewModel almacenViewModel =
+                new ViewModelProvider(this).get(AlmacenViewModel.AlmacenViewModel.class);
         //inflamos el binding con el layout del fragmento
         binding = FragmentAlmacenBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
