@@ -40,8 +40,16 @@
             android:supportsPictureInPicture="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:exported="true"
-            android:theme="@style/Theme.GestorInventario.NoActionBar"/>
+            android:theme="@style/Theme.GestorInventario.NoActionBar">
+        <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
 
     </application>
-
 </manifest>
