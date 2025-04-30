@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.Utils;
+package com.wul4.paythunder.gestorInventario.utils;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

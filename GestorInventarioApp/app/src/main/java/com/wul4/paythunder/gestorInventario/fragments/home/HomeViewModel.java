@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.wul4.paythunder.gestorInventario.entities.Producto;
+
+import java.util.List;
+
 /**
  * Expone los datos al Fragment usando LiveData.
  */
@@ -14,12 +18,23 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<String> Text = new MutableLiveData<>();
 
     // LiveData para cada uno de los datos que quieres mostrar
-    private final MutableLiveData<Integer> Productos = new MutableLiveData<>();
-    private final MutableLiveData<Integer> conexistencias = new MutableLiveData<>();
-    private final MutableLiveData<Integer> confaltantes = new MutableLiveData<>();
-    //private final MutableLiveData<Integer> usuariosActivos = new MutableLiveData<>();
-    private final MutableLiveData<Integer> total_usuarios = new MutableLiveData<>();
+    private MutableLiveData<Integer> totalProductosContados = new MutableLiveData<>();
 
+    private MutableLiveData<Integer> listarConExistencias = new MutableLiveData<>();
+    private MutableLiveData<Integer>listarConFaltantes = new MutableLiveData<>();
+    private final MutableLiveData<Integer> listarUsuariosActivos = new MutableLiveData<>();
+
+    public MutableLiveData<String> getText() {
+        return Text;
+    }
+
+
+
+
+
+
+
+    /*ojo modifica despues del valor asignado*/
 
 
     //El constructor vacío, no inicializa los valores de los MutableLiveData.
@@ -29,50 +44,46 @@ public class HomeViewModel extends ViewModel {
     }
 
 
-    // Métodos para obtener los LiveData
-    public LiveData<Integer> getProductos() {
-        return Productos;
+
+
+    public MutableLiveData<Integer> getListarConFaltantes() {
+        return listarConFaltantes;
+    }
+    public MutableLiveData<Integer> getlistarusuariosactivos() {
+        return listarUsuariosActivos;
     }
 
-    public LiveData<Integer> getConexistencias() {
-        return conexistencias;
+    public LiveData<Integer> getlistarConExistencias() {
+        return listarConExistencias;
     }
 
-    public MutableLiveData<String> getText() {
-        return Text;
+    public LiveData<Integer> gettotalProductosContados() {
+        return totalProductosContados;
     }
 
-    public LiveData<Integer> getConfaltantes() {
-        return confaltantes;
+    public void settotalProductosContados(int productosContados) {
+        totalProductosContados.setValue(productosContados);
     }
 
-    //public LiveData<Integer> getUsuariosActivos() {
-      //  return usuariosActivos;
-   // }
-
-    public LiveData<Integer> getTotal_usuarios(){ return total_usuarios;}
-
-    // Se agregaron métodos para asignar los valores desde fuera de la clase.
-    // Estos métodos pueden ser utilizados por HomeRequest
-    // o directamente desde el Fragment para actualizar los datos.
-
-    public void setProductos(int total) {
-        Productos.setValue(total);
-    }
-
-    public void setConexistencias(int conexistencias) {
-        this.conexistencias.setValue(conexistencias);
-    }
-
-    public void setConfaltantes(int confaltantes) {
-        this.confaltantes.setValue(confaltantes);
+    public void setlistarConExistencias(int conExistencias) {
+        this.listarConExistencias.setValue(conExistencias);
     }
 
 
-    public void setTotal_usuarios(int total_usuarios){
-        this.total_usuarios.setValue(total_usuarios);
+
+
+    public void setListarConFaltantes(int conFaltantes) {
+        this.listarConFaltantes.setValue(conFaltantes);
     }
+
+
+
+
+    public void setlistarusuariosactivos(int total) {
+        listarUsuariosActivos.setValue(total);
+    }
+
+
+
+
 }
-
-
-

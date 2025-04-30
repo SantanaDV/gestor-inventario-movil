@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.Activities;
+package com.wul4.paythunder.gestorInventario.activities;
 
 
 import android.os.Bundle;
@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.Utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 
 import com.wul4.paythunder.gestorInventario.entities.Usuario;
+import com.wul4.paythunder.gestorInventario.utils.Funciones;
+import com.wul4.paythunder.gestorInventario.utils.Utils;
 
 import retrofit2.Call;
 import retrofit2.Callback;

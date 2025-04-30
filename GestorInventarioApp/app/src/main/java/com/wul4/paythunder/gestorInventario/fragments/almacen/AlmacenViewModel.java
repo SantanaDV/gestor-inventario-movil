@@ -49,5 +49,6 @@ public class AlmacenViewModel extends ViewModel {
     }
 
 
-
+    public LiveData<Producto> getCategorias() {return getCategorias();
+    }
 }
