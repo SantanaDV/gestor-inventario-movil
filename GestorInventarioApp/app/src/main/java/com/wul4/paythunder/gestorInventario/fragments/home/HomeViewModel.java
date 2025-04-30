@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wul4.paythunder.gestorInventario.entities.Producto;
-import com.wul4.paythunder.gestorInventario.entities.Usuario;
 
 import java.util.List;
 
@@ -19,20 +18,23 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<String> Text = new MutableLiveData<>();
 
     // LiveData para cada uno de los datos que quieres mostrar
-    private final MutableLiveData<Integer> Productos = new MutableLiveData<>();
-    private MutableLiveData<Integer> productosContados = new MutableLiveData<>();
+    private MutableLiveData<Integer> totalProductosContados = new MutableLiveData<>();
 
-    private final MutableLiveData<Integer> conexistencias = new MutableLiveData<>();
-    private MutableLiveData<List<Producto>>listarConExistencias = new MutableLiveData<>();
-    private MutableLiveData<List<Producto>>listarConFaltantes = new MutableLiveData<>();
-    private final MutableLiveData<Integer> confaltantes = new MutableLiveData<>();
-    //private final MutableLiveData<Integer> usuariosActivos = new MutableLiveData<>();
-    private final MutableLiveData<Integer> total_usuarios = new MutableLiveData<>();
-    private MutableLiveData<List<Usuario>> listaTotal_usuarios = new MutableLiveData<>();
+    private MutableLiveData<Integer> listarConExistencias = new MutableLiveData<>();
+    private MutableLiveData<Integer>listarConFaltantes = new MutableLiveData<>();
+    private final MutableLiveData<Integer> listarUsuariosActivos = new MutableLiveData<>();
 
     public MutableLiveData<String> getText() {
         return Text;
     }
+
+
+
+
+
+
+
+    /*ojo modifica despues del valor asignado*/
 
     public void setProductosContados(MutableLiveData<Integer> productosContados) {
         this.productosContados = productosContados;
@@ -56,22 +58,40 @@ public class HomeViewModel extends ViewModel {
 
     }
 
+<<<<<<< HEAD
     public LiveData<Integer> getproductosContados(){
         return productosContados;
     }
     public LiveData<Integer> getProductos() {
         return Productos;
+=======
+
+
+
+    public MutableLiveData<Integer> getListarConFaltantes() {
+        return listarConFaltantes;
+    }
+    public MutableLiveData<Integer> getlistarusuariosactivos() {
+        return listarUsuariosActivos;
+>>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
     }
 
-    public LiveData<Integer> getConexistencias() {
-        return conexistencias;
+    public LiveData<Integer> getlistarConExistencias() {
+        return listarConExistencias;
     }
 
+<<<<<<< HEAD
+=======
+    public LiveData<Integer> gettotalProductosContados() {
+        return totalProductosContados;
+    }
+>>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
 
-    public LiveData<Integer> getConfaltantes() {
-        return confaltantes;
+    public void settotalProductosContados(int productosContados) {
+        totalProductosContados.setValue(productosContados);
     }
 
+<<<<<<< HEAD
     public LiveData<Integer> getTotal_usuarios(){ return total_usuarios;}
     public LiveData<List<Usuario>> listaTotal_usuarios(){ return listaTotal_usuarios;}
 
@@ -87,15 +107,22 @@ public class HomeViewModel extends ViewModel {
 
     public void setConfaltantes(int confaltantes) {
         this.confaltantes.setValue(confaltantes);
+=======
+    public void setlistarConExistencias(int conExistencias) {
+        this.listarConExistencias.setValue(conExistencias);
+>>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
     }
 
 
-    public void setTotal_usuarios(int total_usuarios){
-        this.total_usuarios.setValue(total_usuarios);
+
+
+    public void setListarConFaltantes(int conFaltantes) {
+        this.listarConFaltantes.setValue(conFaltantes);
     }
 
 
 
+<<<<<<< HEAD
     public void setProductosContados(int productosContados) {
         this.productosContados.setValue(productosContados);
     }
@@ -118,4 +145,14 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<List<Usuario>> getListarTotal_Usuarios(){
         return listaTotal_usuarios;
     }
+=======
+
+    public void setlistarusuariosactivos(int total) {
+        listarUsuariosActivos.setValue(total);
+    }
+
+
+
+
+>>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
 }
