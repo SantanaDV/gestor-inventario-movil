@@ -9,4 +9,9 @@
     <item name="Productos" type="id"/>
     <item name="conexistencias" type="id"/>
     <item name="confaltantes" type="id"/>
+    <item name="imageTotalProductos" type="id" />
+    <item name="usuariosActivos" type="id" />" type="id"
+    <item name="textProductosContados" type="id"/>
+    <item name="conExistencias" type="id"/>
+    <item name="conFaltantes" type="id"/>
 </resources>

@@ -35,6 +35,7 @@ public class HomeViewModel extends ViewModel {
 
 
     /*ojo modifica despues del valor asignado*/
+/*ojo modifica despues del valor asignado*/
 
 
     //El constructor vacío, no inicializa los valores de los MutableLiveData.

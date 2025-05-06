@@ -57,7 +57,6 @@ public class HomeResponse {
         });
 
 
-
         apiHome.getlistarConExistencias().enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -127,8 +126,4 @@ public class HomeResponse {
         });
     }
 }
-
-
-
-
 
