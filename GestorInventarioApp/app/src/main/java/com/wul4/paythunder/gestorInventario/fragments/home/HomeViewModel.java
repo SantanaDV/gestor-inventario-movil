@@ -35,6 +35,7 @@ public class HomeViewModel extends ViewModel {
 
 
     /*ojo modifica despues del valor asignado*/
+/*ojo modifica despues del valor asignado*/
 
     public void setProductosContados(MutableLiveData<Integer> productosContados) {
         this.productosContados = productosContados;

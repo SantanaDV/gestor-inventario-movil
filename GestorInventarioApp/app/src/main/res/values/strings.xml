@@ -10,23 +10,22 @@
     <string name="menu_home" translatable="false">Home</string>
     <string name="menu_gallery" translatable="false">Gallery</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
-
     <string name="menu_login" translatable="false">Login</string>
-    <string name="todo"  translatable="false">TODO</string>
-    <string name="total_productos"  translatable="false">TOTAL PRODUCTOS</string>
-    <string name="textview"  translatable="false">TextView</string>
-    <string name="textviewexistencias"  translatable="false">EXISTENCIAS</string>
-    <string name="sinExistencias"  translatable="false">SIN EXISTENCIAS</string>
-    <string name="textview4"  translatable="false"/>
+
+    <string name="todo" translatable="false">TODO</string>
+    <string name="total_productos" translatable="false">TOTAL PRODUCTOS</string>
+    <string name="textview" translatable="false">TextView</string>
+    <string name="textviewexistencias" translatable="false">EXISTENCIAS</string>
+    <string name="sinExistencias" translatable="false">SIN EXISTENCIAS</string>
+    <string name="textview4" translatable="false"></string>
     <string name="cerrar_sesión">Cerrar sesión</string>
 
-    <string name="registrarse"  translatable="false">¿Registrarse?</string>
-    <string name="formulario_de_registro"  translatable="false">FORMULARIO DE REGISTRO</string>
-    <string name="confirmar_contrase_a"  translatable="false">Confirmar Contraseña</string>
-    <string name="contrasena"  translatable="false">Contraseña</string>
-    <string name="email"  translatable="false">Email</string>
-    <string name="nombre_completo"  translatable="false">Nombre Completo</string>
+    <string name="registrarse" translatable="false">¿Registrarse?</string>
+    <string name="formulario_de_registro" translatable="false">FORMULARIO DE REGISTRO</string>
+    <string name="confirmar_contrase_a" translatable="false">Confirmar Contraseña</string>
+    <string name="contrasena" translatable="false">Contraseña</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="nombre_completo" translatable="false">Nombre Completo</string>
 
     <string name="textviewproductos">TextViewProductos</string>
     <string name="textviewtotalproductos">TOTAL PRODUCTOS</string>

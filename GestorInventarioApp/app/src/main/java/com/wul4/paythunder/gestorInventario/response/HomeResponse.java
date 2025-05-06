@@ -51,46 +51,10 @@ public class HomeResponse {
             }
 
             @Override
-<<<<<<< HEAD
-            public void onFailure(Call<Integer> call, Throwable t) {
-
-                homeViewModel.setProductosContados(-1);
-            }
-        });
-
-/*
-se ha modificado pero aun no sale bien porque no suma las cantidades de los productos activos sino solo los productos en id
- */
-        apiHome.getlistarConexistencias().enqueue(new Callback<List<Producto>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Producto>> call, @NonNull Response<List<Producto>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Producto> productos = response.body();
-
-                    //filtro producto activo
-                    List<Producto> productosFiltrados = new ArrayList<>();
-                    int sumaCantidades = 0;
-                    for (Producto p : productos) {
-                        if (p.getEstado() != null && p.getEstado().equalsIgnoreCase("activo")) {
-                            productosFiltrados.add(p);
-
-
-                            //sumamos las cantidades
-
-                            sumaCantidades += p.getCantidad();
-                        }
-                    }
-
-                    homeViewModel.setConexistencias(sumaCantidades);//cantidad total
-                    homeViewModel.getListarConExistencias().setValue(productosFiltrados); //lista contada de productos
-                }else {
-                    homeViewModel.setConexistencias(-1);
-=======
             public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
                 homeViewModel.settotalProductosContados(-1);
             }
         });
-
 
 
         apiHome.getlistarConExistencias().enqueue(new Callback<Integer>() {
@@ -105,7 +69,6 @@ se ha modificado pero aun no sale bien porque no suma las cantidades de los prod
 
                 } else {
                     homeViewModel.setlistarConExistencias(-1);
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
                 }
 
             }
@@ -204,8 +167,11 @@ se ha modificado pero aun no sale bien porque no suma las cantidades de los prod
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 
 
 
 
 >>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
+=======
+>>>>>>> 0170ced (acutalización 06/05)
