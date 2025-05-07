@@ -17,6 +17,10 @@ import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.entities.Usuario;
 import com.wul4.paythunder.gestorInventario.utils.Funciones;
 import com.wul4.paythunder.gestorInventario.utils.Utils;
+import com.wul4.paythunder.gestorInventario.utils.Funciones;
+import com.wul4.paythunder.gestorInventario.utils.Utils;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
+import com.wul4.paythunder.gestorInventario.entities.Usuario;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         //Utilizamos el metodo de Utils para poner la pantalla completa
         com.wul4.paythunder.gestorInventario.utils.Utils.setFullscreen(this);
+        Utils.setFullscreen(this);
 
         //Cogemos las referencias del layout
         etEmail = findViewById(R.id.etEmail);
@@ -62,67 +67,80 @@ public class RegisterActivity extends AppCompatActivity {
                                 //En caso de que todo este bien procedemos a registrar al usuario
                                 //Creamos el objeto de Usuario
                                 com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth apiAuth = ApiClient.getClient().create(com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth.class);
-                                Usuario usuario = new Usuario();
-                                usuario.setEmail(etEmail.getText().toString());
-                                usuario.setContrasena(etPassword.getText().toString());
-                                usuario.setNombre(etFullName.getText().toString());
-                                //Comprobamos que el email no existe ya en la base de datos con una llamada a la api
-                                Call<Boolean> callBoolean = apiAuth.existeEmail(usuario.getEmail());
+                                if (!(Funciones.editTextEmpty(etEmail) || Funciones.editTextEmpty(etPassword) || Funciones.editTextEmpty(etConfirmPassword) || Funciones.editTextEmpty(etFullName))) {
+                                    if (Funciones.comprobarFormatoCorreo(etEmail.getText().toString())) {
+                                        if (Funciones.comprobarCadenasIguales(etPassword.getText().toString(), etConfirmPassword.getText().toString())) {
+                                            if (Funciones.stringMayorASeisCaracteres(etPassword.getText().toString())) {
+                                                if (Funciones.stringNumerosYLetras(etPassword.getText().toString())) {
 
-                                callBoolean.enqueue(new Callback<Boolean>() {
-                                    @Override
-                                    public void onResponse(Call<Boolean> callExiste, Response<Boolean> response) {
-                                        if (response.isSuccessful()) {
-                                            Boolean existe = response.body();
-                                            if (existe) {
-                                                Toast.makeText(getApplicationContext(), "El email ya existe", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                //Hacemos la llamada al registro
-                                                Call<Usuario> call = apiAuth.register(usuario);
+                                                    //En caso de que todo este bien procedemos a registrar al usuario
+                                                    //Creamos el objeto de Usuario
+                                                    apiAuth = ApiClient.getClient().create(ApiAuth.class);
+                                                    Usuario usuario = new Usuario();
+                                                    usuario.setEmail(etEmail.getText().toString());
+                                                    usuario.setContrasena(etPassword.getText().toString());
+                                                    usuario.setNombre(etFullName.getText().toString());
+                                                    //Comprobamos que el email no existe ya en la base de datos con una llamada a la api
+                                                    Call<Boolean> callBoolean = apiAuth.existeEmail(usuario.getEmail());
 
-                                                call.enqueue(new Callback<Usuario>() {
-                                                    @Override
-                                                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                                                        if (response.isSuccessful() && response.body() != null) {
-                                                            Toast.makeText(getApplicationContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
-                                                            finish();
+                                                    ApiAuth finalApiAuth = apiAuth;
+                                                    callBoolean.enqueue(new Callback<Boolean>() {
+                                                        @Override
+                                                        public void onResponse(Call<Boolean> callExiste, Response<Boolean> response) {
+                                                            if (response.isSuccessful()) {
+                                                                Boolean existe = response.body();
+                                                                if (existe) {
+                                                                    Toast.makeText(getApplicationContext(), "El email ya existe", Toast.LENGTH_SHORT).show();
+                                                                } else {
+                                                                    //Hacemos la llamada al registro
+                                                                    Call<Usuario> call = finalApiAuth.register(usuario);
+
+                                                                    call.enqueue(new Callback<Usuario>() {
+                                                                        @Override
+                                                                        public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                                                            if (response.isSuccessful() && response.body() != null) {
+                                                                                Toast.makeText(getApplicationContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                                                                                finish();
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onFailure(Call<Usuario> call, Throwable t) {
+                                                                            Toast.makeText(getApplicationContext(), "Ha habido un problema, pongase en contacto con un administrador", Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
                                                         }
-                                                    }
 
-                                                    @Override
-                                                    public void onFailure(Call<Usuario> call, Throwable t) {
-                                                        Toast.makeText(getApplicationContext(), "Ha habido un problema, pongase en contacto con un administrador", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
+                                                        @Override
+                                                        public void onFailure(Call<Boolean> callExiste, Throwable t) {
+                                                            Toast.makeText(getApplicationContext(), "Ha habido un problema, pongase en contacto con un administrador", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+
+
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "La contraseña debe contener solo letras y numeros", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "La contraseña debe tener mas de 6 caracteres", Toast.LENGTH_SHORT).show();
                                             }
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                                         }
+
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "El email no es valido", Toast.LENGTH_SHORT).show();
                                     }
-
-                                    @Override
-                                    public void onFailure(Call<Boolean> callExiste, Throwable t) {
-                                        Toast.makeText(getApplicationContext(), "Ha habido un problema, pongase en contacto con un administrador", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), "La contraseña debe contener solo letras y numeros", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "La contraseña debe tener mas de 6 caracteres", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                     }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "El email no es valido", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             }
-
-
         });
     }
 

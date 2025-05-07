@@ -182,7 +182,8 @@ public class Utils {
         String fechaS = dateFormat.format(fechaD);
         String logWritter = fechaD.toString() + ": " + tag + " --> " + message + "\n";
         try {
-            File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), com.wul4.paythunder.gestorInventario.utils.Constantes.LOGS_FOLFER_NAME);
+//            File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), com.wul4.paythunder.gestorInventario.utils.Constantes.LOGS_FOLFER_NAME);
+            File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), Constantes.LOGS_FOLFER_NAME);
             if (!root.exists()) {
                 root.mkdirs();
             }
@@ -263,6 +264,7 @@ public class Utils {
 
                     View decorView = window.getDecorView();
                     decorView.setSystemUiVisibility(com.wul4.paythunder.gestorInventario.utils.Constantes.uiOptions);
+                    decorView.setSystemUiVisibility(Constantes.uiOptions);
 
                     // https://developer.android.com/develop/ui/views/layout/immersive?hl=es-419#java
 
