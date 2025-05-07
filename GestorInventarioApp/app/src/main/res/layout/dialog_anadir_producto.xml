@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Imagen del producto -->
+        <ImageView
+            android:id="@+id/imgNuevoProducto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder_image" />
+
+        <!-- Botón para subir foto -->
+        <Button
+            android:id="@+id/btnSubirFoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Subir Foto" />
+
+        <!-- Nombre del producto -->
+        <EditText
+            android:id="@+id/etNombreProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del producto"
+            android:inputType="textPersonName"
+            android:layout_marginTop="8dp" />
+
+        <!-- Cantidad -->
+        <EditText
+            android:id="@+id/etCantidadProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cantidad"
+            android:inputType="number"
+            android:layout_marginTop="8dp" />
+
+        <!-- Código QR -->
+        <EditText
+            android:id="@+id/etCodigoQRProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código QR"
+            android:inputType="text"
+            android:layout_marginTop="8dp" />
+
+        <!-- Botón para escanear QR -->
+        <Spinner
+            android:id="@+id/spinnerCategoriaProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Activo?"
+                android:textSize="16sp" />
+
+            <Switch
+                android:id="@+id/id_del_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEscanearQR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Escanear QR" />
+
+        <!-- Botón para leer NFC -->
+        <Button
+            android:id="@+id/btnLeerNFC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Leer NFC" />
+
+        <!-- Categoría -->
+
+        <!-- Switch Activo / Desactivado -->
+
+    </LinearLayout>
+</ScrollView>
