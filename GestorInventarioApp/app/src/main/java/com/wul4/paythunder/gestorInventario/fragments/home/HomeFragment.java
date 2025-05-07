@@ -50,17 +50,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Inicializamos TextViews usando ViewBinding
-<<<<<<< HEAD
-        productosContados = binding.productosContados;
-        Conexistencias = binding.conexistencias;
-        Confaltantes = binding.confaltantes;
-        Total_usuarios = binding.totalUsuarios;
-=======
         productosContados = binding.textProductosContados;
         conExistencias = binding.conExistencias;
         conFaltantes = binding.conFaltantes;
         usuariosActivos = binding.usuariosActivos;
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); // Inicializar ViewModel
 
@@ -70,24 +63,6 @@ public class HomeFragment extends Fragment {
         homeResponse.fetchAllData(); // Llamada para obtener los datos
 
 
-<<<<<<< HEAD
-        // Se obtiene la vista raíz del fragmento.
-       // final TextView textView = binding.Productos;
-
-       // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        // Observadores para actualizar la UI automáticamente
-        homeViewModel.getproductosContados().observe(getViewLifecycleOwner(), productosCont -> {
-            productosContados.setText(String.valueOf(productosCont));
-        });
-
-        homeViewModel.getConexistencias().observe(getViewLifecycleOwner(), conexistencias -> {
-            Conexistencias.setText(String.valueOf(conexistencias));
-        });
-
-        homeViewModel.getConfaltantes().observe(getViewLifecycleOwner(), confaltantes -> {
-            Confaltantes.setText(String.valueOf(confaltantes));
-=======
         homeViewModel.gettotalProductosContados().observe(getViewLifecycleOwner(), productosContados -> {
             this.productosContados.setText(String.valueOf(productosContados));
 
@@ -100,7 +75,6 @@ public class HomeFragment extends Fragment {
 
         homeViewModel.getListarConFaltantes().observe(getViewLifecycleOwner(), confaltantes -> {
             this.conFaltantes.setText(String.valueOf(confaltantes));
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
         });
 
        homeViewModel.gettotalProductosContados().observe(getViewLifecycleOwner(), productosContados -> {

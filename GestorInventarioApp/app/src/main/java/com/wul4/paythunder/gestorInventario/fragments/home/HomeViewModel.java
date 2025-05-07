@@ -59,13 +59,6 @@ public class HomeViewModel extends ViewModel {
 
     }
 
-<<<<<<< HEAD
-    public LiveData<Integer> getproductosContados(){
-        return productosContados;
-    }
-    public LiveData<Integer> getProductos() {
-        return Productos;
-=======
 
 
 
@@ -74,44 +67,22 @@ public class HomeViewModel extends ViewModel {
     }
     public MutableLiveData<Integer> getlistarusuariosactivos() {
         return listarUsuariosActivos;
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
     }
 
     public LiveData<Integer> getlistarConExistencias() {
         return listarConExistencias;
     }
 
-<<<<<<< HEAD
-=======
     public LiveData<Integer> gettotalProductosContados() {
         return totalProductosContados;
     }
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
 
     public void settotalProductosContados(int productosContados) {
         totalProductosContados.setValue(productosContados);
     }
 
-<<<<<<< HEAD
-    public LiveData<Integer> getTotal_usuarios(){ return total_usuarios;}
-    public LiveData<List<Usuario>> listaTotal_usuarios(){ return listaTotal_usuarios;}
-
-    // Se agregaron métodos para asignar los valores desde fuera de la clase.
-    // Estos métodos pueden ser utilizados por HomeRequest
-    // o directamente desde el Fragment para actualizar los datos.
-
-
-
-    public void setConexistencias(int conexistencias) {
-        this.conexistencias.setValue(conexistencias);
-    }
-
-    public void setConfaltantes(int confaltantes) {
-        this.confaltantes.setValue(confaltantes);
-=======
     public void setlistarConExistencias(int conExistencias) {
         this.listarConExistencias.setValue(conExistencias);
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
     }
 
 
@@ -123,30 +94,6 @@ public class HomeViewModel extends ViewModel {
 
 
 
-<<<<<<< HEAD
-    public void setProductosContados(int productosContados) {
-        this.productosContados.setValue(productosContados);
-    }
-
-    public MutableLiveData<List<Producto>> getListarConExistencias() {
-        return listarConExistencias;
-    }
-
-    public void setListarConExistencias(MutableLiveData<List<Producto>> listarConExistencias) {
-        this.listarConExistencias = listarConExistencias;
-    }
-
-    public MutableLiveData<List<Producto>> getListarConFaltantes() {
-        return listarConFaltantes;
-    }
-
-    public void setListarConFaltantes(MutableLiveData<List<Producto>> listarConFaltantes) {
-        this.listarConFaltantes = listarConFaltantes;
-    }
-    public MutableLiveData<List<Usuario>> getListarTotal_Usuarios(){
-        return listaTotal_usuarios;
-    }
-=======
 
     public void setlistarusuariosactivos(int total) {
         listarUsuariosActivos.setValue(total);
@@ -155,5 +102,4 @@ public class HomeViewModel extends ViewModel {
 
 
 
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
 }

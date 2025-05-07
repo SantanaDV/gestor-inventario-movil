@@ -80,36 +80,16 @@ public class HomeResponse {
         });
 
 
-<<<<<<< HEAD
-        apiHome.getlistarConFaltantes().enqueue(new Callback<List<Producto>>() {
-=======
 
         apiHome.getlistarConFaltantes().enqueue(new Callback<Integer>() {
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
-<<<<<<< HEAD
-                    List<Producto> productos = response.body();
-
-                    List<Producto>productosFiltrados = new ArrayList<>();
-                    int sumaCantidades = 0;
-                    for (Producto p:productos) {
-                        if (p.getEstado() != null && p.getEstado().equalsIgnoreCase("desactivado")) {
-                            productosFiltrados.add(p);
-
-                            sumaCantidades += p.getCantidad();
-                        }
-                    }
-                    homeViewModel.setConfaltantes(sumaCantidades);//cantidad total
-                    homeViewModel.getListarConFaltantes().setValue(productosFiltrados); //lista contada de productos
-=======
                     int conFaltantes = response.body();
 
                     homeViewModel.setListarConFaltantes(conFaltantes);//cantidad total
                     homeViewModel.getListarConFaltantes().getValue(); //lista contada de productos
 
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
                 } else {
                     homeViewModel.setListarConFaltantes(-1);
                 }
@@ -123,23 +103,10 @@ public class HomeResponse {
             }
         });
 
-<<<<<<< HEAD
-        apiHome.getlistaTotal_usuarios().enqueue(new Callback<List<Usuario>>() {
-=======
         apiHome.getlistarUsuariosActivos().enqueue(new Callback<Integer>() {
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
-<<<<<<< HEAD
-                    List<Usuario> usuarios = response.body();
-                    int sumaUsuarios = usuarios.size();; //contar los productos
-
-                    homeViewModel.setTotal_usuarios(sumaUsuarios);//cantidad total
-                    homeViewModel.getListaTotal_usuarios().setValue(usuarios); //lista contada de productos
-                } else {
-                    //homeViewModel.setListaTotal_usuarios();
-=======
                     Integer usuariosFiltrados = response.body();
 
                     //no es necesario hacer suma adicional aquí ya que el backend ya nos da la suma total
@@ -150,7 +117,6 @@ public class HomeResponse {
 
                 } else {
                     //homeViewModel.setlistarUsuariosActivos(-1);
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
                 }
 
             }
@@ -164,14 +130,3 @@ public class HomeResponse {
         });
     }
 }
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-
-
-
-
->>>>>>> 36aeb1e (En fase de implementación del boton añadir y su dialog)
-=======
->>>>>>> 0170ced (acutalización 06/05)
