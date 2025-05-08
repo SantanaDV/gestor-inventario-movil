@@ -12,11 +12,13 @@ import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
 import java.util.Collections;
 import java.util.List;
 
+//import okhttp3.Callback;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Callback;
 
 public class AlmacenViewModel extends ViewModel {
 
@@ -85,7 +87,12 @@ public class AlmacenViewModel extends ViewModel {
             }
             @Override public void onFailure(Call<Producto> c, Throwable t) {
                 resultadoCreacion.setValue(null);
+                // tu código aquí
             }
         });
     }
 }
+
+
+
+

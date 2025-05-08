@@ -1,4 +1,3 @@
-// src/main/java/com/wul4/paythunder/gestorInventario/fragments/almacen/AlmacenFragment.java
 package com.wul4.paythunder.gestorInventario.fragments.almacen;
 
 import android.app.Activity;
@@ -44,7 +43,8 @@ public class AlmacenFragment extends Fragment {
     private int    cantidadFiltro  = -1;
     private String categoriaFiltro = "";
 
-    @Nullable @Override
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

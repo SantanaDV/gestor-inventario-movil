@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Sección: Tareas por Hacer -->
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/tareas"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/tvCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tareas por Hacer"
+                android:background="#FFFF0000"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutTareaHacer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:background="@drawable/border_tareas">
+
+                <FrameLayout
+                    android:id="@+id/containerTareasPorHacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Sección: Tareas en Proceso -->
+            <ImageView
+                android:id="@+id/imageIcon2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/tareas2"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/tvCategoria2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tareas en Proceso"
+                android:background="#FFFF0000"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutTareaProceso"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:background="@drawable/border_tareas">
+
+                <FrameLayout
+                    android:id="@+id/containerTareasEnProceso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Sección: Tareas Realizadas -->
+            <ImageView
+                android:id="@+id/imageIcon3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/tareas3"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/tvCategoria3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tareas Realizadas"
+                android:background="#FFFF0000"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutTareaRealizada"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:background="@drawable/border_tareas">
+
+                <FrameLayout
+                    android:id="@+id/containerTareasRealizadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.cardview.widget.CardView>
