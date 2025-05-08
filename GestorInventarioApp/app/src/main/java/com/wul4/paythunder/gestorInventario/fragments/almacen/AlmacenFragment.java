@@ -42,6 +42,13 @@ public class AlmacenFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+<<<<<<< Updated upstream
+=======
+        //Obtenemos la instancia del ViewModel asociado al fragmento
+        AlmacenViewModel almacenViewModel =
+                new ViewModelProvider(this).get(AlmacenViewModel.class);
+        //inflamos el binding con el layout del fragmento
+>>>>>>> Stashed changes
         binding = FragmentAlmacenBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(AlmacenViewModel.class);
         viewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
