@@ -2,13 +2,9 @@ package com.wul4.paythunder.gestorInventario.response;
 
 import androidx.annotation.NonNull;
 
-import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiHome;
 import com.wul4.paythunder.gestorInventario.fragments.home.HomeViewModel;
 //import com.wul4.paythunder.gestorInventario.request.ApiHome;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

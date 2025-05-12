@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.fragments.home;
+package com.wul4.paythunder.gestorInventario.fragments.tareas;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
