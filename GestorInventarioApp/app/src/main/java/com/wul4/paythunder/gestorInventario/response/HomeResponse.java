@@ -2,13 +2,9 @@ package com.wul4.paythunder.gestorInventario.response;
 
 import androidx.annotation.NonNull;
 
-import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiHome;
 import com.wul4.paythunder.gestorInventario.fragments.home.HomeViewModel;
 //import com.wul4.paythunder.gestorInventario.request.ApiHome;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,28 +52,6 @@ public class HomeResponse {
             }
         });
 
-
-//            }@Override
-//            public void onResponse(@NonNull Call<List<Producto>> call, @NonNull Response<List<Producto>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    List<Producto> productosContados = response.body();
-//                    int sumaProductos = productosContados.size();
-//
-//                    homeViewModel.setproductosContados(sumaProductos);
-//                    homeViewModel.getTotalProductosContados().setValue(productosContados);
-//
-//
-//
-//                } else {
-//                    //homeViewModel.setProductosContados();
-//                }
-//            }
-//
-//            @Override
-//                public void onFailure(@NonNull Call<List<Producto>> call,@NonNull Throwable t) {
-//                    homeViewModel.setproductosContados(-1);
-//                }
-//        });
 
 
         apiHome.getlistarConExistencias().enqueue(new Callback<Integer>() {

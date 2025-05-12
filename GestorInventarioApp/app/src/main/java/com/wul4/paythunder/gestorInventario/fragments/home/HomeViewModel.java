@@ -4,10 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.wul4.paythunder.gestorInventario.entities.Producto;
-
-import java.util.List;
-
 /**
  * Expone los datos al Fragment usando LiveData.
  */
