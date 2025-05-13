@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
 
+import java.net.HttpCookie;
 import java.util.List;
 
 /*
@@ -16,6 +17,8 @@ public class TareaViewModel extends ViewModel {
     // LiveData para cada uno de los datos que quieres mostrar
 
     private final MutableLiveData<String> Text = new MutableLiveData<>();
+    private final MutableLiveData<List<Tarea>> crearTareas = new MutableLiveData<>();
+    private final MutableLiveData<Integer> tareasCrear = new MutableLiveData<>();
 
     private final MutableLiveData<List<Tarea>> totalTareas = new MutableLiveData<>();
 
@@ -31,12 +34,6 @@ public class TareaViewModel extends ViewModel {
 
 
 
-//    public TareaViewModel(MutableLiveData<List<Tarea>> totalTareas, MutableLiveData<List<Tarea>> tareasHacer, MutableLiveData<List<Tarea>> tareasProceso, MutableLiveData<List<Tarea>> tareasRealizadas) {
-//        this.totalTareas = totalTareas;
-//        this.tareasHacer = tareasHacer;
-//        this.tareasProceso = tareasProceso;
-//        this.tareasRealizadas = tareasRealizadas;
-//    }
 
     public TareaViewModel() {
     }
@@ -63,6 +60,10 @@ public class TareaViewModel extends ViewModel {
         tareasProceso = tareasProceso;
     }
 
+    public MutableLiveData<List<Tarea>> getCrearTareas() {
+        return crearTareas;
+    }
+
     public MutableLiveData<List<Tarea>> getTareasRealizadas() {
         return tareasRealizadas;
     }
@@ -75,4 +76,8 @@ public class TareaViewModel extends ViewModel {
     public MutableLiveData<Integer> getCuentaTareas() {
         return cuentaTareas;
     }
+
+    public MutableLiveData<Integer> getTareasCrear() { return tareasCrear; }
+
+
 }
