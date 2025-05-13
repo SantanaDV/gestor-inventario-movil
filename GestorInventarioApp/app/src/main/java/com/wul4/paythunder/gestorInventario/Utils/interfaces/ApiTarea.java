@@ -13,6 +13,8 @@ import retrofit2.http.GET;
  */
 
 public interface ApiTarea {
+    @GET("api/tarea")
+    Call<List<Tarea>> getCrearTareas();
 
     @GET("api/tarea/totalTareas")
     Call<List<Tarea>> gettotalTareas();
@@ -25,4 +27,7 @@ public interface ApiTarea {
 
     @GET("api/tarea/tareasRealizadas")
     Call<List<Tarea>> gettareasRealizadas();
+
+
+
 }

@@ -39,7 +39,28 @@ public class TareaResponse {
 
     private void fetchAllDataTareas() {
 
-        apiTarea.gettotalTareas().enqueue(new Callback<List<Tarea>>() {
+        apiTarea.getCrearTareas().enqueue(new Callback<List<Tarea>>() {
+
+            @Override
+            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Tarea> tareasCrear = response.body();
+                    tareaViewModel.getTareasCrear().setValue(tareasCrear.size());
+                    tareaViewModel.getCrearTareas().setValue(tareasCrear);
+                } else {
+
+                        tareaViewModel.getTareasCrear().setValue(null);
+                    }
+                }
+
+
+            @Override
+            public void onFailure(Call<List<Tarea>> call, Throwable t) {
+
+            }
+        });
+
+            apiTarea.gettotalTareas().enqueue(new Callback<List<Tarea>>() {
             @Override
             public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
                 if (response.isSuccessful() && response.body() != null) {
