@@ -26,7 +26,7 @@
         android:background="#FFFF0000"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:text="TOTAL PRODUCTOS"
+        android:text="@string/total_productos"
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/imageTotalProductos"
         app:layout_constraintTop_toTopOf="@+id/imageTotalProductos"
@@ -43,7 +43,8 @@
         app:layout_constraintStart_toEndOf="@id/textTotalProductos"
         app:layout_constraintTop_toTopOf="@id/textTotalProductos"
         app:layout_constraintBottom_toBottomOf="@id/textTotalProductos"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        tools:ignore="HardcodedText" />
 
 
 
@@ -52,7 +53,7 @@
         android:layout_width="61dp"
         android:layout_height="58dp"
         android:layout_marginLeft="16dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/Todo"
         android:src="@drawable/existencias"
         app:layout_constraintTop_toBottomOf="@+id/imageTotalProductos"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +70,7 @@
         android:fontFamily="sans-serif-black"
         android:textColor="@color/white"
         android:gravity="center"
-        android:text="EXISTENCIAS"
+        android:text="@string/existencias"
         app:layout_constraintBottom_toBottomOf="@+id/imageExistencias"
         app:layout_constraintStart_toEndOf="@+id/imageExistencias"
         app:layout_constraintTop_toTopOf="@+id/imageExistencias"
@@ -93,7 +94,7 @@
         android:layout_width="61dp"
         android:layout_height="58dp"
         android:layout_marginLeft="16dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/Todo"
         android:src="@drawable/criticos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageExistencias"
@@ -111,7 +112,7 @@
         android:fontFamily="sans-serif-black"
         android:textColor="@color/white"
         android:gravity="center"
-        android:text="SIN EXISTENCIAS"
+        android:text="@string/sin_existencias"
         app:layout_constraintStart_toEndOf="@+id/imageFaltantes"
         app:layout_constraintBottom_toBottomOf="@+id/imageFaltantes"
         app:layout_constraintTop_toTopOf="@+id/imageFaltantes"

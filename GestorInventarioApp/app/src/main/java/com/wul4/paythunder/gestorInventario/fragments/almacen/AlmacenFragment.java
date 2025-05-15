@@ -1,5 +1,6 @@
 package com.wul4.paythunder.gestorInventario.fragments.almacen;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,13 +43,10 @@ public class AlmacenFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-<<<<<<< Updated upstream
-=======
         //Obtenemos la instancia del ViewModel asociado al fragmento
         AlmacenViewModel almacenViewModel =
                 new ViewModelProvider(this).get(AlmacenViewModel.class);
         //inflamos el binding con el layout del fragmento
->>>>>>> Stashed changes
         binding = FragmentAlmacenBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(AlmacenViewModel.class);
         viewModel.getProductos().observe(getViewLifecycleOwner(), productos -> {
@@ -147,6 +145,7 @@ public class AlmacenFragment extends Fragment {
     }
 
     /** Agrega una lista de productos a una columna concreta **/
+    @SuppressLint("SetTextI18n")
     private void agregarProductosAColumna(List<Producto> productos,
                                           LinearLayout columna,
                                           LayoutInflater inflater) {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,7 +9,8 @@
         android:id="@+id/loginFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Iniciar Sesión"
+                android:text="@string/iniciar_sesion"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -35,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:text="Accede a tu cuenta"
+                android:text="@string/accede_a_tu_cuenta"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp" />
 
@@ -87,7 +89,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginEnd="40dp"
                     android:layout_marginRight="40dp"
-                    android:text="Recordar" />
+                    android:text="@string/recordar" />
 
                 <TextView
                     android:id="@+id/tvForgotPassword"
@@ -95,7 +97,7 @@
                     android:layout_height="48dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="¿Olvidaste la contraseña?"
+                    android:text="@string/olvidaste_la_contrasena"
                     android:textColor="?attr/colorSecondary" />
             </LinearLayout>
 
@@ -108,17 +110,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:backgroundTint="?attr/colorPrimary"
-                android:text="Iniciar Sesión"
+                android:text="@string/iniciar_sesion"
                 android:textAllCaps="false"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:targetApi="21" />
 
             <TextView
                 android:id="@+id/tvError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Email o contraseña incorrectos"
+                android:text="@string/email_o_contrasena_incorrectos"
                 android:textColor="@android:color/holo_red_dark"
                 android:visibility="gone" />
         </LinearLayout>

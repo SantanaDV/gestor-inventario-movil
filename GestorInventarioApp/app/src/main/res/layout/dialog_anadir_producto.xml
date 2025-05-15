@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -23,14 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Subir Foto" />
+            android:text="@string/subir_foto" />
 
         <!-- Nombre del producto -->
         <EditText
             android:id="@+id/etNombreProducto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre del producto"
+            android:hint="@string/nombre_del_producto"
             android:inputType="textPersonName"
             android:layout_marginTop="8dp" />
 
@@ -39,7 +40,7 @@
             android:id="@+id/etCantidadProducto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cantidad"
+            android:hint="@string/cantidad"
             android:inputType="number"
             android:layout_marginTop="8dp" />
 
@@ -48,7 +49,7 @@
             android:id="@+id/etCodigoQRProducto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Código QR"
+            android:hint="@string/codigo_qr"
             android:inputType="text"
             android:layout_marginTop="8dp" />
 
@@ -69,14 +70,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿Activo?"
+                android:text="@string/activo"
                 android:textSize="16sp" />
 
             <Switch
                 android:id="@+id/id_del_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
         <Button
@@ -84,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Escanear QR" />
+            android:text="@string/escanear_qr" />
 
         <!-- Botón para leer NFC -->
         <Button
@@ -92,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Leer NFC" />
+            android:text="@string/leer_nfc" />
 
         <!-- Categoría -->
 
