@@ -9,22 +9,23 @@ public class Tarea {
     private int estado;
     private String  descripcion;
     private String empleado_asignado;
-    private Date fecha_asignacion;
-    private Date fecha_finalizacion;
+    private String fecha_asignacion;
+    private String fecha_finalizacion;
     private int id_categoria;
 
 
-    public Tarea(int id) {
-    }
-
-    public Tarea(int id, int estado, String descripcion, String empleado_asignado, Date fecha_asignacion, Date fecha_finalizacion, int id_categoria) {
+    public Tarea(int id, int estado, String descripcion, String empleado_asignado, String fecha_finalizacion, Date fecha_asignacion, int id_categoria) {
         this.id = id;
         this.estado = estado;
         this.descripcion = descripcion;
         this.empleado_asignado = empleado_asignado;
-        this.fecha_asignacion = fecha_asignacion;
         this.fecha_finalizacion = fecha_finalizacion;
+        this.fecha_asignacion = String.valueOf(fecha_asignacion);
         this.id_categoria = id_categoria;
+    }
+
+    public Tarea() {
+
     }
 
     public int getId() {
@@ -48,19 +49,17 @@ public class Tarea {
         this.empleado_asignado = empleado_asignado;
     }
 
-
-    public void setFecha_asignacion(Date fecha_asignacion) {
-        this.fecha_asignacion = fecha_asignacion;
+    public CharSequence getFecha_asignacion() {
+        return (CharSequence) fecha_asignacion;
     }
+
 
 
     public void setEstado(int estado) {
         this.estado = estado;
     }
 
-    public void setFecha_finalizacion(Date fecha_finalizacion) {
-        this.fecha_finalizacion = fecha_finalizacion;
-    }
+
 
     public int getId_categoria() {
         return id_categoria;
@@ -70,12 +69,16 @@ public class Tarea {
         return empleado_asignado;
     }
 
-    public Date getFecha_asignacion() {
-        return fecha_asignacion;
+    public void setFecha_asignacion(String fecha_asignacion) {
+        this.fecha_asignacion = fecha_asignacion;
     }
 
-    public Date getFecha_finalizacion() {
-        return fecha_finalizacion;
+    public CharSequence getFecha_finalizacion() {
+        return (CharSequence) fecha_finalizacion;
+    }
+
+    public void setFecha_finalizacion(String fecha_finalizacion) {
+        this.fecha_finalizacion = fecha_finalizacion;
     }
 
     public void setId_categoria(int id_categoria) {
@@ -90,6 +93,7 @@ public class Tarea {
     public int getEstado() {
         return estado ;
     }
+
 
 
 }

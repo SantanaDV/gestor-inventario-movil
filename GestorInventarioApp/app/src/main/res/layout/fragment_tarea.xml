@@ -22,6 +22,7 @@
                 android:id="@+id/imageIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:contentDescription="@string/Todo"
                 android:src="@drawable/tareas"
                 android:layout_gravity="start" />
 
@@ -29,7 +30,7 @@
                 android:id="@+id/tvCategoriaHacer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tareas por Hacer"
+                android:text="@string/tareas_por_hacer"
                 android:background="#FFFF0000"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -57,6 +58,7 @@
                 android:id="@+id/imageIcon2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:contentDescription="@string/Todo"
                 android:src="@drawable/tareas2"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="start" />
@@ -65,7 +67,7 @@
                 android:id="@+id/tvCategoriaProceso"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tareas en Proceso"
+                android:text="@string/tareas_en_proceso"
                 android:background="#FFFF0000"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -92,6 +94,7 @@
                 android:id="@+id/imageIcon3"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:contentDescription="@string/Todo"
                 android:src="@drawable/tareas3"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="start" />
@@ -100,7 +103,7 @@
                 android:id="@+id/tvCategoriaRealizada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tareas Realizadas"
+                android:text="@string/tareas_realizadas"
                 android:background="#FFFF0000"
                 android:textColor="@color/white"
                 android:textSize="18sp"

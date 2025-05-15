@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="8dp"
     android:layout_margin="8dp"
-    android:elevation="4dp">
+    android:elevation="4dp"
+    tools:targetApi="21">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +19,7 @@
             android:id="@+id/tvDescripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descripción de la tarea"
+            android:text="@string/descripcion_de_la_tarea"
             android:textStyle="bold"
             android:textSize="16sp" />
 
@@ -25,27 +27,27 @@
             android:id="@+id/tvEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estado de la tarea"
+            android:text="@string/estado_de_la_tarea"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvEmpleado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Empleado asignado"
+            android:text="@string/empleado_asignado"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvCategoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categoría de la tarea"
+            android:text="@string/categoria_de_la_tarea"
             android:textSize="14sp" />
         <TextView
             android:id="@+id/tvFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha asignación"
+            android:text="@string/fecha_de_asignacion"
             android:textSize="14sp" />
 
 
