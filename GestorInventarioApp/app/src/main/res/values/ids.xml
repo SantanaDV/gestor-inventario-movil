@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="button6" type="id" />
-    <item name="total_productos" type="id" />
+    <item name="total_Productos" type="id" />
     <item name="totalUsuarios" type="id" />
     <item name="textView3" type="id" />
     <item name="textView4" type="id" />
     <item name="button" type="id" />
     <item name="productosContados" type="id"/>
-    <item name="conexistencias" type="id"/>
-    <item name="confaltantes" type="id"/>
     <item name="imageTotalProductos" type="id" />
-    <item name="usuariosActivos" type="id" />" type="id"
+    <item name="usuariosActivos" type="id" />
     <item name="textProductosContados" type="id"/>
     <item name="conExistencias" type="id"/>
     <item name="conFaltantes" type="id"/>
-    <item name="tarea_fragmentPorHacer" type="id">
-        action_tareaFragment_to_fragmentPorHacer
-    </item>
-    <item name="tarea_fragmentProceso" type="id">
-        action_tareaFragment_to_fragmentProceso
-    </item>
-    <item name="tarea_fragmentRealizadas" type="id">
-        action_tareaFragment_to_fragmentRealizadas
-    </item>
-    <item name="tvTitulo" type="id">tvTitulo</item>
-    <item name="tvDescripcion" type="id">tvDescription</item>
+    <item name="tarea_fragmentPorHacer" type="id"/>
+    <item name="tarea_fragmentProceso" type="id"/>
+    <item name="tarea_fragmentRealizadas" type="id"/>
+    <item name="tvTitulo" type="id"/>
+    <item name="tvDescripcion" type="id"/>
+    <item name="etFechaFinalizacion" type="id"/>
+
+<!--    <item name="conexistencias" type="id"/>-->
+<!--    <item name="confaltantes" type="id"/>-->
+
 </resources>
