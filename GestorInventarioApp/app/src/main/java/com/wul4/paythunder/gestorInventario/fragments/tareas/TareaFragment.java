@@ -26,7 +26,7 @@ public class TareaFragment extends Fragment {
 
     private FragmentTareaBinding binding;
 
-    private RecyclerView rcCategoriaHacer, rcCategoriaProceso, rcCategoriaRealizada;
+    private RecyclerView categoriaHacer, categoriaproceso, categoriaRealizada;
     private TareaAdapter adapterCategoriaHacer, adapterCategoriaProceso, adapterCategoriaRealizada;
     private TareaViewModel tareaViewModel;
 
@@ -50,9 +50,9 @@ public class TareaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Referencias a los TextView de categorías
-        rcCategoriaHacer = view.findViewById(R.id.tvCategoriaHacer);
-        rcCategoriaProceso = view.findViewById(R.id.tvCategoriaProceso);
-        rcCategoriaRealizada = view.findViewById(R.id.tvCategoriaRealizada);
+        categoriaHacer = view.findViewById(R.id.categoriaHacer);
+        categoriaproceso = view.findViewById(R.id.categoriaProceso);
+        categoriaRealizada = view.findViewById(R.id.categoriaRealizada);
 
 
         adapterCategoriaHacer = new TareaAdapter();
@@ -60,31 +60,31 @@ public class TareaFragment extends Fragment {
         adapterCategoriaRealizada = new TareaAdapter();
 
 //       esto hace que los elementos se muestren en una lista lineal, es decir, uno debajo del otro (en vertical)
-        rcCategoriaHacer.setLayoutManager(new LinearLayoutManager(getContext()));
-        rcCategoriaProceso.setLayoutManager(new LinearLayoutManager(getContext()));
-        rcCategoriaRealizada.setLayoutManager(new LinearLayoutManager(getContext()));
+        categoriaHacer.setLayoutManager(new LinearLayoutManager(getContext()));
+        categoriaproceso.setLayoutManager(new LinearLayoutManager(getContext()));
+        categoriaRealizada.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        TareaViewModel tareaViewModel = new ViewModelProvider(this).get(TareaViewModel.class); // Inicializar ViewModel
+        tareaViewModel = new ViewModelProvider(this).get(TareaViewModel.class); // Inicializar ViewModel
 
         // Crear instancia del servicio API y del Response que maneja las llamadas
         ApiTarea apiTarea = ApiClient.getClient().create(ApiTarea.class);
         TareaResponse tareaResponse= new TareaResponse(tareaViewModel, apiTarea);
         tareaResponse.fetchAllData(); // Llamada para obtener los datos
 
-        tareaViewModel.getTareasHacer().observe(getViewLifecycleOwner(), tareasHacer -> {
-            adapterCategoriaHacer.setTareas(tareasHacer);
-            rcCategoriaHacer.setAdapter(adapterCategoriaHacer);
+        tareaViewModel.getListarTareaHacer().observe(getViewLifecycleOwner(), tareasHacer -> {
+            adapterCategoriaHacer.setTareaList(tareasHacer);
+            categoriaHacer.setAdapter(adapterCategoriaHacer);
         });
 
-        tareaViewModel.getTareasProceso().observe(getViewLifecycleOwner(), tareasProceso -> {
-            adapterCategoriaProceso.setTareas(tareasProceso);
-            rcCategoriaProceso.setAdapter(adapterCategoriaProceso);
+        tareaViewModel.getListarTareaProceso().observe(getViewLifecycleOwner(), tareasProceso -> {
+            adapterCategoriaProceso.setTareaList(tareasProceso);
+            categoriaproceso.setAdapter(adapterCategoriaProceso);
         });
 
-        tareaViewModel.getTareasRealizadas().observe(getViewLifecycleOwner(), tareasRealizadas -> {
-            adapterCategoriaRealizada.setTareas(tareasRealizadas);
-            rcCategoriaRealizada.setAdapter(adapterCategoriaRealizada);
+        tareaViewModel.getListarTareaRealizada().observe(getViewLifecycleOwner(), tareasRealizadas -> {
+            adapterCategoriaRealizada.setTareaList(tareasRealizadas);
+            categoriaRealizada.setAdapter(adapterCategoriaRealizada);
         });
 
 

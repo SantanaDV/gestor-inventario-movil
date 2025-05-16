@@ -27,7 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class TareaBaseFragment extends Fragment {
@@ -46,7 +45,7 @@ public class TareaBaseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tarea, container, false);
 
     // inicializamos las vistas
-        etDescripcion = view.findViewById(R.id.tvDescripcion);
+        etDescripcion = view.findViewById(R.id.descripcion);
         spEstado = view.findViewById(R.id.spEstado);
         spEmpleadoAsignado = view.findViewById(R.id.spEmpleadoAsignado);
         spCategoria = view.findViewById(R.id.spCategoria);

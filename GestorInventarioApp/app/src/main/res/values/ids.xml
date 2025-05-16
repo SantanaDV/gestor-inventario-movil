@@ -16,7 +16,7 @@
     <item name="tarea_fragmentProceso" type="id"/>
     <item name="tarea_fragmentRealizadas" type="id"/>
     <item name="tvTitulo" type="id"/>
-    <item name="tvDescripcion" type="id"/>
+    <item name="descripcion" type="id"/>
     <item name="etFechaFinalizacion" type="id"/>
 
 <!--    <item name="conexistencias" type="id"/>-->

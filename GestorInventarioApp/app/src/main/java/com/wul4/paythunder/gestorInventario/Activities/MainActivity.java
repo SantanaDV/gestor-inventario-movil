@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Definir los destinos de nivel superior
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_almacenshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_almacenshow, R.id.loginFragment, R.id.nav_tarea)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
