@@ -20,16 +20,6 @@ public interface ApiTarea {
     @GET("api/tarea/totalTareas")
     Call<List<Tarea>> gettotalTareas();
 
-    @GET("api/tarea/tareasHacer")
-    Call<List<Tarea>> gettareasHacer();
-
-    @GET("api/tarea/tareasProceso")
-    Call<List<Tarea>> gettareasProceso();
-
-    @GET("api/tarea/tareasRealizadas")
-    Call<List<Tarea>> gettareasRealizadas();
-
-
     @POST("api/tarea/crearTarea")  // Endpoint para crear una nueva tarea, por ello utilizamos @POST en vez de @GET
     Call<Tarea>crearTarea(@Body Tarea nuevaTarea);  // Usamos @Body para enviar el objeto en el cuerpo
 
@@ -41,4 +31,14 @@ public interface ApiTarea {
 
     @POST("api/tarea/crearTareas")
     Call<List<Tarea>> getCrearTareas();
+
+
+
+
+    @GET("api/tarea/listarTareaRealizada")
+    Call<List<Tarea>> getlistarTareaRealizada();
+    @GET("api/tarea/listarTareaHacer")
+    Call<List<Tarea>> getlistarTareaHacer();
+    @GET("api/tarea/listarTareaProceso")
+    Call<List<Tarea>> getListarTareaProceso();
 }

@@ -16,7 +16,7 @@
         android:padding="12dp">
 
         <TextView
-            android:id="@+id/tvDescripcion"
+            android:id="@+id/descripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/descripcion_de_la_tarea"
@@ -24,27 +24,27 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tvEstado"
+            android:id="@+id/estado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/estado_de_la_tarea"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvEmpleado"
+            android:id="@+id/empleado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empleado_asignado"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvCategoria"
+            android:id="@+id/categoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/categoria_de_la_tarea"
             android:textSize="14sp" />
         <TextView
-            android:id="@+id/tvFecha"
+            android:id="@+id/fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fecha_de_asignacion"

@@ -1,12 +1,10 @@
 package com.wul4.paythunder.gestorInventario.fragments.tareas;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
 
-import java.net.HttpCookie;
 import java.util.List;
 
 /*
@@ -22,9 +20,9 @@ public class TareaViewModel extends ViewModel {
 
     private final MutableLiveData<List<Tarea>> totalTareas = new MutableLiveData<>();
 
-    private final MutableLiveData<List<Tarea>> tareasHacer = new MutableLiveData<>();
-    private final MutableLiveData<List<Tarea>> tareasProceso = new MutableLiveData<>();
-    private final MutableLiveData<List<Tarea>> tareasRealizadas = new MutableLiveData<>();
+    private final MutableLiveData<List<Tarea>> listarTareaHacer = new MutableLiveData<>();
+    private final MutableLiveData<List<Tarea>> listarTareaProceso = new MutableLiveData<>();
+    private final MutableLiveData<List<Tarea>> listarTareaRealizada = new MutableLiveData<>();
     private final MutableLiveData<Integer> cuentaTareas = new MutableLiveData<>();
 
 
@@ -44,40 +42,49 @@ public class TareaViewModel extends ViewModel {
 
 
 
-    public MutableLiveData<List<Tarea>> getTareasHacer() {
-        return tareasHacer;
+    public MutableLiveData<List<Tarea>> getListarTareaHacer() {
+        return listarTareaHacer;
     }
 
-    public void setTareasHacer(MutableLiveData<List<Tarea>> tareasHacer) {
-        tareasHacer = tareasHacer;
+
+
+    public MutableLiveData<List<Tarea>> getListarTareaProceso() {
+        return listarTareaProceso;
     }
 
-    public MutableLiveData<List<Tarea>> getTareasProceso() {
-        return tareasProceso;
-    }
 
-    public void setTareasProceso(MutableLiveData<List<Tarea>> tareasProceso) {
-        tareasProceso = tareasProceso;
-    }
 
     public MutableLiveData<List<Tarea>> getCrearTareas() {
         return crearTareas;
     }
 
-    public MutableLiveData<List<Tarea>> getTareasRealizadas() {
-        return tareasRealizadas;
-    }
-
-    public void setTareasRealizadas(MutableLiveData<List<Tarea>> tareasRealizadas) {
-        tareasRealizadas = tareasRealizadas;
+    public MutableLiveData<List<Tarea>> getListarTareaRealizada() {
+        return listarTareaRealizada;
     }
 
 
-    public MutableLiveData<Integer> getCuentaTareas() {
-        return cuentaTareas;
-    }
+
 
     public MutableLiveData<Integer> getTareasCrear() { return tareasCrear; }
 
 
+
+
+    public void setCrearTareas(int size) {
+    }
+
+    public void settotalTareas(int size) {
+    }
+
+
+
+    public void setListarTareaProceso(int size) {
+    }
+
+    public void setListarTareaRealizada(int size) {
+
+    }
+
+    public void setListarTareaHacer(int size) {
+    }
 }

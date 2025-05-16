@@ -27,7 +27,7 @@
                 android:layout_gravity="start" />
 
             <TextView
-                android:id="@+id/tvCategoriaHacer"
+                android:id="@+id/categoriaHacer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tareas_por_hacer"
@@ -64,7 +64,7 @@
                 android:layout_gravity="start" />
 
             <TextView
-                android:id="@+id/tvCategoriaProceso"
+                android:id="@+id/categoriaProceso"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tareas_en_proceso"
@@ -100,7 +100,7 @@
                 android:layout_gravity="start" />
 
             <TextView
-                android:id="@+id/tvCategoriaRealizada"
+                android:id="@+id/categoriaRealizada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tareas_realizadas"
