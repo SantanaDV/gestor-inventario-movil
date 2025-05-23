@@ -1,7 +1,5 @@
 package com.wul4.paythunder.gestorInventario.fragments.almacen;
 
-
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -22,89 +20,72 @@ import retrofit2.Response;
 
 public class AlmacenViewModel extends ViewModel {
 
+    private final ApiAlmacen api = ApiClient.getClient().create(ApiAlmacen.class);
+
+    // LiveData para listado normal...
     private final MutableLiveData<List<Producto>> productos = new MutableLiveData<>();
     private final MutableLiveData<List<Categoria>> categorias = new MutableLiveData<>();
-    private ApiAlmacen apiAlmacen = ApiClient.getClient().create(ApiAlmacen.class);
-    private final MutableLiveData<Producto> resultadoEdicion = new MutableLiveData<>();
+    private final MutableLiveData<Producto> productoQR = new MutableLiveData<>();
     private final MutableLiveData<Producto> resultadoCreacion  = new MutableLiveData<>();
-    public AlmacenViewModel() {
-
-    }
 
     public LiveData<List<Producto>> getProductos() {
-        Call<List<Producto>> call = apiAlmacen.getProductos();
-        call.enqueue(new retrofit2.Callback<List<Producto>>() {
-
-            @Override
-            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    productos.setValue(response.body());
-                }else{
-                    productos.setValue(Collections.emptyList());
-                }
+        api.getProductos().enqueue(new Callback<List<Producto>>() {
+            @Override public void onResponse(Call<List<Producto>> c, Response<List<Producto>> r) {
+                productos.setValue(r.isSuccessful() && r.body()!=null
+                        ? r.body() : Collections.emptyList());
             }
-
-            @Override
-            public void onFailure(Call<List<Producto>> call, Throwable t) {
+            @Override public void onFailure(Call<List<Producto>> c, Throwable t) {
                 productos.setValue(Collections.emptyList());
-
             }
         });
         return productos;
     }
 
-    public LiveData<List<Categoria>> getCategorias(){
-        Call<List<Categoria>> call = apiAlmacen.getCategorias();
-        call.enqueue(new retrofit2.Callback<List<Categoria>>() {
-
-            @Override
-            public void onResponse(Call<List<Categoria>> call, Response<List<Categoria>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    categorias.setValue(response.body());
-                }
+    public LiveData<List<Categoria>> getCategorias() {
+        api.getCategorias().enqueue(new Callback<List<Categoria>>() {
+            @Override public void onResponse(Call<List<Categoria>> c, Response<List<Categoria>> r) {
+                categorias.setValue(r.isSuccessful()&&r.body()!=null
+                        ? r.body() : Collections.emptyList());
             }
-
-            @Override
-            public void onFailure(Call<List<Categoria>> call, Throwable t) {
+            @Override public void onFailure(Call<List<Categoria>> c, Throwable t) {
                 categorias.setValue(Collections.emptyList());
             }
         });
-
         return categorias;
     }
-    public LiveData<Producto> getResultadoEdicion() {
-        return resultadoEdicion;
+
+    public LiveData<Producto> getProductoQR() {
+        return productoQR;
     }
+
+    /** Llama al endpoint /obtenerProductoQR/{qr} **/
+    public void fetchProductoPorQR(String qr) {
+        api.getProductoPorQR(qr).enqueue(new Callback<Producto>() {
+            @Override public void onResponse(Call<Producto> c, Response<Producto> r) {
+                productoQR.setValue(r.isSuccessful() ? r.body() : null);
+            }
+            @Override public void onFailure(Call<Producto> c, Throwable t) {
+                productoQR.setValue(null);
+            }
+        });
+    }
+
     public LiveData<Producto> getResultadoCreacion() {
         return resultadoCreacion;
     }
 
-
-    /**
-     * Lanza la llamada a la API para crear un producto.
-     * @param productoJson cuerpo JSON ya empaquetado en RequestBody
-     * @param imagenPart parte con la imagen, o null si no hay
-     */
-    public void guardarProductoApi(RequestBody productoJson,
-                                    MultipartBody.Part imagenPart) {
-        Call<Producto> call = apiAlmacen.createOrUpdateProducto(productoJson,
-                imagenPart != null ? imagenPart : MultipartBody.Part.createFormData("imagen",""));
-        call.enqueue(new Callback<Producto>() {
-            @Override
-            public void onResponse(Call<Producto> call, Response<Producto> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    resultadoCreacion.setValue(response.body());
-                } else {
-                    // podrías setear null o lanzar un evento de error
-                    resultadoCreacion.setValue(null);
-                }
+    public void guardarProductoApi(RequestBody productoJson, MultipartBody.Part imagenPart) {
+        api.createOrUpdateProducto(productoJson,
+                imagenPart != null
+                        ? imagenPart
+                        : MultipartBody.Part.createFormData("imagen","")
+        ).enqueue(new Callback<Producto>() {
+            @Override public void onResponse(Call<Producto> c, Response<Producto> r) {
+                resultadoCreacion.setValue(r.isSuccessful() ? r.body() : null);
             }
-
-            @Override
-            public void onFailure(Call<Producto> call, Throwable t) {
+            @Override public void onFailure(Call<Producto> c, Throwable t) {
                 resultadoCreacion.setValue(null);
             }
         });
     }
-
 }

@@ -72,8 +72,6 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         etCodigoQR = view.findViewById(R.id.etCodigoQRProducto);
         spinnerCategoria = view.findViewById(R.id.spinnerCategoriaProducto);
         btnSubirFoto = view.findViewById(R.id.btnSubirFoto);
-        btnEscanearQR = view.findViewById(R.id.btnEscanearQR);
-        btnLeerNFC = view.findViewById(R.id.btnLeerNFC);
         sActivoNoActivo = view.findViewById(R.id.id_del_switch);
         // Observamos el switch
         sActivoNoActivo.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -92,8 +90,7 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         });
 
         btnSubirFoto.setOnClickListener(v -> seleccionarImagenDeGaleria());
-        btnEscanearQR.setOnClickListener(v -> escanearCodigo());
-        btnLeerNFC.setOnClickListener(v -> leerNFC());
+
 
         builder.setView(view)
                 .setTitle("Añadir Producto")
@@ -126,14 +123,7 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         galeriaLauncher.launch("image/*");
     }
 
-    private void escanearCodigo() {
-        Toast.makeText(getContext(), "Funcionalidad de escaneo QR/Código pendiente", Toast.LENGTH_SHORT).show();
-        // Aquí lanzarías tu actividad de escaneo QR
-    }
 
-    private void leerNFC() {
-        Toast.makeText(getContext(), "Funcionalidad NFC aún no disponible", Toast.LENGTH_SHORT).show();
-    }
 
     private void guardarProducto() throws IOException {
         // Lectura y validación de campos

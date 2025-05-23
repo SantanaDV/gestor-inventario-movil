@@ -79,20 +79,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnEscanearQR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Escanear QR" />
-
         <!-- Botón para leer NFC -->
-        <Button
-            android:id="@+id/btnLeerNFC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Leer NFC" />
 
         <!-- Categoría -->
 
