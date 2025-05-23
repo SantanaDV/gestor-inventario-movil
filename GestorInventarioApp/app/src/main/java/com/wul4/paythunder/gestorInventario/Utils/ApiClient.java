@@ -15,8 +15,7 @@ public class ApiClient {
 
     // Reemplazar con la URL base la api (actualmente  maquina local)
 //    private static final String BASE_URL = "http://10.110.4.196:8080/";
-    private static final String BASE_URL = "http://10.110.4.38:8080/";
-   // private static final String BASE_URL = "http://10.110.4.196:8080/";
+    private static final String BASE_URL = "http://10.110.4.43:8080/";
 
 
     private static Retrofit retrofit = null;

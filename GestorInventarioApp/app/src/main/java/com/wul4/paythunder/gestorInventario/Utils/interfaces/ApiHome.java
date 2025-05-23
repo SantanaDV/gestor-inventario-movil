@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * clase ApiHome para manejar solicitudes de autenticación, desde la API REST.
@@ -14,7 +15,6 @@ import retrofit2.http.GET;
  */
 
 public interface ApiHome {
-
     @GET("api/producto/productosContados")
     Call<Integer> gettotalProductosContados();
 

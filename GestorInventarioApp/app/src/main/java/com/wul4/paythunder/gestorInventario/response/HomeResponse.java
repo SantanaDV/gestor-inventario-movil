@@ -53,7 +53,6 @@ public class HomeResponse {
         });
 
 
-
         apiHome.getlistarConExistencias().enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -67,6 +66,7 @@ public class HomeResponse {
                 } else {
                     homeViewModel.setlistarConExistencias(-1);
                 }
+
             }
 
             @Override
@@ -96,6 +96,30 @@ public class HomeResponse {
                 homeViewModel.setListarConFaltantes(-1);
 
             }
+        });
+
+        apiHome.getlistarUsuariosActivos().enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Integer usuariosFiltrados = response.body();
+
+                    //no es necesario hacer suma adicional aquí ya que el backend ya nos da la suma total
+
+                    homeViewModel.setlistarusuariosactivos(usuariosFiltrados);
+                    homeViewModel.getlistarusuariosactivos().getValue();
+
+
+                } else {
+                    //homeViewModel.setlistarUsuariosActivos(-1);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
+                homeViewModel.setlistarusuariosactivos(-1);
+            }
+
         });
 
         apiHome.getlistarUsuariosActivos().enqueue(new Callback<Integer>() {

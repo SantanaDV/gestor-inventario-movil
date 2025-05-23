@@ -12,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 /**
  * Interfaz ApiAlmacen para manejar solicitudes de autenticación, desde la API REST.
@@ -36,4 +37,14 @@ public interface ApiAlmacen {
             @Part("producto") RequestBody productoJson,
             @Part MultipartBody.Part imagen  // si no hay imagen, pasaremos null
     );
+
+    /**
+     * Llamada al controlador para la busqueda por QR
+     * @param qr
+     * @return
+     */
+        @GET("api/producto/obtenerProductoQR/{codigo_qr}")
+        Call<Producto> getProductoPorQR(@Path("codigo_qr") String qr);
+
+
 }

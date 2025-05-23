@@ -76,6 +76,20 @@ public class HomeFragment extends Fragment {
             this.conFaltantes.setText(String.valueOf(confaltantes));
         });
 
+       homeViewModel.gettotalProductosContados().observe(getViewLifecycleOwner(), productosContados -> {
+           this.productosContados.setText(String.valueOf(productosContados));
+
+       });
+
+       homeViewModel.getlistarConExistencias().observe(getViewLifecycleOwner(), conexistencias -> {
+           this.conExistencias.setText(String.valueOf(conexistencias));
+       });
+
+
+        homeViewModel.getListarConFaltantes().observe(getViewLifecycleOwner(), confaltantes -> {
+            this.conFaltantes.setText(String.valueOf(confaltantes));
+        });
+
         homeViewModel.getlistarusuariosactivos().observe(getViewLifecycleOwner(), UsuariosActivos -> {
             this.usuariosActivos.setText(String.valueOf(UsuariosActivos));
 

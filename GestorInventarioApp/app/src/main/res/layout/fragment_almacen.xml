@@ -1,95 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootCoordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- Barra de búsqueda y filtros -->
+    <!-- Contenedor principal -->
     <LinearLayout
-        android:id="@+id/llFiltros"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
         android:padding="16dp">
 
-        <!-- Spinner para categoría -->
-        <Spinner
-            android:id="@+id/spinnerCategoria"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:spinnerMode="dropdown"
-            android:prompt="@string/selecciona_categoria" />
-
-        <!-- EditText para cantidad máxima -->
-        <EditText
-            android:id="@+id/etCantidadMaxima"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/cantidad_maxima"
-            android:inputType="number"
-            tools:ignore="Autofill" />
-
-        <!-- Botón para filtrar -->
-        <Button
-            android:id="@+id/btnFiltrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filtrar" />
-    </LinearLayout>
-
-    <!-- Contenedor de productos -->
-    <ScrollView
-        android:id="@+id/scrollProductos"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
-
+        <!-- Botones Buscar QR / Buscar NFC -->
         <LinearLayout
-            android:id="@+id/contenedorAlmacen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_marginBottom="12dp">
 
-            <!-- Columna de productos activos -->
-            <LinearLayout
-                android:id="@+id/columnaActivos"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuscarQR"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:icon="@drawable/ic_qr_code_24"
+                android:iconTint="?attr/colorPrimary"
+                android:text="Buscar QR"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuscarNFC"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical" />
-
-            <!-- Separador -->
-            <View
-                android:layout_width="8dp"
-                android:layout_height="match_parent" />
-
-            <!-- Columna de productos inactivos -->
-            <LinearLayout
-                android:id="@+id/columnaInactivos"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" />
+                android:icon="@drawable/ic_nfc_24"
+                android:iconTint="?attr/colorPrimary"
+                android:text="Buscar NFC"/>
         </LinearLayout>
-    </ScrollView>
 
-    <!-- Botón flotante para añadir producto -->
+        <!-- Tarjeta de filtros -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:weightSum="3">
+
+                    <Spinner
+                        android:id="@+id/spinnerCategoria"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"
+                        android:prompt="@string/selecciona_categoria" />
+
+
+                <!-- Cantidad máx. -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="?attr/colorPrimary"
+                    android:hint="Cantidad máx.">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCantidadMaxima"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Botón filtrar -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFiltrar"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:icon="@drawable/ic_filter_list_24"
+                    android:iconTint="?attr/colorPrimary"
+                    android:text="Filtrar"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Listado de productos -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollProductos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:padding="4dp">
+
+                <!-- Columna Activos -->
+                <LinearLayout
+                    android:id="@+id/columnaActivos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="4dp"/>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <!-- Columna Inactivos -->
+                <LinearLayout
+                    android:id="@+id/columnaInactivos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="4dp"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <!-- FAB de añadir -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabAnadir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="8dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         android:text="@string/anadir"
         app:icon="@drawable/baseline_add_24"
-        app:iconTint="@android:color/white" />
-
-</LinearLayout>
+        app:iconTint="@android:color/white"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -82,20 +82,7 @@
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnEscanearQR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/escanear_qr" />
-
         <!-- Botón para leer NFC -->
-        <Button
-            android:id="@+id/btnLeerNFC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/leer_nfc" />
 
         <!-- Categoría -->
 
