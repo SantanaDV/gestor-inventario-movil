@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Sección: Tareas por Hacer -->
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/tareas"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/categoriaHacer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tareas_por_hacer"
+                android:background="#FFFF0000"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+<!--            <Button-->
+<!--                android:id="@+id/btnPorHacer"-->
+<!--            android:id="@+id/layout_tarea_hacer"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="@string/clicar_tareas_por_hacer"-->
+<!--                android:layout_marginTop="8dp" />-->
+
+            <LinearLayout
+                android:id="@+id/tareaHacer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:padding="8dp"
+                android:background="@drawable/border_tareas">
+
+                <FrameLayout
+                    android:id="@+id/containerTareasPorHacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/red_primary"
+                    tools:ignore="UnusedAttribute" />
+
+
+
+
+            </LinearLayout>
+
+            <!-- Sección: Tareas en Proceso -->
+            <ImageView
+                android:id="@+id/imageIcon2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/tareas2"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/categoriaProceso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tareas_en_proceso"
+                android:background="#FFFF0000"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+<!--            <Button-->
+<!--                android:id="@+id/btnEnProceso"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="@string/clicar_tareas_en_proceso"-->
+<!--                android:layout_marginTop="8dp" />-->
+
+            <LinearLayout
+                android:id="@+id/layoutTareaProceso"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:padding="8dp"
+                android:background="@drawable/border_tareas">
+
+
+                <FrameLayout
+                    android:id="@+id/containerTareasEnProceso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/red_primary"
+                    tools:ignore="UnusedAttribute" />
+
+
+            </LinearLayout>
+
+            <!-- Sección: Tareas Realizadas -->
+            <ImageView
+                android:id="@+id/imageIcon3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/tareas3"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/categoriaRealizada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tareas_realizadas"
+                android:background="#FFFF0000"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+<!--            <Button-->
+<!--                android:id="@+id/btnRealizadas"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="@string/clicar_tareas_realizadas"-->
+<!--                android:layout_marginTop="8dp" />-->
+
+            <LinearLayout
+                android:id="@+id/layoutTareaRealizada"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:padding="8dp"
+                android:background="@drawable/border_tareas">
+
+                <FrameLayout
+                    android:id="@+id/containerTareasRealizadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/red_primary"
+                    tools:ignore="UnusedAttribute" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.cardview.widget.CardView>

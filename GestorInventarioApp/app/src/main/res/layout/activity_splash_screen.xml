@@ -27,6 +27,7 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/todo"
             android:foregroundGravity="center"
             android:padding="10dp"
             android:scaleType="fitCenter"
@@ -62,7 +63,8 @@
             android:text="Powered by"
             android:textAlignment="center"
             android:textColor="@color/ptText"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/footerLogo"
@@ -70,6 +72,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/todo"
             android:foregroundGravity="center"
             android:padding="5dp"
             android:scaleType="fitCenter"

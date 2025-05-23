@@ -10,35 +10,68 @@
     <string name="menu_home" translatable="false">Home</string>
     <string name="menu_gallery" translatable="false">Gallery</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
-
     <string name="menu_login" translatable="false">Login</string>
-    <string name="todo">TODO</string>
-    <string name="total_productos">TOTAL PRODUCTOS</string>
-    <string name="textview">TextView</string>
-    <string name="textviewexistencias">EXISTENCIAS</string>
-    <string name="sinExistencias">SIN EXISTENCIAS</string>
-    <string name="textview4" />
-    <string name="cerrar_sesión">Cerrar sesión</string>
 
-    <string name="registrarse">¿Registrarse?</string>
-    <string name="formulario_de_registro">FORMULARIO DE REGISTRO</string>
-    <string name="confirmar_contrase_a">Confirmar Contraseña</string>
-    <string name="contrasena">Contraseña</string>
-    <string name="email">Email</string>
-    <string name="nombre_completo">Nombre Completo</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="textview" translatable="false">TextView</string>
+    <string name="total_productos">Total productos</string>
+    <string name="sin_existencias" translatable="false">SIN EXISTENCIAS</string>
+    <string name="textview4" translatable="false">view</string>
+    <string name="cerrar_sesión" translatable="false">Cerrar sesión</string>
 
-    <string name="textviewproductos">TextViewProductos</string>
-    <string name="textviewtotalproductos">TOTAL PRODUCTOS</string>
-    <string name="menu_almacen">Almacén</string>
-    <string name="anadir">Añadir</string>
-    <string name="filtrar">filtrar</string>
-    <string name="cantidad_maxima">cantidad</string>
-    <string name="selecciona_categoria">selecciona una categoría</string>
-    <string name="editar">editar</string>
-    <string name="borrar">borrar</string>
-    <string name="descripcion_producto">descripción del producto</string>
-    <string name="total_usuarios">total_usuarios</string>
+    <string name="registrarse" translatable="false">¿Registrarse?</string>
+    <string name="formulario_de_registro" translatable="false">FORMULARIO DE REGISTRO</string>
+    <string name="confirmar_contrasena" translatable="false">Confirmar Contraseña</string>
+    <string name="contrasena" translatable="false">Contraseña</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="nombre_completo" translatable="false">Nombre Completo</string>
 
-
+    <string name="textviewproductos" translatable="false">TextViewProductos</string>
+    <string name="textviewtotalproductos" translatable="false">TOTAL PRODUCTOS</string>
+    <string name="menu_almacen" translatable="false">Almacén</string>
+    <string name="anadir" translatable="false">Añadir</string>
+    <string name="filtrar" translatable="false">filtrar</string>
+    <string name="cantidad_maxima" translatable="false">cantidad</string>
+    <string name="selecciona_categoria" translatable="false">selecciona una categoría</string>
+    <string name="editar" translatable="false">editar</string>
+    <string name="borrar" translatable="false">borrar</string>
+    <string name="descripcion_producto" translatable="false">descripción del producto</string>
+    <string name="total_usuarios" translatable="false">total_usuarios</string>
+    <string name="cargando" translatable="false">cargando</string>
+    <string name="usuariosActivos" translatable="false">USUARIOS ACTIVOS</string>
+    <string name="powered_by" translatable="false">Powered by</string>
+    <string name="imagen_del_producto" translatable="false">Imagen del producto</string>
+    <string name="codigo_qr" translatable="false">Código QR</string>
+    <string name="cantidad" translatable="false">Cantidad</string>
+    <string name="nombre_del_producto" translatable="false">Nombre del producto</string>
+    <string name="subir_foto" translatable="false">Subir Foto</string>
+    <string name="activo" translatable="false">¿Activo?</string>
+    <string name="escanear_qr" translatable="false">Escanear QR</string>
+    <string name="leer_nfc" translatable="false">Leer NFC</string>
+    <string name="tarea_por_hacer" translatable="false">Tarea por Hacer</string>
+    <string name="descripcion_de_la_tarea" translatable="false">Descripción de la tarea</string>
+    <string name="fecha_de_asignacion_yyyy_mm_dd" translatable="false">Fecha de asignación (YYYY-MM-DD)</string>
+    <string name="guardar" translatable="false">Guardar</string>
+    <string name="eliminar" translatable="false">Eliminar</string>
+    <string name="fecha_de_asignacion" translatable="false">Fecha de asignación</string>
+    <string name="estado_de_la_tarea" translatable="false">Estado de la tarea</string>
+    <string name="empleado_asignado" translatable="false">Empleado asignado</string>
+    <string name="categoria_de_la_tarea" translatable="false">Categoría de la tarea</string>
+    <string name="tareas_por_hacer" translatable="false">Tareas por Hacer</string>
+    <string name="tareas_en_proceso" translatable="false">Tareas en Proceso</string>
+    <string name="tareas_realizadas" translatable="false">Tareas Realizadas</string>
+    <string name="iniciar_sesion" translatable="false">Iniciar Sesión</string>
+    <string name="accede_a_tu_cuenta" translatable="false">Accede a tu cuenta</string>
+    <string name="recordar" translatable="false">Recordar</string>
+    <string name="olvidaste_la_contrasena" translatable="false">¿Olvidaste la contraseña?</string>
+    <string name="email_o_contrasena_incorrectos" translatable="false">Email o contraseña incorrectos</string>
+    <string name="existencias" translatable="false">EXISTENCIAS</string>
+    <string name="menu_tarea">Tarea</string>
+    <string name="clicar_tareas_por_hacer">Clicar tarea por hacer</string>
+    <string name="clicar_tareas_en_proceso">Clicar Tareas en proceso</string>
+    <string name="clicar_tareas_realizadas">Clicar Tareas Realizadas</string>
 </resources>
+
+
+
+

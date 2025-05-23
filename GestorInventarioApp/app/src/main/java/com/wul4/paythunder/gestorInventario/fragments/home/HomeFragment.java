@@ -1,4 +1,3 @@
-
 package com.wul4.paythunder.gestorInventario.fragments.home;
 
 import android.os.Bundle;
@@ -30,9 +29,9 @@ public class HomeFragment extends Fragment {
     //declaro los TextView que voy a usar para mostrar los datos
     private TextView productosContados;
 
-    private TextView Conexistencias;
-    private TextView Confaltantes;
-    private TextView Total_usuarios;
+    private TextView conExistencias;
+    private TextView conFaltantes;
+    private TextView usuariosActivos;
 
     // Este método es llamado cuando el fragmento necesita crear su vista.
     @Override
@@ -50,10 +49,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Inicializamos TextViews usando ViewBinding
-        productosContados = binding.productosContados;
-        Conexistencias = binding.conexistencias;
-        Confaltantes = binding.confaltantes;
-        Total_usuarios = binding.totalUsuarios;
+        productosContados = binding.textProductosContados;
+        conExistencias = binding.conExistencias;
+        conFaltantes = binding.conFaltantes;
+        usuariosActivos = binding.usuariosActivos;
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); // Inicializar ViewModel
 
@@ -63,26 +62,22 @@ public class HomeFragment extends Fragment {
         homeResponse.fetchAllData(); // Llamada para obtener los datos
 
 
-        // Se obtiene la vista raíz del fragmento.
-       // final TextView textView = binding.Productos;
+        homeViewModel.gettotalProductosContados().observe(getViewLifecycleOwner(), productosContados -> {
+            this.productosContados.setText(String.valueOf(productosContados));
 
-       // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        // Observadores para actualizar la UI automáticamente
-        homeViewModel.getproductosContados().observe(getViewLifecycleOwner(), productosCont -> {
-            productosContados.setText(String.valueOf(productosCont));
         });
 
-        homeViewModel.getConexistencias().observe(getViewLifecycleOwner(), conexistencias -> {
-            Conexistencias.setText(String.valueOf(conexistencias));
+        homeViewModel.getlistarConExistencias().observe(getViewLifecycleOwner(), conexistencias -> {
+            this.conExistencias.setText(String.valueOf(conexistencias));
         });
 
-        homeViewModel.getConfaltantes().observe(getViewLifecycleOwner(), confaltantes -> {
-            Confaltantes.setText(String.valueOf(confaltantes));
+
+        homeViewModel.getListarConFaltantes().observe(getViewLifecycleOwner(), confaltantes -> {
+            this.conFaltantes.setText(String.valueOf(confaltantes));
         });
 
-        homeViewModel.getTotal_usuarios().observe(getViewLifecycleOwner(), UsuariosActivos -> {
-            Total_usuarios.setText(String.valueOf(UsuariosActivos));
+        homeViewModel.getlistarusuariosactivos().observe(getViewLifecycleOwner(), UsuariosActivos -> {
+            this.usuariosActivos.setText(String.valueOf(UsuariosActivos));
 
         });
 

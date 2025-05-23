@@ -14,19 +14,19 @@ import retrofit2.http.GET;
  */
 
 public interface ApiHome {
-    @GET("api/producto/productosContados") //tira de mi lista de produtos y los cuenta
-    Call<Integer> getproductosContados();
+
+    @GET("api/producto/productosContados")
+    Call<Integer> gettotalProductosContados();
 
     @GET("api/producto/conExistencias")
-    Call<List<Producto>> getlistarConexistencias();
+    Call<Integer> getlistarConExistencias();
 
     @GET("api/producto/conFaltantes")
-    Call<List<Producto>> getlistarConFaltantes();
+    Call<Integer> getlistarConFaltantes();
 
 
     @GET("api/usuario/usuariosActivos")
-    Call<List<Usuario>> getlistaTotal_usuarios();
-
-
-    Call<List<Producto>> getProductos();
+    Call<Integer> getlistarUsuariosActivos();
 }
+
+

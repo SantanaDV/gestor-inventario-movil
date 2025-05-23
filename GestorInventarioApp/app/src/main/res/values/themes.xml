@@ -1,28 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.GestorInventario" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-
         <item name="colorPrimary">#F82011</item>
         <item name="colorPrimaryVariant">@color/red_primary_variant</item>
-        <item name="colorOnPrimary">@color/red_on_primary</item><!-- Secondary brand color. -->
+        <item name="colorOnPrimary">@color/red_on_primary</item>
         <item name="colorSecondary">@color/ptRed</item>
         <item name="colorSecondaryVariant">@color/red_secondary_variant</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
-        <!-- Customize your theme here. -->
         <item name="dialogTheme">@style/Theme.GestorInventario.Dialog</item>
         <item name="alertDialogTheme">@style/Theme.GestorInventario.Dialog.Alert</item>
-
-        <item name="android:navigationBarColor">#00FFFFFF</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">
-            shortEdges <!-- default, shortEdges, never -->
+            shortEdges
         </item>
     </style>
+
 
     <style name="Theme.PayThunderMain" parent="Theme.MaterialComponents.DayNight">
 
@@ -43,12 +38,12 @@
         <item name="colorSecondaryVariant">@color/red_secondary_variant</item>
         <item name="colorOnSecondary">@color/red_on_secondary</item>
         <!-- Status bar color -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="21">?attr/colorPrimaryVariant</item>
 
     </style>
 
     <!-- Base dialog theme. -->
-    <style name="Theme.GestorInventario.Dialog" parent="@android:style/Theme.Material.Light.Dialog">
+    <style name="Theme.GestorInventario.Dialog" parent="@android:style/Theme.Material.Light.Dialog" tools:targetApi="21">
         <item name="colorPrimary">@color/ptBlue</item>
         <item name="android:colorAccent">@color/ptBlue</item>
         <item name="colorAccent">@color/ptBlue</item>
@@ -63,7 +58,7 @@
     </style>
 
     <!-- Alert dialog theme. -->
-    <style name="Theme.GestorInventario.Dialog.Alert" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+    <style name="Theme.GestorInventario.Dialog.Alert" parent="@android:style/Theme.Material.Light.Dialog.Alert" tools:targetApi="21">
         <item name="colorPrimary">@color/ptBlue</item>
 
         <item name="colorAccent">@color/ptBlue</item>

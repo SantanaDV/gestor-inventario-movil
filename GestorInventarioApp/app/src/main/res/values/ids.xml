@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="button6" type="id" />
-    <item name="total_productos" type="id" />
+    <item name="total_Productos" type="id" />
     <item name="totalUsuarios" type="id" />
     <item name="textView3" type="id" />
     <item name="textView4" type="id" />
     <item name="button" type="id" />
     <item name="productosContados" type="id"/>
-    <item name="conexistencias" type="id"/>
-    <item name="confaltantes" type="id"/>
+    <item name="imageTotalProductos" type="id" />
+    <item name="usuariosActivos" type="id" />
+    <item name="textProductosContados" type="id"/>
+    <item name="conExistencias" type="id"/>
+    <item name="conFaltantes" type="id"/>
+    <item name="tarea_fragmentPorHacer" type="id"/>
+    <item name="tarea_fragmentProceso" type="id"/>
+    <item name="tarea_fragmentRealizadas" type="id"/>
+    <item name="tvTitulo" type="id"/>
+    <item name="descripcion" type="id"/>
+    <item name="etFechaFinalizacion" type="id"/>
+    <item name="tareas_por_hacer" type="id"/>
+    <item name="tareas_en_proceso" type="id"/>
+    <item name="tareas_realizadas" type="id"/>
+    <item name="recyclerViewTareas" type="id"/>
+    <item name="tareaHacerFragment" type="id"/>
+    <item name="tareaProcesoFragment" type="id"/>
+    <item name="tareaRealizadaFragment" type="id"/>
+    <item name= "containerTareasPorHacer" type="id"/>
+    <item name="fragment_tarea" type="id"/>
+    <item name="fragment_tarea_hacer" type="id"/>
+    <item name="fragment_tarea_proceso" type="id"/>
+    <item name="fragment_tarea_realizada" type="id"/>
+    <item name="btnPorHacer" type="id"/>
+    <item name="btnEnProceso" type="id"/>
+    <item name="btnRealizadas" type="id"/>
+    <item name="imageIcon" type="id"/>
+    <item name="imageIcon2" type="id"/>
+    <item name="imageIcon3" type="id"/>
+    <item name="categoriaHacer" type="id"/>
+    <item name="categoriaProceso" type="id"/>
+    <item name="categoriaRealizada" type="id"/>
+    <item name="tareaProceso" type="id"/>
+    <item name="tareaRealizada" type="id"/>
+
+
+    <!--    <item name="conexistencias" type="id"/>-->
+<!--    <item name="confaltantes" type="id"/>-->
+
 </resources>
