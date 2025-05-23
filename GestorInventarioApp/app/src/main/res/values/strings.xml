@@ -14,10 +14,8 @@
 
     <string name="todo" translatable="false">TODO</string>
     <string name="textview" translatable="false">TextView</string>
-    <string name="Todo">TODO</string>
     <string name="total_productos">Total productos</string>
-    <string name="textviewexistencias" translatable="false">EXISTENCIAS</string>
-    <string name="sinExistencias" translatable="false">SIN EXISTENCIAS</string>
+    <string name="sin_existencias" translatable="false">SIN EXISTENCIAS</string>
     <string name="textview4" translatable="false">view</string>
     <string name="cerrar_sesión" translatable="false">Cerrar sesión</string>
 
@@ -68,6 +66,12 @@
     <string name="olvidaste_la_contrasena" translatable="false">¿Olvidaste la contraseña?</string>
     <string name="email_o_contrasena_incorrectos" translatable="false">Email o contraseña incorrectos</string>
     <string name="existencias" translatable="false">EXISTENCIAS</string>
-    <string name="sin_existencias" translatable="false">SIN EXISTENCIAS</string>
     <string name="menu_tarea">Tarea</string>
+    <string name="clicar_tareas_por_hacer">Clicar tarea por hacer</string>
+    <string name="clicar_tareas_en_proceso">Clicar Tareas en proceso</string>
+    <string name="clicar_tareas_realizadas">Clicar Tareas Realizadas</string>
 </resources>
+
+
+
+

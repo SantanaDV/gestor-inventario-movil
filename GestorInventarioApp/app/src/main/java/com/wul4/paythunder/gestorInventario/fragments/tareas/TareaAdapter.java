@@ -14,13 +14,22 @@ import com.wul4.paythunder.gestorInventario.entities.Tarea;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
-clase que gestiona los datos y crea cada item de la lista
-le dice al RecyclerView que datos mostrar y como inflar cada elemento/
- */
+
 public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHolder> {
 
     private List<Tarea> tareaList = new ArrayList<>();
+    private final OnTareaClickListener listener;
+
+
+    public interface OnTareaClickListener {
+        void onClick(Tarea tarea);
+    }
+
+
+
+    public TareaAdapter(OnTareaClickListener listener) {
+        this.listener = listener;
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     public void setTareaList(List<Tarea> tareaList) {
@@ -30,7 +39,7 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
 
     @NonNull
     @Override
-    public TareaViewHolder  onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TareaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_tarea, parent, false);
         return new TareaViewHolder(view);
@@ -45,16 +54,23 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
         holder.empleado.setText(tarea.getEmpleadoAsignado());
         holder.categoria.setText(tarea.getId_categoria());
         holder.fecha.setText(tarea.getFecha_asignacion());
+
+        // Lógica de clic
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onClick(tarea);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return tareaList.size();
+        return tareaList != null ? tareaList.size() : 0;
     }
 
     static class TareaViewHolder extends RecyclerView.ViewHolder {
 
-        TextView descripcion, estado, empleado, categoria, fecha;
+        final TextView descripcion, estado, empleado, categoria, fecha;
 
         public TareaViewHolder(@NonNull View itemView) {
             super(itemView);

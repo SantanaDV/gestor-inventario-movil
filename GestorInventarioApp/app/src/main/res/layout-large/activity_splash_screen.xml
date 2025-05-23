@@ -70,7 +70,7 @@
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/Todo"
+            android:contentDescription="@string/todo"
             android:foregroundGravity="center"
             android:padding="7.5dp"
             android:scaleType="fitCenter"
