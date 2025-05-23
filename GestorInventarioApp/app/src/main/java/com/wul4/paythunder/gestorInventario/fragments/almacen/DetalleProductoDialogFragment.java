@@ -3,11 +3,6 @@ package com.wul4.paythunder.gestorInventario.fragments.almacen;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Parcelable;
-<<<<<<< HEAD
-=======
-import androidx.annotation.NonNull;
->>>>>>> 866cdc9 (Resueltos conflictos y subida para crear tareas en app móvil)
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;

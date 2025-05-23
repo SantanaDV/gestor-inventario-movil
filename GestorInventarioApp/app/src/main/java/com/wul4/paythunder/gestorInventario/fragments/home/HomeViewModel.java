@@ -31,23 +31,7 @@ public class HomeViewModel extends ViewModel {
 
 
     /*ojo modifica despues del valor asignado*/
-/*ojo modifica despues del valor asignado*/
 
-    public void setProductosContados(MutableLiveData<Integer> productosContados) {
-        this.productosContados = productosContados;
-    }
-
-    public MutableLiveData<List<Usuario>> getListaTotal_usuarios() {
-        return listaTotal_usuarios;
-    }
-
-    public void setListaTotal_usuarios(MutableLiveData<List<Usuario>> listaTotal_usuarios) {
-        this.listaTotal_usuarios = listaTotal_usuarios;
-    }
-
-    public Integer getProductosContados() {
-        return productosContados.getValue();
-    }
 
     //El constructor vacío, no inicializa los valores de los MutableLiveData.
     //Porque se asignarán más tarde, cuando se obtengan los datos.
