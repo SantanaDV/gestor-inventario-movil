@@ -1,8 +1,9 @@
 package com.wul4.paythunder.gestorInventario.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tarea {
+public class Tarea implements Serializable{
 
     private int id;
 
