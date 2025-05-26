@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.fragments.almacen;
+package com.wul4.paythunder.gestorInventario.fragments.productos;
 
 
 import android.app.AlertDialog;
@@ -27,13 +27,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.entities.Categoria;
 import com.wul4.paythunder.gestorInventario.utils.dto.ProductoCreacionDTO;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +54,7 @@ public class AnadirProductoDialogFragment extends DialogFragment {
     private ActivityResultLauncher<String> galeriaLauncher;
     private List<Categoria> categorias = new ArrayList<>();
     private List<String> categoriasString = new ArrayList<>();
-    private AlmacenViewModel almacenViewModel;
+    private ProductosViewModel almacenViewModel;
 
     @NonNull
     @Override
@@ -65,7 +63,7 @@ public class AnadirProductoDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_anadir_producto, null);
 
-        almacenViewModel = new ViewModelProvider(requireActivity()).get(AlmacenViewModel.class);
+        almacenViewModel = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         imgProducto = view.findViewById(R.id.imgNuevoProducto);
         etNombre = view.findViewById(R.id.etNombreProducto);
         etCantidad = view.findViewById(R.id.etCantidadProducto);

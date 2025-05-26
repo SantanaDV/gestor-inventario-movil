@@ -28,8 +28,8 @@
     <!-- Fragmento de Galería -->
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.wul4.paythunder.gestorInventario.fragments.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:name="com.wul4.paythunder.gestorInventario.fragments.almacen.AlmacenWebViewFragment"
+        android:label="@string/menu_almacen"
         tools:layout="@layout/fragment_gallery">
 
         <action
@@ -40,9 +40,9 @@
     <!-- Fragmento de Almacén -->
     <fragment
         android:id="@+id/nav_almacenshow"
-        android:name="com.wul4.paythunder.gestorInventario.fragments.almacen.AlmacenFragment"
-        android:label="@string/menu_almacen"
-        tools:layout="@layout/fragment_almacen">
+        android:name="com.wul4.paythunder.gestorInventario.fragments.productos.ProductosFragment"
+        android:label="@string/menu_productos"
+        tools:layout="@layout/fragment_productos">
 
         <action
             android:id="@+id/action_nav_almacenshow_self"

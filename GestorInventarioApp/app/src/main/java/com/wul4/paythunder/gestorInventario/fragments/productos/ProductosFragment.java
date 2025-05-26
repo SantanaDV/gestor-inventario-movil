@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.fragments.almacen;
+package com.wul4.paythunder.gestorInventario.fragments.productos;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
@@ -20,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.databinding.FragmentAlmacenBinding;
+import com.wul4.paythunder.gestorInventario.databinding.FragmentProductosBinding;
 import com.wul4.paythunder.gestorInventario.entities.Categoria;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.activities.ScannerActivity;
@@ -31,11 +30,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AlmacenFragment extends Fragment {
+public class ProductosFragment extends Fragment {
     private static final int REQUEST_SCAN_QR = 1001;
 
-    private FragmentAlmacenBinding binding;
-    private AlmacenViewModel       vm;
+    private @NonNull FragmentProductosBinding binding;
+    private ProductosViewModel vm;
 
     private List<Producto> allProductos   = new ArrayList<>();
     private List<Categoria> allCategorias = new ArrayList<>();
@@ -48,8 +47,8 @@ public class AlmacenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentAlmacenBinding.inflate(inflater, container, false);
-        vm      = new ViewModelProvider(requireActivity()).get(AlmacenViewModel.class);
+        binding = FragmentProductosBinding.inflate(inflater, container, false);
+        vm      = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
 
         // 1) Observers de lista y categorías
         vm.getProductos().observe(getViewLifecycleOwner(), productos -> {
