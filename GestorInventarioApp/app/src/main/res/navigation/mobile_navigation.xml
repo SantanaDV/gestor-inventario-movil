@@ -11,8 +11,6 @@
         android:name="com.wul4.paythunder.gestorInventario.fragments.login.LoginFragment"
         android:label="@string/menu_login"
         tools:layout="@layout/fragment_login">
-
-<!--         Acción para navegar a Home -->
         <action
             android:id="@+id/action_loginFragment_to_nav_home"
             app:destination="@id/nav_home" />
@@ -23,30 +21,79 @@
         android:id="@+id/nav_home"
         android:name="com.wul4.paythunder.gestorInventario.fragments.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <!-- Fragmento de Galería -->
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.wul4.paythunder.gestorInventario.fragments.almacen.AlmacenWebViewFragment"
-        android:label="@string/menu_almacen"
-        tools:layout="@layout/fragment_gallery">
-
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_nav_gallery_self"
-            app:destination="@id/nav_gallery" />
+            android:id="@+id/action_nav_home_to_nav_almacen"
+            app:destination="@id/nav_almacen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
-    <!-- Fragmento de Almacén -->
+    <!-- Fragmento de Almacenes -->
     <fragment
-        android:id="@+id/nav_almacenshow"
+        android:id="@+id/nav_almacen"
+        android:name="com.wul4.paythunder.gestorInventario.fragments.almacen.AlmacenFragment"
+        android:label="@string/menu_almacen"
+        tools:layout="@layout/fragment_almacen">
+        <action
+            android:id="@+id/action_nav_almacen_to_nav_estanterias"
+            app:destination="@id/nav_estanterias"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="idAlmacen"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <!-- Fragmento de Estanterías (recibe idAlmacen) -->
+    <fragment
+        android:id="@+id/nav_estanterias"
+        android:name="com.wul4.paythunder.gestorInventario.fragments.estanterias.EstanteriasFragment"
+        android:label="@string/menu_estanterias"
+        tools:layout="@layout/fragment_estanterias">
+        <argument
+            android:name="idAlmacen"
+            app:argType="integer" />
+
+        <!-- Acción a Productos por Estantería -->
+        <action
+            android:id="@+id/action_nav_estanterias_to_nav_productos_estanteria"
+            app:destination="@id/nav_productos_estanteria"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="idEstanteria"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <!-- Nuevo Fragmento de Productos por Estantería (recibe idEstanteria) -->
+    <fragment
+        android:id="@+id/nav_productos_estanteria"
+        android:name="com.wul4.paythunder.gestorInventario.fragments.productosEstanteria.ProductosEstanteriaFragment"
+        android:label="@string/menu_productos_estanteria"
+        tools:layout="@layout/fragment_productos_estanteria">
+        <argument
+            android:name="idEstanteria"
+            app:argType="integer" />
+    </fragment>
+
+    <!-- Fragmento de Productos (genérico) -->
+    <fragment
+        android:id="@+id/nav_productos"
         android:name="com.wul4.paythunder.gestorInventario.fragments.productos.ProductosFragment"
         android:label="@string/menu_productos"
         tools:layout="@layout/fragment_productos">
-
-        <action
-            android:id="@+id/action_nav_almacenshow_self"
-            app:destination="@id/nav_almacenshow" />
+        <argument
+            android:name="idEstanteria"
+            app:argType="integer" />
     </fragment>
 
     <!-- Fragmento de Tarea -->
@@ -55,11 +102,9 @@
         android:name="com.wul4.paythunder.gestorInventario.fragments.tareas.TareaFragment"
         android:label="@string/menu_tarea"
         tools:layout="@layout/fragment_tarea">
-
         <action
             android:id="@+id/action_tareaFragment_to_tareaHacerFragment"
-            app:destination="@id/tareaHacerFragment"
-            tools:ignore="DuplicateIds" />
+            app:destination="@id/tareaHacerFragment" />
         <action
             android:id="@+id/action_tareaFragment_to_tareaProcesoFragment"
             app:destination="@id/tareaProcesoFragment" />
@@ -67,4 +112,5 @@
             android:id="@+id/action_tareaFragment_to_tareaRealizadaFragment"
             app:destination="@id/tareaRealizadaFragment" />
     </fragment>
+
 </navigation>

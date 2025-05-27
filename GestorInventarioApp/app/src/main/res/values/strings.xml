@@ -81,6 +81,8 @@
 
     <string name="confirmar_contrasena">Confirmar contraseña</string>
     <string name="sin_existencias">Sin existencias</string>
-
+    <string name="menu_estanterias">Estanterías</string>
+    <string name="sin_estanterias">Sin estanterias</string>
+    <string name="no_hay_productos">No hay productos</string>
 
 </resources>
