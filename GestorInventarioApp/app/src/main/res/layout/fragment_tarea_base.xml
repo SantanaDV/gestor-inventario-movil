@@ -63,16 +63,16 @@
 
         <!-- Botones -->
         <Button
-            android:id="@+id/btnGuardar"
+            android:id="@+id/btnGuardarTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/guardar" />
+            android:text="@string/btnGuardarTarea" />
 
         <Button
-            android:id="@+id/btnEliminar"
+            android:id="@+id/btnEliminarTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/eliminar"
+            android:text="@string/eliminarNuevaTarea"
             android:backgroundTint="@android:color/holo_red_light"
             android:textColor="@android:color/white"
             android:layout_marginTop="8dp"

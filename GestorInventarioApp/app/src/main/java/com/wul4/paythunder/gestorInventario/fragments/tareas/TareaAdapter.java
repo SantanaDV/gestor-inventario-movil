@@ -41,7 +41,7 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
     @Override
     public TareaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_tarea, parent, false);
+                .inflate(R.layout.fragment_tarea_base, parent, false);
         return new TareaViewHolder(view);
     }
 
@@ -55,7 +55,7 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
         holder.categoria.setText(tarea.getId_categoria());
         holder.fecha.setText(tarea.getFecha_asignacion());
 
-        // Lógica de clic
+         //Lógica de clic
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onClick(tarea);

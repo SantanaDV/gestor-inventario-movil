@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.wul4.paythunder.gestorInventario.R;
 
@@ -29,27 +31,24 @@ public class TareaFragment extends Fragment {
 
         // Referencias a secciones
         TextView categoriaHacer = view.findViewById(R.id.categoriaHacer);
-        LinearLayout layoutHacer = view.findViewById(R.id.tareaHacer);
         categoriaHacer.setOnClickListener(v -> {
-            layoutHacer.setVisibility(
-                    layoutHacer.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE
-            );
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.action_tareaFragment_to_tareaHacerFragment);
+
         });
 
         TextView categoriaProceso = view.findViewById(R.id.categoriaProceso);
-        LinearLayout layoutProceso = view.findViewById(R.id.tareaProceso);
         categoriaProceso.setOnClickListener(v -> {
-            layoutProceso.setVisibility(
-                    layoutProceso.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE
-            );
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.action_tareaFragment_to_tareaProcesoFragment);
+
         });
 
         TextView categoriaRealizada = view.findViewById(R.id.categoriaRealizada);
-        LinearLayout layoutRealizada = view.findViewById(R.id.tareaRealizada);
         categoriaRealizada.setOnClickListener(v -> {
-            layoutRealizada.setVisibility(
-                    layoutRealizada.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE
-            );
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.action_tareaFragment_to_tareaRealizadaFragment);
+
         });
 
         FragmentManager fragmentManager = getChildFragmentManager();

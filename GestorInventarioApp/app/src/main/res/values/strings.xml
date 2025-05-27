@@ -24,8 +24,8 @@
     <string name="tarea_por_hacer" translatable="false">Tarea por Hacer</string>
     <string name="descripcion_de_la_tarea" translatable="false">Descripción de la tarea</string>
     <string name="fecha_de_asignacion_yyyy_mm_dd" translatable="false">Fecha de asignación (YYYY-MM-DD)</string>
-    <string name="guardar" translatable="false">Guardar</string>
-    <string name="eliminar" translatable="false">Eliminar</string>
+    <string name="crearNuevaTarea" translatable="false">CREAR</string>
+    <string name="eliminarNuevaTarea" translatable="false">ELIMINAR</string>
     <string name="fecha_de_asignacion" translatable="false">Fecha de asignación</string>
     <string name="estado_de_la_tarea" translatable="false">Estado de la tarea</string>
     <string name="empleado_asignado" translatable="false">Empleado asignado</string>
@@ -43,6 +43,7 @@
     <string name="clicar_tareas_por_hacer">Clicar tarea por hacer</string>
     <string name="clicar_tareas_en_proceso">Clicar Tareas en proceso</string>
     <string name="clicar_tareas_realizadas">Clicar Tareas Realizadas</string>
+<<<<<<< Updated upstream
 
 
 
@@ -79,4 +80,9 @@
     <string name="torch_toggle">Alternar linterna</string>
 
 
+=======
+    <string name="simple_spinner_item">simple_spinner_item</string>
+    <string name="crear_nueva_tarea">Abrir Formulario</string>
+    <string name="btnGuardarTarea">GUARDAR</string>
+>>>>>>> Stashed changes
 </resources>

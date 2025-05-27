@@ -69,7 +69,7 @@ public class TareaProcesoFragment extends Fragment {
             recyclerView.setAdapter(adapter);
 
             // Observar tareas por hacer
-            tareaViewModel.getListarTareaHacer().observe(getViewLifecycleOwner(), tareas -> {
+            tareaViewModel.getListarTareaProceso().observe(getViewLifecycleOwner(), tareas -> {
                 if (tareas != null) {
                     adapter.setTareaList(tareas);
                 }

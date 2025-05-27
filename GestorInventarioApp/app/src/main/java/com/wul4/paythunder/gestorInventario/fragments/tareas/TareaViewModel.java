@@ -23,7 +23,7 @@ public class TareaViewModel extends ViewModel {
     private final MutableLiveData<List<Tarea>> listarTareaHacer = new MutableLiveData<>();
     private final MutableLiveData<List<Tarea>> listarTareaProceso = new MutableLiveData<>();
     private final MutableLiveData<List<Tarea>> listarTareaRealizada = new MutableLiveData<>();
-    private final MutableLiveData<Integer> cuentaTareas = new MutableLiveData<>();
+    private final MutableLiveData<Integer> cuentaTotalTareas = new MutableLiveData<>();
 
 
     public MutableLiveData<String> getText() {
@@ -31,6 +31,10 @@ public class TareaViewModel extends ViewModel {
     }
 
 
+    public MutableLiveData<Integer> setCuentaTotalTareas(int size) {
+        this.cuentaTotalTareas.setValue(size);
+        return cuentaTotalTareas;
+    }
 
 
     public TareaViewModel() {
@@ -47,12 +51,9 @@ public class TareaViewModel extends ViewModel {
     }
 
 
-
     public MutableLiveData<List<Tarea>> getListarTareaProceso() {
         return listarTareaProceso;
     }
-
-
 
     public MutableLiveData<List<Tarea>> getCrearTareas() {
         return crearTareas;
@@ -63,12 +64,7 @@ public class TareaViewModel extends ViewModel {
     }
 
 
-
-
     public MutableLiveData<Integer> getTareasCrear() { return tareasCrear; }
-
-
-
 
     public void setCrearTareas(int size) {
     }
@@ -77,14 +73,14 @@ public class TareaViewModel extends ViewModel {
     }
 
 
+    public void setListarTareaHacer(int size) {
+    }
 
     public void setListarTareaProceso(int size) {
+        
     }
 
     public void setListarTareaRealizada(int size) {
-
-    }
-
-    public void setListarTareaHacer(int size) {
     }
 }
+

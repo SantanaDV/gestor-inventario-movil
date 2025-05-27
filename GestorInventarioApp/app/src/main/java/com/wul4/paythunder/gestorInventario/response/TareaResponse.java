@@ -1,5 +1,7 @@
 package com.wul4.paythunder.gestorInventario.response;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
@@ -81,6 +83,8 @@ public class TareaResponse {
                 if (response.isSuccessful() && response.body() != null) {
 
                     List<Tarea> tareasContadasHacer = response.body();
+
+                    Log.d("API", "Tareas Hacer recibidas: " + tareasContadasHacer.size());
 
                     tareaViewModel.setListarTareaHacer(tareasContadasHacer.size());
                     tareaViewModel.getListarTareaHacer().setValue(tareasContadasHacer);
