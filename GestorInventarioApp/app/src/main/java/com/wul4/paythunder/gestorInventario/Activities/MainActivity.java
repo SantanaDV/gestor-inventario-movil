@@ -1,6 +1,5 @@
 package com.wul4.paythunder.gestorInventario.activities;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,24 +19,17 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-
 import com.wul4.paythunder.gestorInventario.R;
-import com.wul4.paythunder.gestorInventario.utils.Constantes;
 import com.wul4.paythunder.gestorInventario.databinding.ActivityMainBinding;
-
+import com.wul4.paythunder.gestorInventario.utils.Constantes;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final String TAG = MainActivity.class.getSimpleName();
-    public SharedPreferences preferences = null;
-    public SharedPreferences.Editor prefEditor = null;
-
-    //Atributos nuevos:
-
-    private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    //Flag para decidir si mostrar el menú de opciones
+    private AppBarConfiguration appBarConfiguration;
     private boolean mostrarMenu = true;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor prefEditor;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -46,91 +38,69 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //Ocultamos el teclado para que al abrir el login no se vea tan feo
+
+        // Evitar que el teclado aparezca al inicio si hay campos de texto
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, com.wul4.paythunder.gestorInventario.activities.RegisterActivity.class);
-                startActivity(intent);
 
-            }
+        // Fab: lanza RegisterActivity
+        binding.appBarMain.fab.setOnClickListener(v -> {
+            startActivity(new Intent(this, com.wul4.paythunder.gestorInventario.activities.RegisterActivity.class));
         });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
 
-        // Definir los destinos de nivel superior
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_almacenshow, R.id.loginFragment, R.id.tarea_fragment)
-                .setOpenableLayout(drawer)
-                .build();
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navView = binding.navView;
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
-        //Hacemos invisible el boton de registrarse entodas las vistas menos en el LoginFragment
-        navController.addOnDestinationChangedListener((controller, destination, arguments) ->
-        {
+        // IDs de nivel superior según tu nav-graph
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home,
+                R.id.nav_almacen,
+                R.id.nav_productos,
+                R.id.tarea_fragment
+        )
+                .setOpenableLayout(drawer)
+                .build();
+
+        // Gestiona visibilidad de fab y drawer en login
+        navController.addOnDestinationChangedListener((controller, destination, args) -> {
             boolean isLogin = destination.getId() == R.id.loginFragment;
-            //  Ocultar menú de opciones al entrar a login, pasando el flag a false
             mostrarMenu = !isLogin;
-            invalidateOptionsMenu(); // Fuerza recreación del menú
+            invalidateOptionsMenu();
 
-            //Mostrar o ocultar en función de la vista
-            binding.appBarMain.fab.setVisibility(isLogin ? View.GONE : View.VISIBLE);
-            //Mostramos u ocultamos la Toolbar
-            if (isLogin) {
-                binding.appBarMain.fab.setVisibility(View.VISIBLE);
-            } else {
-                binding.appBarMain.fab.setVisibility(View.GONE);
-            }
+            binding.appBarMain.fab.setVisibility(isLogin
+                    ? View.VISIBLE
+                    : View.GONE
+            );
+            binding.navView.setVisibility(isLogin
+                    ? View.GONE
+                    : View.VISIBLE
+            );
 
-            // Mostrar u ocultar el NavigationView (menu lateral)
-            binding.navView.setVisibility(isLogin ? View.GONE : View.VISIBLE);
-
-            /*//Bloqueamos el drawer cuando estamos en el loginFragment para desactivar el boton de menu del C70
-            DrawerLayout drawerLayout = binding.drawerLayout;
-            if (isLogin) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            } else {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            }*/
-
+             // ocultar/mostrar drawer
+            navView.setVisibility(isLogin ? View.GONE : View.VISIBLE);
         });
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
 
+        // Conecta toolbar + drawer con navController
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
 
-        //Configuramos el listener para la opción de cerrar sesión del menu lateral
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-
-            if (id == R.id.action_logout) {
+        // Listener para los items del menú lateral
+        navView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.action_logout) {
                 cerrarSesion();
-                //obtenemos el layout principal y cerramos la ventana
-                binding.drawerLayout.closeDrawers();
+                drawer.closeDrawers();
                 return true;
-            } else {
-                //Navegamos al fragment correspondiente
-                NavigationUI.onNavDestinationSelected(menuItem, navController);
-                binding.drawerLayout.closeDrawers();
-                return false;
             }
+            boolean handled = NavigationUI.onNavDestinationSelected(item, navController);
+            drawer.closeDrawers();
+            return handled;
         });
 
-
+        // SharedPreferences para token
         preferences = getSharedPreferences(Constantes.PREFERENCES_NAME, MODE_PRIVATE);
         prefEditor = preferences.edit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
     }
 
     @Override
@@ -138,49 +108,33 @@ public class MainActivity extends AppCompatActivity {
         if (mostrarMenu) {
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            //Añadir la actividad de settings
-            // startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        } else if (id == R.id.action_logout) {
+        if (item.getItemId() == R.id.action_logout) {
             cerrarSesion();
             return true;
-
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+        // Otros items del toolbar (settings, etc)
+        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Metodo para cerrar la sesión. Borra el token del sharedpreferences y navega al LoginFragment
-     */
     private void cerrarSesion() {
-        // Borrar token del sharedpreferences
-        SharedPreferences prefs = getSharedPreferences(Constantes.PREFERENCES_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove("token");
-        editor.apply();
-
-        // Navegar al LoginFragment
+        // Borramos token
+        prefEditor.remove("token");
+        prefEditor.apply();
+        // Navegamos al login
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.loginFragment);
     }
-
-
-
 }

@@ -20,9 +20,6 @@ public interface AlmacenApi {
             @Path("idAlmacen") int idAlmacen
     );
 
-    /** Obtiene los productos de una estantería dada **/
-    @GET("api/producto/estanteria/{idEstanteria}")
-    Call<List<ProductoResponse>> getProductos(
-            @Path("idEstanteria") int idEstanteria
-    );
+    @GET("api/producto")
+    Call<List<ProductoResponse>> getAllProductos();
 }

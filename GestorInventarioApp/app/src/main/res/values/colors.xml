@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green_card">#B3A5F892</color>
     <color name="red_card">#B2F89292</color>
+    <color name="gray_light">#D3D3D3</color>
 
     <!-- PayThunder Colors -->
     <color name="ptRed">#D60B51</color>

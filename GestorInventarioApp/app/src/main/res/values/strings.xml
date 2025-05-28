@@ -84,5 +84,9 @@
     <string name="menu_estanterias">Estanterías</string>
     <string name="sin_estanterias">Sin estanterias</string>
     <string name="no_hay_productos">No hay productos</string>
+    <string name="no_hay_estanterias">No hay estanterias</string>
+    <string name="desasignar">desasignar</string>
+
+    <string name="menu_productos_estanteria">Productos por estantería</string>
 
 </resources>

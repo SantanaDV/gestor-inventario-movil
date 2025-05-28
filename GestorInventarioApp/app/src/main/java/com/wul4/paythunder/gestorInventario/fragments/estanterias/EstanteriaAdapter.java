@@ -38,7 +38,8 @@ public class EstanteriaAdapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         EstanteriaResponse est = datos.get(position);
-        holder.binding.textNombre.setText(est.getNombre());
+        // Reemplazamos getNombre() por getPosicion() (u otro campo adecuado)
+        holder.binding.textNombre.setText("Estanteria " + est.getId());        holder.binding.getRoot().setOnClickListener(v -> listener.onClick(est));
         holder.binding.getRoot().setOnClickListener(v -> listener.onClick(est));
     }
 

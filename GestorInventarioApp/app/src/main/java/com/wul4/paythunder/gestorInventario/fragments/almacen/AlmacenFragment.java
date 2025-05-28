@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.wul4.paythunder.gestorInventario.databinding.FragmentAlmacenBinding;
 import com.wul4.paythunder.gestorInventario.response.AlmacenResponse;
 
@@ -33,10 +35,17 @@ public class AlmacenFragment extends Fragment {
 
     private void setupRecycler() {
         adapter = new AlmacenAdapter(List.of(), almacen -> {
-            // Aquí manejas click en un almacén:
-            // por ejemplo, navegas a EstanteriasFragment pasando almacen.getId()
+            // Navegar a EstanteriasFragment pasando el id del almacén
+            NavHostFragment.findNavController(this)
+                    .navigate(
+                            AlmacenFragmentDirections
+                                    .actionNavAlmacenToNavEstanterias(almacen.getId())
+                    );
         });
-        binding.recyclerAlmacenes.setAdapter(adapter);
+        binding.recyclerAlmacenes.setLayoutManager(
+                           new androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+                               );
+               binding.recyclerAlmacenes.setAdapter(adapter);
     }
 
     private void observeAlmacenes() {
