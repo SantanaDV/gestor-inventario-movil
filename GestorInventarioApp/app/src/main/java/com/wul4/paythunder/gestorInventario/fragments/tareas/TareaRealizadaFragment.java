@@ -20,17 +20,12 @@ import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiTarea;
 
 public class TareaRealizadaFragment extends Fragment {
 
-        private FragmentTareaBinding binding;
         private RecyclerView recyclerView;
 
-        private RecyclerView recyclerHacer, recyclerProceso, recyclerRealizada;
-        private TareaAdapter adapterHacer, adapterProceso, adapterRealizada;
         private TareaViewModel tareaViewModel;
-        private View btnPorHacer;
-        private View btnProceso;
-        private View btnRealizada;
+    private RecyclerView.Adapter adapterRealizada;
 
-        @Nullable
+    @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                                  @Nullable Bundle savedInstanceState) {
@@ -70,7 +65,7 @@ public class TareaRealizadaFragment extends Fragment {
             recyclerView.setAdapter(adapter);
 
             // Observar tareas por hacer
-            tareaViewModel.getListarTareaHacer().observe(getViewLifecycleOwner(), tareas -> {
+            tareaViewModel.getListarTareaRealizada().observe(getViewLifecycleOwner(), tareas -> {
                 if (tareas != null) {
                     adapter.setTareaList(tareas);
                 }

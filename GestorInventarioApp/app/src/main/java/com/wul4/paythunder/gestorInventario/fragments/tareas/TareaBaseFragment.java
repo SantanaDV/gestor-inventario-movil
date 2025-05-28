@@ -42,7 +42,7 @@ public class TareaBaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tarea, container, false);
+        View view = inflater.inflate(R.layout.fragment_tarea_hacer, container, false);
 
     // inicializamos las vistas
         etDescripcion = view.findViewById(R.id.descripcion);
@@ -51,8 +51,8 @@ public class TareaBaseFragment extends Fragment {
         spCategoria = view.findViewById(R.id.spCategoria);
         etFechaAsignacion = view.findViewById(R.id.etFechaAsignacion);
         etFechaFinalizacion = view.findViewById(R.id.etFechaFinalizacion);
-        btnGuardar = view.findViewById(R.id.btnGuardar);
-        btnEliminar = view.findViewById(R.id.btnEliminar);
+        btnGuardar = view.findViewById(R.id.btnCrearNuevaTarea);
+        btnEliminar = view.findViewById(R.id.btnEliminarTarea);
 
         cargarSpinners();
 
@@ -133,7 +133,7 @@ public class TareaBaseFragment extends Fragment {
         if (tareaActual != null){
             tarea.setId(tareaActual.getId());
         }
-        
+
         tarea.setDescripcion(descripcion);
         tarea.setEmpleado_asignado(empleado_asignado);
         tarea.setEstado(Integer.parseInt(estado));
@@ -143,14 +143,14 @@ public class TareaBaseFragment extends Fragment {
 
 
         ApiTarea apiTarea = ApiClient.getClient().create(ApiTarea.class);
-        
+
         Call<Tarea> call;
         if (tareaActual != null && tareaActual.getId() != 0) {
             call = apiTarea.actualizarTarea(tarea);
         } else {
             call = apiTarea.crearTarea(tarea);
         }
-        
+
         call.enqueue(new Callback<Tarea>() {
             @Override
             public void onResponse(@NonNull Call<Tarea> call, @NonNull Response<Tarea> response) {

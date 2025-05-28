@@ -99,7 +99,7 @@
 <!--                android:layout_marginTop="8dp" />-->
 
             <LinearLayout
-                android:id="@+id/layoutTareaProceso"
+                android:id="@+id/tareaProceso"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
 <!--                android:layout_marginTop="8dp" />-->
 
             <LinearLayout
-                android:id="@+id/layoutTareaRealizada"
+                android:id="@+id/tareaRealizada"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
