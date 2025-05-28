@@ -4,23 +4,30 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
+        <!-- Home -->
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
+
+        <!-- Almacén: debe llamarse nav_almacen -->
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_almacen"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_almacenshow"
-            android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_almacen" />
+
+        <!-- Productos genéricos: debe llamarse nav_productos -->
+        <item
+            android:id="@+id/nav_productos"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_productos" />
+
+        <!-- Tareas -->
         <item
             android:id="@+id/tarea_fragment"
             android:icon="@drawable/ic_menu_tarea"
             android:title="@string/menu_tarea" />
-
 
     </group>
 </menu>

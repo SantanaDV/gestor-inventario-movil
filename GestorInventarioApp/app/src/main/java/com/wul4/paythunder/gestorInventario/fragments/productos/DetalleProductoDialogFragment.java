@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.fragments.almacen;
+package com.wul4.paythunder.gestorInventario.fragments.productos;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.wul4.paythunder.gestorInventario.R;
 import com.wul4.paythunder.gestorInventario.entities.Producto;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;

@@ -1,47 +1,49 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'       // ya no lleva versión aquí
+    id 'androidx.navigation.safeargs'
 }
 
 android {
-    compileSdkVersion 33
+    namespace "com.wul4.paythunder.gestorInventario"
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.wul4.paythunder.gestorInventario"
-        minSdkVersion 16
-        targetSdkVersion 33
+        minSdkVersion 23
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
-        // Habilitar multidex
         multiDexEnabled true
-
-        vectorDrawables {
-            useSupportLibrary true
-        }
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     packagingOptions {
-        // para evitar conflictos en algunos AAR
         pickFirst 'META-INF/DEPENDENCIES'
         pickFirst 'META-INF/LICENSE'
         pickFirst 'META-INF/LICENSE.txt'
-        pickFirst 'META-INF/license.txt'
         pickFirst 'META-INF/NOTICE'
         pickFirst 'META-INF/NOTICE.txt'
-        pickFirst 'META-INF/notice.txt'
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding true
         dataBinding false
@@ -49,44 +51,28 @@ android {
 }
 
 dependencies {
-    // ZXing Android Embedded 3.x (soporta minSdk 16)
-    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
-    implementation 'com.google.zxing:core:3.3.3'
-
-    // Debug de retrofit
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
-
-    // multidex
-    implementation 'androidx.multidex:multidex:2.0.1'
-
-    // Carga de imágenes
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
-
-    // Retrofit + Gson
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    // Picasso
-    implementation "com.squareup.picasso:picasso:2.71828"
-
-    // Kotlin stdlib
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22"
 
-    // Activity / Activity-KTX (versiones compatibles con minSdk 16)
-    implementation 'androidx.activity:activity:1.4.0'
-    implementation 'androidx.activity:activity-ktx:1.4.0'
+    // Navigation (KTX)
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
-    // UI / layouts
+    // Resto de tus dependencias...
+    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+    implementation 'androidx.webkit:webkit:1.7.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.activity:activity-ktx:1.4.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
-    // Navigation (soporta minSdk 16)
-    implementation 'androidx.navigation:navigation-fragment:2.4.2'
-    implementation 'androidx.navigation:navigation-ui:2.4.2'
-
-    // Tests
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
