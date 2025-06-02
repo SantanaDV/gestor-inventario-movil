@@ -14,13 +14,13 @@
         <!-- Almacén: debe llamarse nav_almacen -->
         <item
             android:id="@+id/nav_almacen"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_store"
             android:title="@string/menu_almacen" />
 
         <!-- Productos genéricos: debe llamarse nav_productos -->
         <item
             android:id="@+id/nav_productos"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_products"
             android:title="@string/menu_productos" />
 
         <!-- Tareas -->

@@ -8,9 +8,11 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -47,4 +49,12 @@ public interface ApiAlmacen {
         Call<Producto> getProductoPorQR(@Path("codigo_qr") String qr);
 
 
+    /**
+     * Asignar varios productos a la misma estantería.
+     * Recibe un JSON con { id_estanteria, ids_producto: [...] }.
+     */
+    @PUT("api/producto/asignarEstanteria")
+    Call<Void> asignarProductosAEstanteria(@Body com.wul4.paythunder.gestorInventario.utils.dto.AsignarProductosDTO dto);
 }
+
+
