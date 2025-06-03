@@ -3,8 +3,10 @@ package com.wul4.paythunder.gestorInventario.fragments.productosEstanteria;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.wul4.paythunder.gestorInventario.entities.Producto;
+import com.wul4.paythunder.gestorInventario.interfaces.AlmacenApi;
+import com.wul4.paythunder.gestorInventario.response.ProductoResponse;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.dto.AsignarProductosDTO;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
 
 import java.util.ArrayList;
@@ -14,30 +16,41 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Repositorio que:
+ * 1) Obtiene todos los productos (como ProductoResponse) vía AlmacenApi.getAllProductos()
+ * 2) Llama a ApiAlmacen.asignarProductosAEstanteria(...) para asignarlos a una estantería.
+ */
 public class ProductosDisponiblesRepository {
-    private final ApiAlmacen api;
+
+    // Para leer “todos los productos” (ProductoResponse)
+    private final AlmacenApi prodApi;
+
+    // Para INVOCAR el endpoint de “asignarEstanteria”
+    private final ApiAlmacen apiAlmacen;
 
     public ProductosDisponiblesRepository() {
-        api = ApiClient.getClient().create(ApiAlmacen.class);
+        prodApi     = ApiClient.getClient().create(AlmacenApi.class);
+        apiAlmacen  = ApiClient.getClient().create(ApiAlmacen.class);
     }
 
     /**
-     * Devuelve LiveData con la lista de todos los productos (sin filtrar).
+     * Devuelve un LiveData<List<ProductoResponse>> con TODO el catálogo.
      */
-    public LiveData<List<Producto>> fetchAllProductos() {
-        MutableLiveData<List<Producto>> data = new MutableLiveData<>();
-        api.getProductos().enqueue(new Callback<List<Producto>>() {
+    public LiveData<List<ProductoResponse>> fetchAllProductos() {
+        MutableLiveData<List<ProductoResponse>> data = new MutableLiveData<>();
+        prodApi.getAllProductos().enqueue(new Callback<List<ProductoResponse>>() {
             @Override
-            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
+            public void onResponse(Call<List<ProductoResponse>> call,
+                                   Response<List<ProductoResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     data.postValue(response.body());
                 } else {
                     data.postValue(new ArrayList<>());
                 }
             }
-
             @Override
-            public void onFailure(Call<List<Producto>> call, Throwable t) {
+            public void onFailure(Call<List<ProductoResponse>> call, Throwable t) {
                 data.postValue(new ArrayList<>());
             }
         });
@@ -45,27 +58,24 @@ public class ProductosDisponiblesRepository {
     }
 
     /**
-     * Lanza la llamada de asignación de productos a estantería.
+     * Asigna varios IDs de producto a la estantería dada.
+     * Devuelve LiveData<Boolean> que será true si la llamada HTTP fue 2xx, false en error.
      */
-    public LiveData<Boolean> asignarProductos(int idEstanteria, List<Integer> idsProducto) {
+    public LiveData<Boolean> asignarProductos(int idEstanteria, List<Integer> idsProductos) {
         MutableLiveData<Boolean> resultado = new MutableLiveData<>();
-        com.wul4.paythunder.gestorInventario.utils.dto.AsignarProductosDTO dto =
-                new com.wul4.paythunder.gestorInventario.utils.dto.AsignarProductosDTO(
-                        idEstanteria, idsProducto
-                );
+        AsignarProductosDTO dto = new AsignarProductosDTO(idEstanteria, idsProductos);
 
-        api.asignarProductosAEstanteria(dto).enqueue(new Callback<Void>() {
+        apiAlmacen.asignarProductosAEstanteria(dto).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                // Si HTTP 2xx, consideramos éxito
                 resultado.postValue(response.isSuccessful());
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 resultado.postValue(false);
             }
         });
+
         return resultado;
     }
 }

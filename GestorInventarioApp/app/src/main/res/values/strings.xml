@@ -88,5 +88,9 @@
     <string name="desasignar">desasignar</string>
 
     <string name="menu_productos_estanteria">Productos por estantería</string>
+    <string name="asignar_productos">Asignar productos</string>
+    <string name="no_hay_productos_disponibles">No hay productos disponibles</string>
+    <string name="imagen_producto">Imagen</string>
+    <string name="menu_productos_disponibles">Productos Disponibles</string>
 
 </resources>

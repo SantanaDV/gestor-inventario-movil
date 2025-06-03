@@ -50,6 +50,20 @@
         </action>
     </fragment>
 
+    <!-- Fragmento de Productos Disponibles (recibe idEstanteria) -->
+    <fragment
+        android:id="@+id/nav_productos_disponibles"
+        android:name="com.wul4.paythunder.gestorInventario.fragments.productosEstanteria.ProductosDisponiblesFragment"
+        android:label="@string/menu_productos_disponibles"
+        tools:layout="@layout/fragment_productos_disponibles">
+
+        <!-- Argumento que indica a qué estantería estamos asignando -->
+        <argument
+            android:name="idEstanteria"
+            app:argType="integer" />
+    </fragment>
+
+
     <!-- Fragmento de Estanterías (recibe idAlmacen) -->
     <fragment
         android:id="@+id/nav_estanterias"
