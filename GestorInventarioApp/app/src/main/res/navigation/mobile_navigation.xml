@@ -97,6 +97,16 @@
         <argument
             android:name="idEstanteria"
             app:argType="integer" />
+
+        <!-- Acción: de este fragmento a "ProductosDisponiblesFragment" -->
+        <action
+            android:id="@+id/action_nav_productos_estanteria_to_nav_productos_disponibles"
+            app:destination="@id/nav_productos_disponibles">
+        <!-- Reenvía el mismo argumento al siguiente -->
+        <argument
+            android:name="idEstanteria"
+            app:argType="integer" />
+        </action>
     </fragment>
 
     <!-- Fragmento de Productos (genérico) -->

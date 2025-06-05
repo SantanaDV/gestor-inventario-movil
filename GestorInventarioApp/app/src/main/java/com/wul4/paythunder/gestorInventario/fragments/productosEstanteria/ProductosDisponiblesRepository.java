@@ -3,10 +3,10 @@ package com.wul4.paythunder.gestorInventario.fragments.productosEstanteria;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.wul4.paythunder.gestorInventario.interfaces.AlmacenApi;
 import com.wul4.paythunder.gestorInventario.response.ProductoResponse;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.utils.dto.AsignarProductosDTO;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.AlmacenApi;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
 
 import java.util.ArrayList;
@@ -26,12 +26,12 @@ public class ProductosDisponiblesRepository {
     // Para leer “todos los productos” (ProductoResponse)
     private final AlmacenApi prodApi;
 
-    // Para INVOCAR el endpoint de “asignarEstanteria”
+    // Para INVOCAR el endpoint “asignarEstanteria”
     private final ApiAlmacen apiAlmacen;
 
     public ProductosDisponiblesRepository() {
-        prodApi     = ApiClient.getClient().create(AlmacenApi.class);
-        apiAlmacen  = ApiClient.getClient().create(ApiAlmacen.class);
+        prodApi    = ApiClient.getClient().create(AlmacenApi.class);
+        apiAlmacen = ApiClient.getClient().create(ApiAlmacen.class);
     }
 
     /**
@@ -75,7 +75,6 @@ public class ProductosDisponiblesRepository {
                 resultado.postValue(false);
             }
         });
-
         return resultado;
     }
 }

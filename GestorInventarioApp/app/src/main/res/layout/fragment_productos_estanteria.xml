@@ -1,35 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_productos_estanteria"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Indicador de carga -->
-    <ProgressBar
-        android:id="@+id/progressProductosEstanteria"
-        style="?android:attr/progressBarStyleLarge"
+    <!-- Contenedor principal con padding -->
+    <LinearLayout
+        android:id="@+id/container_productos_estanteria"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Indicador de carga -->
+        <ProgressBar
+            android:id="@+id/progressProductosEstanteria"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <!-- Mensaje cuando no hay productos -->
+        <TextView
+            android:id="@+id/tvSinProductosEstanteria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_hay_productos"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:gravity="center"
+            android:visibility="gone"
+            android:paddingTop="24dp"/>
+
+        <!-- Lista de productos -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerProductosEstanteria"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- FloatingActionButton para “+ Añadir productos a esta estantería” -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAñadirProductos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-    <!-- Mensaje cuando no hay productos -->
-    <TextView
-        android:id="@+id/tvSinProductosEstanteria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_hay_productos"
-        android:textAppearance="?attr/textAppearanceBody1"
-        android:gravity="center"
-        android:visibility="gone"
-        android:paddingTop="24dp"/>
-
-    <!-- Lista de productos -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerProductosEstanteria"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone"/>
-</LinearLayout>
+        android:contentDescription="@string/asignar_productos"
+        app:srcCompat="@drawable/baseline_add_24"
+        android:tint="@android:color/white"
+        app:layout_anchor="@id/container_productos_estanteria"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

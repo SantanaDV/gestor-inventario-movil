@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +37,17 @@ public class ProductosEstanteriaFragment extends Fragment {
 
         setupRecyclerView();
         observeProductos(idEstanteria);
+
+        binding.fabAAdirProductos.setOnClickListener(v -> {
+            // Creamos la acción SafeArgs:
+            ProductosEstanteriaFragmentDirections
+                    .ActionNavProductosEstanteriaToNavProductosDisponibles action =
+                    ProductosEstanteriaFragmentDirections
+                            .actionNavProductosEstanteriaToNavProductosDisponibles(idEstanteria);
+
+            // Ejecutamos la navegación:
+            NavHostFragment.findNavController(this).navigate(action);
+        });
 
         return binding.getRoot();
     }

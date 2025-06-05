@@ -3,9 +3,9 @@ package com.wul4.paythunder.gestorInventario.fragments.almacen;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.wul4.paythunder.gestorInventario.interfaces.AlmacenApi;
 import com.wul4.paythunder.gestorInventario.response.AlmacenResponse;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.AlmacenApi;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.wul4.paythunder.gestorInventario.interfaces;
+package com.wul4.paythunder.gestorInventario.utils.interfaces;
 
 import com.wul4.paythunder.gestorInventario.response.AlmacenResponse;
 import com.wul4.paythunder.gestorInventario.response.EstanteriaResponse;

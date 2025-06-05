@@ -44,15 +44,15 @@
     </LinearLayout>
 
     <!-- FloatingActionButton para “Asignar productos” -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabAsignarProductos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/asignar_productos"
-        app:srcCompat="@drawable/baseline_add_24"
-        android:tint="@android:color/white"
+        android:text="@string/asignar_productos"
+        app:icon="@drawable/baseline_add_24"
         app:layout_anchor="@id/container_productos_disponibles"
         app:layout_anchorGravity="bottom|end"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:contentDescription="@string/asignar_productos"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

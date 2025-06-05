@@ -13,27 +13,27 @@ import java.util.List;
 
 /**
  * ViewModel que:
- *  - expone LiveData<List<ProductoResponse>> filtrada (productos *no* asignados a la estantería actual)
- *  - expone LiveData<Boolean> con el resultado de la asignación
+ *  - expone LiveData<List<ProductoResponse>> filtrada (aquellos productos NO asignados a la estantería actual),
+ *  - expone LiveData<Boolean> con el resultado de la asignación.
  */
 public class ProductosDisponiblesViewModel extends ViewModel {
 
     private final ProductosDisponiblesRepository repo = new ProductosDisponiblesRepository();
 
-    /** 1) LiveData “crudo” con todos los productos de prodApi.getAllProductos() */
+    /** 1) LiveData “crudo” con TODOS los productos devueltos por el endpoint GET /api/producto */
     private final LiveData<List<ProductoResponse>> allProductosLiveData = repo.fetchAllProductos();
 
-    /** 2) LiveData filtrado: sólo productos cuya estantería sea null o distinta de idEstanteriaActual */
+    /** 2) LiveData filtrado: solo productos que no estén ya en la estantería actual */
     private final MediatorLiveData<List<ProductoResponse>> productosFiltrados = new MediatorLiveData<>();
 
     /** 3) LiveData del resultado de la llamada de asignación (true=éxito, false=error) */
     private final MutableLiveData<Boolean> resultadoAsignacion = new MutableLiveData<>();
 
-    /** Id de la estantería a la cual queremos asignar (se fija desde el Fragment) */
+    /** ID de la estantería a la cual queremos asignar (se fija desde el Fragment) */
     private int idEstanteriaActual = -1;
 
     public ProductosDisponiblesViewModel() {
-        // Cada vez que cambie “allProductosLiveData”, disparamos filtrar(...)
+        // Cada vez que cambie allProductosLiveData, disparo filtrar(...)
         productosFiltrados.addSource(allProductosLiveData, new Observer<List<ProductoResponse>>() {
             @Override
             public void onChanged(List<ProductoResponse> lista) {
@@ -48,13 +48,12 @@ public class ProductosDisponiblesViewModel extends ViewModel {
      */
     public void setIdEstanteria(int id) {
         this.idEstanteriaActual = id;
-        // Forzar un filtrado inmediato con el estado actual:
         filtrar(allProductosLiveData.getValue());
     }
 
     /**
-     * Filtra la “listaOriginal” y deja sólo aquellos productos
-     * cuya estantería sea null o distinta de idEstanteriaActual.
+     * Filtra “listaOriginal” y deja solo aquellos productos cuya estantería sea null
+     * o bien distinta de idEstanteriaActual.
      */
     private void filtrar(List<ProductoResponse> listaOriginal) {
         if (listaOriginal == null) {
@@ -63,8 +62,6 @@ public class ProductosDisponiblesViewModel extends ViewModel {
         }
         List<ProductoResponse> disponibles = new ArrayList<>();
         for (ProductoResponse p : listaOriginal) {
-            // Si no tiene estantería (p.getEstanteria()==null)
-            // o la que tiene es distinta de la actual, lo incluyo:
             if (p.getEstanteria() == null
                     || p.getEstanteria().getId() != idEstanteriaActual) {
                 disponibles.add(p);
@@ -78,14 +75,14 @@ public class ProductosDisponiblesViewModel extends ViewModel {
         return productosFiltrados;
     }
 
-    /** LiveData público del resultado de la asignación (true=OK, false=error). */
+    /** LiveData público con el resultado de asignación (true=OK, false=error). */
     public LiveData<Boolean> getResultadoAsignacion() {
         return resultadoAsignacion;
     }
 
     /**
      * Lanza la asignación de los IDs de producto a la estantería actual.
-     * Observa el LiveData<Boolean> devuelto por el repositorio y publica en resultadoAsignacion.
+     * Observa el LiveData<Boolean> devuelto por el repositorio y lo publica en resultadoAsignacion.
      */
     public void asignarProductos(List<Integer> idsProductos) {
         if (idEstanteriaActual < 0) {

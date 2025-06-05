@@ -2,9 +2,10 @@ package com.wul4.paythunder.gestorInventario.fragments.estanterias;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.wul4.paythunder.gestorInventario.interfaces.AlmacenApi;
 import com.wul4.paythunder.gestorInventario.response.EstanteriaResponse;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.AlmacenApi;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
