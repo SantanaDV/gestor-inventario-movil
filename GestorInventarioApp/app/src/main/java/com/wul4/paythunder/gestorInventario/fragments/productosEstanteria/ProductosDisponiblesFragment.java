@@ -43,17 +43,17 @@ public class ProductosDisponiblesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProductosDisponiblesBinding.inflate(inflater, container, false);
 
-        // 1) Recuperar el ID de la estantería (via Safe Args)
+        // Recuperar el ID de la estantería (via Safe Args)
         int idEstanteriaActual = ProductosDisponiblesFragmentArgs
                 .fromBundle(getArguments())
                 .getIdEstanteria();
         Log.d(TAG, "onCreateView: idEstanteriaActual=" + idEstanteriaActual);
 
-        // 2) Instanciar ViewModel y asignarle el ID de la estantería
+        // Instanciar ViewModel y asignarle el ID de la estantería
         viewModel = new ViewModelProvider(this).get(ProductosDisponiblesViewModel.class);
         viewModel.setIdEstanteria(idEstanteriaActual);
 
-        // 3) Configurar RecyclerView y su Adapter
+        // Configurar RecyclerView y su Adapter
         adapter = new ProductosDisponiblesAdapter();
         binding.recyclerProductosDisponibles.setLayoutManager(
                 new LinearLayoutManager(requireContext())
@@ -75,7 +75,7 @@ public class ProductosDisponiblesFragment extends Fragment {
             }
         });
 
-        // 5) Observar el resultado de la asignación (true=éxito, false=error)
+        // Observar el resultado de la asignación (true=éxito, false=error)
         viewModel.getResultadoAsignacion().observe(getViewLifecycleOwner(), exito -> {
             Log.d(TAG, "getResultadoAsignacion(): exito=" + exito);
             if (exito == null) return;
@@ -92,7 +92,7 @@ public class ProductosDisponiblesFragment extends Fragment {
             }
         });
 
-        // 6) Pulsar el FAB: abrimos el diálogo para introducir “balda” solo de los marcados
+        // Pulsar el FAB: abrimos el diálogo para introducir “balda” solo de los marcados
         binding.fabAsignarProductos.setOnClickListener(v -> {
             List<ProductoResponse> seleccionadosObjeto = adapter.getProductosSeleccionados();
             Log.d(TAG, "FAB click: seleccionadosObjeto.size()=" + seleccionadosObjeto.size());

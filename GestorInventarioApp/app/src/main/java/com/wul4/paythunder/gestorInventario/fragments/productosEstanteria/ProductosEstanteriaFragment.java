@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wul4.paythunder.gestorInventario.databinding.FragmentProductosEstanteriaBinding;
-import com.wul4.paythunder.gestorInventario.response.ProductoResponse;
 
 public class ProductosEstanteriaFragment extends Fragment {
 

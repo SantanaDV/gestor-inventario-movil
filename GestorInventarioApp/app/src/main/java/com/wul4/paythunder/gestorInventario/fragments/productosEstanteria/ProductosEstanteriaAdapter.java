@@ -76,7 +76,6 @@ public class ProductosEstanteriaAdapter
                     3
             );
 
-            // Resto de tu bind…
             binding.tvNombre.setText(producto.getNombre());
             binding.tvCantidad.setText("Cantidad: " + producto.getCantidad());
             binding.chipEstado.setText(producto.getEstado());

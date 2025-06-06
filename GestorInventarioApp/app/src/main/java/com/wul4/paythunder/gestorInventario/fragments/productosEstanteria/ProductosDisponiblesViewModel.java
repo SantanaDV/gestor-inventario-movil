@@ -20,13 +20,13 @@ public class ProductosDisponiblesViewModel extends ViewModel {
 
     private final ProductosDisponiblesRepository repo = new ProductosDisponiblesRepository();
 
-    /** 1) LiveData “crudo” con TODOS los productos devueltos por el endpoint GET /api/producto */
+    /** LiveData “crudo” con TODOS los productos devueltos por el endpoint GET /api/producto */
     private final LiveData<List<ProductoResponse>> allProductosLiveData = repo.fetchAllProductos();
 
-    /** 2) LiveData filtrado: solo productos que no estén ya en la estantería actual */
+    /**  LiveData filtrado: solo productos que no estén ya en la estantería actual */
     private final MediatorLiveData<List<ProductoResponse>> productosFiltrados = new MediatorLiveData<>();
 
-    /** 3) LiveData del resultado de la llamada de asignación (true=éxito, false=error) */
+    /**  LiveData del resultado de la llamada de asignación (true=éxito, false=error) */
     private final MutableLiveData<Boolean> resultadoAsignacion = new MutableLiveData<>();
 
     /** ID de la estantería a la cual queremos asignar (se fija desde el Fragment) */
