@@ -133,16 +133,13 @@ public class ProductosDisponiblesAdapter
                 boolean nuevo = !seleccionados.contains(producto.getId());
                 toggleSeleccion(producto.getId(), nuevo);
                 check.setChecked(nuevo);
-                Log.d(TAG, "onClickItem id=" + producto.getId() +
-                        " -> ahora seleccionado=" + nuevo);
+
             });
 
             // También al pulsar directamente en el CheckBox
             check.setOnClickListener(v -> {
                 boolean nuevo = check.isChecked();
                 toggleSeleccion(producto.getId(), nuevo);
-                Log.d(TAG, "onCheckClick id=" + producto.getId() +
-                        " -> ahora seleccionado=" + nuevo);
             });
         }
 
@@ -152,8 +149,7 @@ public class ProductosDisponiblesAdapter
             } else {
                 seleccionados.remove(idProducto);
             }
-            Log.d(TAG, "toggleSeleccion() -> ID=" + idProducto +
-                    (marcado ? " añadido." : " eliminado."));
+           
         }
     }
 }

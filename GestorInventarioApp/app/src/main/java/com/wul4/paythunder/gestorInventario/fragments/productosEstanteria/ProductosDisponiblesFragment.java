@@ -77,7 +77,6 @@ public class ProductosDisponiblesFragment extends Fragment {
 
         // Observar el resultado de la asignación (true=éxito, false=error)
         viewModel.getResultadoAsignacion().observe(getViewLifecycleOwner(), exito -> {
-            Log.d(TAG, "getResultadoAsignacion(): exito=" + exito);
             if (exito == null) return;
             if (exito) {
                 Toast.makeText(requireContext(),
@@ -87,7 +86,7 @@ public class ProductosDisponiblesFragment extends Fragment {
             } else {
                 Toast.makeText(requireContext(),
                         "Error al asignar productos", Toast.LENGTH_SHORT).show();
-                // Reactivar el FAB para intentar nuevamente
+                // Reactivar el FAB para intentarlo nuevamente
                 binding.fabAsignarProductos.setEnabled(true);
             }
         });
@@ -95,7 +94,7 @@ public class ProductosDisponiblesFragment extends Fragment {
         // Pulsar el FAB: abrimos el diálogo para introducir “balda” solo de los marcados
         binding.fabAsignarProductos.setOnClickListener(v -> {
             List<ProductoResponse> seleccionadosObjeto = adapter.getProductosSeleccionados();
-            Log.d(TAG, "FAB click: seleccionadosObjeto.size()=" + seleccionadosObjeto.size());
+
             if (seleccionadosObjeto.isEmpty()) {
                 Toast.makeText(requireContext(),
                         "Debes seleccionar al menos un producto", Toast.LENGTH_SHORT).show();
@@ -119,11 +118,7 @@ public class ProductosDisponiblesFragment extends Fragment {
      * con un número válido. Al confirmar, llama a viewModel.asignarProductos(...) con la lista de IDs.
      */
     private void mostrarDialogoBalda(List<ProductoResponse> productosSeleccionados) {
-        Log.d(TAG, "mostrarDialogoBalda(): recibidos " +
-                productosSeleccionados.size() + " productos seleccionados");
-        for (ProductoResponse p : productosSeleccionados) {
-            Log.d(TAG, "   • ID=" + p.getId() + " | Nombre=" + p.getNombre());
-        }
+
 
         // 1) Creamos un LinearLayout vertical que contendrá tantas filas como productosSeleccionados
         LinearLayout container = new LinearLayout(requireContext());
@@ -217,7 +212,6 @@ public class ProductosDisponiblesFragment extends Fragment {
 
                 // 6) Si todo es correcto, extraemos SOLO los IDs seleccionados y llamamos a ViewModel
                 List<Integer> idsSeleccionados = adapter.getIdsSeleccionados();
-                Log.d(TAG, "Asignar clic → IDs enviados a ViewModel: " + idsSeleccionados);
                 viewModel.asignarProductos(idsSeleccionados);
 
                 // Deshabilitamos el FAB mientras esperamos la respuesta
