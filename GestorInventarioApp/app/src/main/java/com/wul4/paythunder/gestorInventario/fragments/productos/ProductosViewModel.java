@@ -75,7 +75,7 @@ public class ProductosViewModel extends ViewModel {
     }
 
     public void guardarProductoApi(RequestBody productoJson, MultipartBody.Part imagenPart) {
-        api.createOrUpdateProducto(productoJson,
+        api.crearProducto(productoJson,
                 imagenPart != null
                         ? imagenPart
                         : MultipartBody.Part.createFormData("imagen","")

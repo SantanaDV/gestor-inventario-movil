@@ -92,5 +92,7 @@
     <string name="no_hay_productos_disponibles">No hay productos disponibles</string>
     <string name="imagen_producto">Imagen</string>
     <string name="menu_productos_disponibles">Productos Disponibles</string>
+    <string name="gestionar_usuarios">Gestionar usuarios</string>
+    <string name="eliminar_usuario">Eliminar usuario</string>
 
 </resources>

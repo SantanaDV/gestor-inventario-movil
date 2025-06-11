@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.wul4.paythunder.gestorInventario.response.AlmacenResponse;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
-import com.wul4.paythunder.gestorInventario.utils.interfaces.AlmacenApi;
+import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAlmacen;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import retrofit2.Response;
 
 public class AlmacenRepository {
 
-    private final AlmacenApi api = ApiClient
+    private final ApiAlmacen api = ApiClient
             .getClient()
-            .create(AlmacenApi.class);
+            .create(ApiAlmacen.class);
 
     public LiveData<List<AlmacenResponse>> fetchAlmacenes() {
         MutableLiveData<List<AlmacenResponse>> live = new MutableLiveData<>();

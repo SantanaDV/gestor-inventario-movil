@@ -28,6 +28,9 @@
     <color name="ptDarkText">#222222</color>
 
 
+    <color name="light_green">#E1F6E2</color>
+    <color name="light_red">#F8D8DD</color>
+
 
     <!-- Colores base para el tema rojo -->
     <color name="red_primary">#F82011</color>         <!-- Rojo 500 -->

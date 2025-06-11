@@ -1,17 +1,17 @@
 package com.wul4.paythunder.gestorInventario.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
+import android.view.View;
 
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,35 +26,42 @@ import com.wul4.paythunder.gestorInventario.utils.Constantes;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private AppBarConfiguration appBarConfiguration;
+    private AppBarConfiguration appBarConfig;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
     private boolean mostrarMenu = true;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor prefEditor;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 1) Binding + layout
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Evitar que el teclado aparezca al inicio si hay campos de texto
+        // 2) Preferences
+        prefs = getSharedPreferences(Constantes.PREFERENCES_NAME, MODE_PRIVATE);
+        prefsEditor = prefs.edit();
+
+        // 3) No abrir teclado al inicio
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        setSupportActionBar(binding.appBarMain.toolbar);
+        // 4) Toolbar
+        Toolbar toolbar = binding.appBarMain.toolbar;
+        setSupportActionBar(toolbar);
 
-        // Fab: lanza RegisterActivity
-        binding.appBarMain.fab.setOnClickListener(v -> {
-            startActivity(new Intent(this, com.wul4.paythunder.gestorInventario.activities.RegisterActivity.class));
-        });
+        // 5) FAB (sigue habilitado sólo en login)
+        binding.appBarMain.fab.setOnClickListener(v ->
+                startActivity(new Intent(this, RegisterActivity.class))
+        );
 
+        // 6) NavController + Drawer
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navView = binding.navView;
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController nav = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
-        // IDs de nivel superior según tu nav-graph
-        appBarConfiguration = new AppBarConfiguration.Builder(
+        // Destinos top-level incluyen tu fragment_home, nav_almacen, nav_productos, tarea_fragment
+        appBarConfig = new AppBarConfiguration.Builder(
                 R.id.nav_home,
                 R.id.nav_almacen,
                 R.id.nav_productos,
@@ -63,78 +70,79 @@ public class MainActivity extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
 
-        // Gestiona visibilidad de fab y drawer en login
-        navController.addOnDestinationChangedListener((controller, destination, args) -> {
-            boolean isLogin = destination.getId() == R.id.loginFragment;
-            mostrarMenu = !isLogin;
+        NavigationUI.setupActionBarWithNavController(this, nav, appBarConfig);
+        NavigationUI.setupWithNavController(navView, nav);
+
+        nav.addOnDestinationChangedListener((controller, destination, args) -> {
+            boolean isLogin       = destination.getId() == R.id.loginFragment;
+            boolean isManageUsers = destination.getId() == R.id.nav_manage_users;
+            mostrarMenu = !isLogin && !isManageUsers;
             invalidateOptionsMenu();
 
-            binding.appBarMain.fab.setVisibility(isLogin
-                    ? View.VISIBLE
-                    : View.GONE
+            // Bloquea/oculta drawer en login o en manage_users
+            boolean lock = isLogin || isManageUsers;
+            drawer.setDrawerLockMode(
+                    lock ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+                            : DrawerLayout.LOCK_MODE_UNLOCKED
             );
-            binding.navView.setVisibility(isLogin
-                    ? View.GONE
-                    : View.VISIBLE
-            );
+            navView.setVisibility(lock ? View.GONE : View.VISIBLE);
 
-             // ocultar/mostrar drawer
-            navView.setVisibility(isLogin ? View.GONE : View.VISIBLE);
+            // FAB sólo en login
+            binding.appBarMain.fab.setVisibility(isLogin ? View.VISIBLE : View.GONE);
         });
 
-        // Conecta toolbar + drawer con navController
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
-        // Listener para los items del menú lateral
+        // 8) Logout lateral (si lo tuvieras) o puedes eliminar este listener
         navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_logout) {
-                cerrarSesion();
-                drawer.closeDrawers();
+                doLogout(nav);
                 return true;
             }
-            boolean handled = NavigationUI.onNavDestinationSelected(item, navController);
+            boolean handled = NavigationUI.onNavDestinationSelected(item, nav);
             drawer.closeDrawers();
             return handled;
         });
-
-        // SharedPreferences para token
-        preferences = getSharedPreferences(Constantes.PREFERENCES_NAME, MODE_PRIVATE);
-        prefEditor = preferences.edit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mostrarMenu) {
-            getMenuInflater().inflate(R.menu.main, menu);
+        if (!mostrarMenu) return false;
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        // Mostrar “Gestionar usuarios” sólo a admin
+        String rol = prefs.getString("rol", "");
+        boolean isAdmin = "admin".equalsIgnoreCase(rol);
+        MenuItem mu = menu.findItem(R.id.nav_manage_users);
+        if (mu != null) mu.setVisible(isAdmin);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController nav = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        int id = item.getItemId();
+
+        if (id == R.id.action_logout) {
+            doLogout(nav);
+            return true;
+        } else if (id == R.id.nav_manage_users) {
+            nav.navigate(R.id.nav_manage_users);
             return true;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void doLogout(NavController nav) {
+        prefsEditor.remove("token")
+                .remove("rol")
+                .apply();
+        nav.navigate(R.id.loginFragment);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_logout) {
-            cerrarSesion();
-            return true;
-        }
-        // Otros items del toolbar (settings, etc)
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void cerrarSesion() {
-        // Borramos token
-        prefEditor.remove("token");
-        prefEditor.apply();
-        // Navegamos al login
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        navController.navigate(R.id.loginFragment);
+        NavController nav = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(nav, appBarConfig) || super.onSupportNavigateUp();
     }
 }

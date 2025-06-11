@@ -3,7 +3,6 @@ package com.wul4.paythunder.gestorInventario.fragments.productosEstanteria;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Fragment que muestra un listado de productos “disponibles” (filtrados por estantería),
- * permite seleccionarlos con checkbox y, al pulsar el FAB “Asignar productos”,
- * abre un diálogo para pedir “balda” únicamente de los productos marcados.
+ * Fragment que:
+ * - muestra productos disponibles,
+ * - permite seleccionarlos,
+ * - abre un diálogo para pedir “balda” por seleccionado,
+ * - llama al ViewModel para asignar.
  */
 public class ProductosDisponiblesFragment extends Fragment {
-
-    private static final String TAG = "ProductosDisp";
 
     private FragmentProductosDisponiblesBinding binding;
     private ProductosDisponiblesViewModel viewModel;
@@ -43,27 +42,20 @@ public class ProductosDisponiblesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProductosDisponiblesBinding.inflate(inflater, container, false);
 
-        // Recuperar el ID de la estantería (via Safe Args)
         int idEstanteriaActual = ProductosDisponiblesFragmentArgs
-                .fromBundle(getArguments())
-                .getIdEstanteria();
-        Log.d(TAG, "onCreateView: idEstanteriaActual=" + idEstanteriaActual);
+                .fromBundle(getArguments()).getIdEstanteria();
 
-        // Instanciar ViewModel y asignarle el ID de la estantería
         viewModel = new ViewModelProvider(this).get(ProductosDisponiblesViewModel.class);
         viewModel.setIdEstanteria(idEstanteriaActual);
 
-        // Configurar RecyclerView y su Adapter
         adapter = new ProductosDisponiblesAdapter();
         binding.recyclerProductosDisponibles.setLayoutManager(
                 new LinearLayoutManager(requireContext())
         );
         binding.recyclerProductosDisponibles.setAdapter(adapter);
 
-        // 4) Observar la lista filtrada de productos
+        // Observa lista filtrada
         viewModel.getProductosFiltrados().observe(getViewLifecycleOwner(), lista -> {
-            Log.d(TAG, "ViewModel entregó productosFiltrados: " +
-                    (lista != null ? lista.size() : "null"));
             binding.progressProductosDisponibles.setVisibility(View.GONE);
             if (lista != null && !lista.isEmpty()) {
                 adapter.setDatos(lista);
@@ -75,151 +67,108 @@ public class ProductosDisponiblesFragment extends Fragment {
             }
         });
 
-        // Observar el resultado de la asignación (true=éxito, false=error)
+        // Observa resultado de asignación
         viewModel.getResultadoAsignacion().observe(getViewLifecycleOwner(), exito -> {
-            if (exito == null) return;
-            if (exito) {
-                Toast.makeText(requireContext(),
-                        "Productos asignados con éxito", Toast.LENGTH_SHORT).show();
-                // Regresamos a la pantalla anterior (pop del NavController)
-                requireActivity().onBackPressed();
-            } else {
-                Toast.makeText(requireContext(),
-                        "Error al asignar productos", Toast.LENGTH_SHORT).show();
-                // Reactivar el FAB para intentarlo nuevamente
-                binding.fabAsignarProductos.setEnabled(true);
+            if (exito != null) {
+                String msg = exito
+                        ? "Productos asignados con éxito"
+                        : "Error al asignar productos";
+                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
+                if (exito) requireActivity().onBackPressed();
+                else binding.fabAsignarProductos.setEnabled(true);
             }
         });
 
-        // Pulsar el FAB: abrimos el diálogo para introducir “balda” solo de los marcados
+        // FAB → abre diálogo de baldas
         binding.fabAsignarProductos.setOnClickListener(v -> {
-            List<ProductoResponse> seleccionadosObjeto = adapter.getProductosSeleccionados();
-
-            if (seleccionadosObjeto.isEmpty()) {
+            List<ProductoResponse> sel = adapter.getProductosSeleccionados();
+            if (sel.isEmpty()) {
                 Toast.makeText(requireContext(),
-                        "Debes seleccionar al menos un producto", Toast.LENGTH_SHORT).show();
-                return;
+                        "Debes seleccionar al menos un producto",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                mostrarDialogoBalda(sel);
             }
-            mostrarDialogoBalda(seleccionadosObjeto);
         });
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    /**
-     * Muestra un AlertDialog en el que, para cada producto de la lista “productosSeleccionados”,
-     * se pide un número de balda. Solo se puede confirmar si TODOS los campos están completos
-     * con un número válido. Al confirmar, llama a viewModel.asignarProductos(...) con la lista de IDs.
-     */
-    private void mostrarDialogoBalda(List<ProductoResponse> productosSeleccionados) {
-
-
-        // 1) Creamos un LinearLayout vertical que contendrá tantas filas como productosSeleccionados
+    private void mostrarDialogoBalda(List<ProductoResponse> seleccionados) {
         LinearLayout container = new LinearLayout(requireContext());
         container.setOrientation(LinearLayout.VERTICAL);
-        int padding = (int) (16 * getResources().getDisplayMetrics().density);
-        container.setPadding(padding, padding, padding, padding);
+        int pad = (int)(16 * getResources().getDisplayMetrics().density);
+        container.setPadding(pad,pad,pad,pad);
 
-        // 2) Mapa (idProducto → EditText) para validar y luego leer cada “balda”
-        Map<Integer, EditText> mapBaldaPorProducto = new HashMap<>();
+        final Map<Integer,EditText> baldasMap = new HashMap<>();
+        for (ProductoResponse p: seleccionados) {
+            LinearLayout row = new LinearLayout(requireContext());
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            row.setPadding(0,pad/2,0,pad/2);
 
-        // 3) Por cada ProductoResponse p en productosSeleccionados, añadimos una fila:
-        for (ProductoResponse p : productosSeleccionados) {
-            // 3a) Fila horizontal
-            LinearLayout fila = new LinearLayout(requireContext());
-            fila.setOrientation(LinearLayout.HORIZONTAL);
-            fila.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
+            TextView tv = new TextView(requireContext());
+            tv.setLayoutParams(new LinearLayout.LayoutParams(0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            tv.setText(p.getNombre());
+            tv.setTextSize(16f);
+
+            EditText et = new EditText(requireContext());
+            et.setLayoutParams(new LinearLayout.LayoutParams(
+                    (int)(80*getResources().getDisplayMetrics().density),
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
-            fila.setPadding(0, padding / 2, 0, padding / 2);
+            et.setHint("Balda");
+            et.setInputType(InputType.TYPE_CLASS_NUMBER);
+            et.setSingleLine(true);
 
-            // 3b) TextView con el nombre del producto
-            TextView tvNombre = new TextView(requireContext());
-            tvNombre.setLayoutParams(new LinearLayout.LayoutParams(
-                    0,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    1f
-            ));
-            tvNombre.setText(p.getNombre());
-            tvNombre.setTextSize(16f);
-
-            // 3c) EditText para que el usuario ingrese un número de “balda”
-            EditText etBalda = new EditText(requireContext());
-            etBalda.setLayoutParams(new LinearLayout.LayoutParams(
-                    (int) (80 * getResources().getDisplayMetrics().density),
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            etBalda.setHint("Balda");
-            etBalda.setInputType(InputType.TYPE_CLASS_NUMBER);
-            etBalda.setSingleLine(true);
-
-            // 3d) Añadimos ambos elementos a la fila
-            fila.addView(tvNombre);
-            fila.addView(etBalda);
-
-            // 3e) Guardamos en el mapa: clave = p.getId(), valor = etBalda
-            mapBaldaPorProducto.put(p.getId(), etBalda);
-
-            // 3f) Añadimos la fila completa al contenedor principal
-            container.addView(fila);
+            baldasMap.put(p.getId(), et);
+            row.addView(tv);
+            row.addView(et);
+            container.addView(row);
         }
 
-        // 4) Construimos el AlertDialog con ese “container” como contenido
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Asignar balda y confirmar");
-        builder.setView(container);
+        AlertDialog.Builder b = new AlertDialog.Builder(requireContext())
+                .setTitle("Asignar balda y confirmar")
+                .setView(container)
+                .setNegativeButton("Cancelar", (d,w)-> {
+                    d.dismiss();
+                    binding.fabAsignarProductos.setEnabled(true);
+                })
+                .setPositiveButton("Asignar", null);
 
-        // Botón “Cancelar”
-        builder.setNegativeButton("Cancelar", (dialog, which) -> {
-            dialog.dismiss();
-            binding.fabAsignarProductos.setEnabled(true);
-        });
-
-        // Botón “Asignar” (sin listener aquí para validar antes de cerrar)
-        builder.setPositiveButton("Asignar", null);
-
-        AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(dialogInterface -> {
-            // Cuando el diálogo está en pantalla, capturamos el botón Positivo
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-                // 5) Validar que TODOS los EditText contengan un número válido
-                boolean todosValidos = true;
-                for (Map.Entry<Integer, EditText> entry : mapBaldaPorProducto.entrySet()) {
-                    String texto = entry.getValue().getText().toString().trim();
-                    if (texto.isEmpty()) {
-                        todosValidos = false;
-                        break;
-                    }
-                    try {
-                        Integer.parseInt(texto);
-                    } catch (NumberFormatException ex) {
-                        todosValidos = false;
-                        break;
+        AlertDialog dlg = b.create();
+        dlg.setOnShowListener(di -> {
+            dlg.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v2->{
+                // validación
+                for (EditText et: baldasMap.values()){
+                    String t=et.getText().toString().trim();
+                    if (t.isEmpty()){
+                        Toast.makeText(requireContext(),
+                                "Debes introducir balda en cada producto",
+                                Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
-                if (!todosValidos) {
-                    Toast.makeText(requireContext(),
-                            "Debes introducir un número de balda en cada producto", Toast.LENGTH_SHORT).show();
-                    return;
+                // extraer IDs y baldas
+                List<Integer> ids = adapter.getIdsSeleccionados();
+                Map<Integer,Integer> baldas = new HashMap<>();
+                for (Map.Entry<Integer,EditText> e: baldasMap.entrySet()){
+                    baldas.put(e.getKey(), Integer.parseInt(e.getValue().getText().toString()));
                 }
-
-                // 6) Si todo es correcto, extraemos SOLO los IDs seleccionados y llamamos a ViewModel
-                List<Integer> idsSeleccionados = adapter.getIdsSeleccionados();
-                viewModel.asignarProductos(idsSeleccionados);
-
-                // Deshabilitamos el FAB mientras esperamos la respuesta
+                // llamar
+                viewModel.asignarProductosConBaldas(ids, baldas);
                 binding.fabAsignarProductos.setEnabled(false);
-                dialog.dismiss();
+                dlg.dismiss();
             });
         });
+        dlg.show();
+    }
 
-        dialog.show();
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

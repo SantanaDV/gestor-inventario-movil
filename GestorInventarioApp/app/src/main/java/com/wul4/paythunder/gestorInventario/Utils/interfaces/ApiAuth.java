@@ -24,5 +24,8 @@ public interface ApiAuth {
     Call<Boolean> existeEmail(@Query("email") String email);
 
 
+    /** Obtener perfil completo **/
+    @GET("api/usuario/perfil")
+    Call<Usuario> getPerfil(@Query("email") String email);
 
 }

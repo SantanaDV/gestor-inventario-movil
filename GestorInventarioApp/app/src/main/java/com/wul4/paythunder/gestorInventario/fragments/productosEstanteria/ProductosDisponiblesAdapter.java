@@ -149,7 +149,7 @@ public class ProductosDisponiblesAdapter
             } else {
                 seleccionados.remove(idProducto);
             }
-           
+
         }
     }
 }
