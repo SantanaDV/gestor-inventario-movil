@@ -53,18 +53,18 @@ public class TareaFragment extends Fragment {
 
         FragmentManager fragmentManager = getChildFragmentManager();
 
-        // Cargar los fragmentos por defecto
-        fragmentManager.beginTransaction()
-                .replace(R.id.containerTareasPorHacer, new TareaHacerFragment())
-                .commit();
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.containerTareasEnProceso, new TareaProcesoFragment())
-                .commit();
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.containerTareasRealizadas, new TareaRealizadaFragment())
-                .commit();
+//        // Cargar los fragmentos por defecto
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.containerTareasPorHacer, new TareaHacerFragment())
+//                .commit();
+//
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.containerTareasEnProceso, new TareaProcesoFragment())
+//                .commit();
+//
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.containerTareasRealizadas, new TareaRealizadaFragment())
+//                .commit();
 
     }
 }

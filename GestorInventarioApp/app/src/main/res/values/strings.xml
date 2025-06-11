@@ -43,7 +43,6 @@
     <string name="clicar_tareas_por_hacer">Clicar tarea por hacer</string>
     <string name="clicar_tareas_en_proceso">Clicar Tareas en proceso</string>
     <string name="clicar_tareas_realizadas">Clicar Tareas Realizadas</string>
-<<<<<<< Updated upstream
 
 
 
@@ -56,18 +55,17 @@
     <string name="textview">TextView</string>
     <string name="textviewexistencias">EXISTENCIAS</string>
     <string name="sinExistencias">SIN EXISTENCIAS</string>
-    <string name="textview4" />
+    <string name="textview4">Texto4</string>
     <string name="cerrar_sesión">Cerrar sesión</string>
 
     <string name="registrarse">¿Registrarse?</string>
     <string name="formulario_de_registro">FORMULARIO DE REGISTRO</string>
-    <string name="confirmar_contrase_a">Confirmar Contraseña</string>
     <string name="contrasena">Contraseña</string>
     <string name="email">Email</string>
     <string name="nombre_completo">Nombre Completo</string>
 
     <string name="textviewproductos">TextViewProductos</string>
-    <string name="textviewtotalproductos">TOTAL PRODUCTOS</string>
+<!--    <string name="textviewtotalproductos">TOTAL PRODUCTOS </string>-->
     <string name="menu_almacen">Almacén</string>
     <string name="anadir">Añadir</string>
     <string name="filtrar">filtrar</string>
@@ -80,9 +78,8 @@
     <string name="torch_toggle">Alternar linterna</string>
 
 
-=======
-    <string name="simple_spinner_item">simple_spinner_item</string>
     <string name="crear_nueva_tarea">Abrir Formulario</string>
     <string name="btnGuardarTarea">GUARDAR</string>
->>>>>>> Stashed changes
+    <string name="confirmar_contrasena">Confirmar contraseña</string>
+    <string name="sin_existencias">Sin existencias</string>
 </resources>

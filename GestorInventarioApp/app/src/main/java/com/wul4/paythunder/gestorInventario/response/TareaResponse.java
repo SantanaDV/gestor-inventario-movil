@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
+import com.wul4.paythunder.gestorInventario.fragments.tareas.TareaAdapter;
 import com.wul4.paythunder.gestorInventario.fragments.tareas.TareaViewModel;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiTarea;
 
@@ -38,26 +39,26 @@ public class TareaResponse {
 
     private void fetchAllDataTareas() {
 
-        apiTarea.getCrearTareas().enqueue(new Callback<List<Tarea>>() {
-
-            @Override
-            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Tarea> tareasCrear = response.body();
-                    tareaViewModel.setCrearTareas(tareasCrear.size());
-                    tareaViewModel.getCrearTareas().setValue(tareasCrear);
-                } else {
-
-                        tareaViewModel.getTareasCrear().setValue(null);
-                    }
-                }
-
-
-            @Override
-            public void onFailure(Call<List<Tarea>> call, Throwable t) {
-
-            }
-        });
+//        apiTarea.getCrearTareas().enqueue(new Callback<List<Tarea>>() {
+//
+//            @Override
+//            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    List<Tarea> tareasCrear = response.body();
+////                    tareaViewModel.setCrearTareas(tareasCrear.size());
+//                    tareaViewModel.getCrearTareas().postValue(tareasCrear);
+//                } else {
+//
+//                        tareaViewModel.getTareasCrear().postValue(null);
+//                    }
+//                }
+//
+//
+//            @Override
+//            public void onFailure(Call<List<Tarea>> call, Throwable t) {
+//
+//            }
+//        });
 
             apiTarea.gettotalTareas().enqueue(new Callback<List<Tarea>>() {
             @Override
@@ -66,14 +67,14 @@ public class TareaResponse {
 
                     List<Tarea> tareasContadas = response.body();
 
-                    tareaViewModel.settotalTareas(tareasContadas.size());
-                    tareaViewModel.getTotalTareas().setValue(tareasContadas);
+//                    tareaViewModel.settotalTareas(tareasContadas.size());
+                    tareaViewModel.getTotalTareas().postValue(tareasContadas);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getTotalTareas().setValue(null);
+                tareaViewModel.getTotalTareas().postValue(null);
             }
         });
 
@@ -86,14 +87,15 @@ public class TareaResponse {
 
                     Log.d("API", "Tareas Hacer recibidas: " + tareasContadasHacer.size());
 
-                    tareaViewModel.setListarTareaHacer(tareasContadasHacer.size());
-                    tareaViewModel.getListarTareaHacer().setValue(tareasContadasHacer);
+                    //tareaViewModel.setListarTareaHacer(tareasContadasHacer.size());
+                    tareaViewModel.getListarTareaHacer().postValue(tareasContadasHacer);
+                    if (tareasContadasHacer != null) TareaAdapter.setTareas(tareasContadasHacer);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getListarTareaHacer().setValue(null);
+                tareaViewModel.getListarTareaHacer().postValue(null);
             }
         });
 
@@ -104,14 +106,14 @@ public class TareaResponse {
 
                     List<Tarea> tareasContadasProceso = response.body();
 
-                    tareaViewModel.setListarTareaProceso(tareasContadasProceso.size());
-                    tareaViewModel.getListarTareaProceso().setValue(tareasContadasProceso);
+//                    tareaViewModel.setListarTareaProceso(tareasContadasProceso.size());
+                    tareaViewModel.getListarTareaProceso().postValue(tareasContadasProceso);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getListarTareaProceso().setValue(null);
+                tareaViewModel.getListarTareaProceso().postValue(null);
             }
         });
 
@@ -122,14 +124,14 @@ public class TareaResponse {
 
                     List<Tarea> tareasContadasRealizadas = response.body();
 
-                    tareaViewModel.setListarTareaRealizada(tareasContadasRealizadas.size());
-                    tareaViewModel.getListarTareaRealizada().setValue(tareasContadasRealizadas);
+//                    tareaViewModel.setListarTareaRealizada(tareasContadasRealizadas.size());
+                    tareaViewModel.getListarTareaRealizada().postValue(tareasContadasRealizadas);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getListarTareaRealizada().setValue(null);
+                tareaViewModel.getListarTareaRealizada().postValue(null);
             }
         });
     }

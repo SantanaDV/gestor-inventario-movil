@@ -7,21 +7,21 @@ public class Tarea implements Serializable{
 
     private int id;
 
-    private int estado;
     private String  descripcion;
     private String empleado_asignado;
+    private String estado;
+
     private String fecha_asignacion;
     private String fecha_finalizacion;
-    private int id_categoria;
+    private Integer id_categoria;
 
-
-    public Tarea(int id, int estado, String descripcion, String empleado_asignado, String fecha_finalizacion, Date fecha_asignacion, int id_categoria) {
+    public Tarea(int id, String descripcion, String empleado_asignado, String estado, String fecha_asignacion, String fecha_finalizacion, int id_categoria) {
         this.id = id;
-        this.estado = estado;
         this.descripcion = descripcion;
         this.empleado_asignado = empleado_asignado;
+        this.estado = estado;
+        this.fecha_asignacion = fecha_asignacion;
         this.fecha_finalizacion = fecha_finalizacion;
-        this.fecha_asignacion = String.valueOf(fecha_asignacion);
         this.id_categoria = id_categoria;
     }
 
@@ -50,19 +50,19 @@ public class Tarea implements Serializable{
         this.empleado_asignado = empleado_asignado;
     }
 
-    public CharSequence getFecha_asignacion() {
-        return (CharSequence) fecha_asignacion;
+    public String getFecha_asignacion() {
+        return  fecha_asignacion;
     }
 
 
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
 
 
-    public int getId_categoria() {
+    public Integer getId_categoria() {
         return id_categoria;
     }
 
@@ -74,8 +74,8 @@ public class Tarea implements Serializable{
         this.fecha_asignacion = fecha_asignacion;
     }
 
-    public CharSequence getFecha_finalizacion() {
-        return (CharSequence) fecha_finalizacion;
+    public String getFecha_finalizacion() {
+        return fecha_finalizacion;
     }
 
     public void setFecha_finalizacion(String fecha_finalizacion) {
@@ -91,10 +91,12 @@ public class Tarea implements Serializable{
     }
 
 
-    public int getEstado() {
+    public String  getEstado() {
         return estado ;
     }
 
 
-
+    public void setEstadoTexto(String estado) {
+        this.estado = estado;
+    }
 }

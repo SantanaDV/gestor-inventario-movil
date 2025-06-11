@@ -31,18 +31,6 @@ public class HomeViewModel extends ViewModel {
 
 
     /*ojo modifica despues del valor asignado*/
-/*ojo modifica despues del valor asignado*/
-
-    public void setProductosContados(MutableLiveData<Integer> productosContados) {
-        this.productosContados = productosContados;
-    }
-
-
-
-
-
-
-    /*ojo modifica despues del valor asignado*/
 
 
     //El constructor vacío, no inicializa los valores de los MutableLiveData.
@@ -94,8 +82,4 @@ public class HomeViewModel extends ViewModel {
 
 
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> rama-francisco-santana

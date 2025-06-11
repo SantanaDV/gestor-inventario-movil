@@ -22,14 +22,15 @@ public class TareaProcesoFragment extends Fragment {
         private FragmentTareaBinding binding;
         private RecyclerView recyclerView;
 
-        private RecyclerView recyclerHacer, recyclerProceso, recyclerRealizada;
-        private TareaAdapter adapterHacer, adapterProceso, adapterRealizada;
+//        private RecyclerView recyclerHacer, recyclerProceso, recyclerRealizada;
+//        private TareaAdapter  adapterProceso;
         private TareaViewModel tareaViewModel;
         private View btnPorHacer;
         private View btnProceso;
         private View btnRealizada;
+        private RecyclerView.Adapter adapterProceso;
 
-        @Nullable
+    @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                                  @Nullable Bundle savedInstanceState) {
@@ -40,9 +41,9 @@ public class TareaProcesoFragment extends Fragment {
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
-            recyclerView = view.findViewById(R.id.recyclerViewTareas);
+            recyclerView = view.findViewById(R.id.recyclerViewProceso);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(adapterProceso);
+           // recyclerView.setAdapter(adapterProceso);
 
             // ViewModel
             tareaViewModel = new ViewModelProvider(this).get(TareaViewModel.class);

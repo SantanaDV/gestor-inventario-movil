@@ -55,6 +55,17 @@
         android:name="com.wul4.paythunder.gestorInventario.fragments.tareas.TareaFragment"
         android:label="@string/menu_tarea"
         tools:layout="@layout/fragment_tarea">
+        <action
+            android:id="@+id/action_tareaFragment_to_tareaHacerFragment"
+            app:destination="@id/tareaHacerFragment" />
+
+        <action
+            android:id="@+id/action_tareaFragment_to_tareaProcesoFragment"
+            app:destination="@id/tareaProcesoFragment" />
+
+        <action
+            android:id="@+id/action_tareaFragment_to_tareaRealizadaFragment"
+            app:destination="@id/tareaRealizadaFragment" />
     </fragment>
 
 
@@ -63,10 +74,10 @@
         android:name="com.wul4.paythunder.gestorInventario.fragments.tareas.TareaHacerFragment"
         android:label="Tareas por Hacer"
         tools:layout="@layout/fragment_tarea_hacer" />
-        <action
-            android:id="@+id/action_tareaFragment_to_tareaHacerFragment"
-            app:destination="@id/tareaHacerFragment"
-            tools:ignore="DuplicateIds" />
+<!--        <action-->
+<!--            android:id="@+id/action_tareaFragment_to_tareaHacerFragment"-->
+<!--            app:destination="@id/tareaHacerFragment"-->
+<!--            tools:ignore="DuplicateIds" />-->
 
 
     <fragment
@@ -74,16 +85,16 @@
         android:name="com.wul4.paythunder.gestorInventario.fragments.tareas.TareaProcesoFragment"
         android:label="Tareas en Proceso"
         tools:layout="@layout/fragment_tarea_en_proceso" />
-        <action
-            android:id="@+id/action_tareaFragment_to_tareaProcesoFragment"
-            app:destination="@id/tareaProcesoFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_tareaFragment_to_tareaProcesoFragment"-->
+<!--            app:destination="@id/tareaProcesoFragment" />-->
 
     <fragment
         android:id="@+id/tareaRealizadaFragment"
         android:name="com.wul4.paythunder.gestorInventario.fragments.tareas.TareaRealizadaFragment"
         android:label="Tareas Realizadas"
         tools:layout="@layout/fragment_tarea_realizada" />
-        <action
-            android:id="@+id/action_tareaFragment_to_tareaRealizadaFragment"
-            app:destination="@id/tareaRealizadaFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_tareaFragment_to_tareaRealizadaFragment"-->
+<!--            app:destination="@id/tareaRealizadaFragment" />-->
 </navigation>

@@ -15,22 +15,20 @@ import retrofit2.http.POST;
  */
 
 public interface ApiTarea {
-//    @POST("api/tarea/guardarTarea")
-//    Call<Tarea> getguardarTarea();
+
     @GET("api/tarea/totalTareas")
     Call<List<Tarea>> gettotalTareas();
 
-    @POST("api/tarea/crearTarea")  // Endpoint para crear una nueva tarea, por ello utilizamos @POST en vez de @GET
-    Call<Tarea>crearTarea(@Body Tarea nuevaTarea);  // Usamos @Body para enviar el objeto en el cuerpo
+//    @GET("api/tarea/crearTarea")  // Endpoint para crear una nueva tarea, por ello utilizamos @POST en vez de @GET
+//    Call<Tarea>crearTarea(@Body Tarea nuevaTarea);  // Usamos @Body para enviar el objeto en el cuerpo
 
     @POST("api/tarea/eliminarTarea")
-    Call<Tarea> eliminarTarea(int id);
+    Call<Tarea> eliminarTarea(@Body int id);
 
     @POST("api/tarea/actualizarTarea")
     Call<Tarea> actualizarTarea(Tarea id);
 
-    @POST("api/tarea/crearTareas")
-    Call<List<Tarea>> getCrearTareas();
+
 
 
 
@@ -41,4 +39,6 @@ public interface ApiTarea {
     Call<List<Tarea>> getlistarTareaHacer();
     @GET("api/tarea/listarTareaProceso")
     Call<List<Tarea>> getListarTareaProceso();
+    @POST("api/tarea/crearTarea")
+    Call<Tarea> crearTarea(@Body Tarea tarea); // Usamos @Body para enviar el objeto en el cuerpo
 }

@@ -21,10 +21,14 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
     private final OnTareaClickListener listener;
 
 
+
+    public static void setTareas(List<Tarea> tareasContadasHacer) {
+    }
+
+
     public interface OnTareaClickListener {
         void onClick(Tarea tarea);
     }
-
 
 
     public TareaAdapter(OnTareaClickListener listener) {
@@ -41,7 +45,7 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
     @Override
     public TareaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_tarea_base, parent, false);
+                .inflate(R.layout.item_tarea, parent, false);
         return new TareaViewHolder(view);
     }
 
@@ -49,13 +53,14 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
     public void onBindViewHolder(@NonNull TareaViewHolder holder, int position) {
         Tarea tarea = tareaList.get(position);
 
-        holder.descripcion.setText(tarea.getDescripcion());
-        holder.estado.setText(tarea.getEstado());
+        holder.etDescripcion.setText(tarea.getDescripcion());
+        holder.estado.setText(String.valueOf(tarea.getEstado()));
         holder.empleado.setText(tarea.getEmpleadoAsignado());
-        holder.categoria.setText(tarea.getId_categoria());
-        holder.fecha.setText(tarea.getFecha_asignacion());
+        holder.fecha.setText(tarea.getFecha_finalizacion() != null ? tarea.getFecha_finalizacion().toString() : "");
+        holder.categoria.setText(tarea.getId_categoria() != null ? String.valueOf(tarea.getId_categoria()) : "");
 
-         //Lógica de clic
+
+        //Lógica de clic
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onClick(tarea);
@@ -65,16 +70,16 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
 
     @Override
     public int getItemCount() {
-        return tareaList != null ? tareaList.size() : 0;
+
+        return tareaList.size();
     }
 
     static class TareaViewHolder extends RecyclerView.ViewHolder {
-
-        final TextView descripcion, estado, empleado, categoria, fecha;
+        final TextView etDescripcion, estado, empleado, categoria, fecha;
 
         public TareaViewHolder(@NonNull View itemView) {
             super(itemView);
-            descripcion = itemView.findViewById(R.id.descripcion);
+            etDescripcion = itemView.findViewById(R.id.etDescripcion);
             estado = itemView.findViewById(R.id.estado);
             empleado = itemView.findViewById(R.id.empleado);
             categoria = itemView.findViewById(R.id.categoria);
@@ -82,3 +87,5 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
         }
     }
 }
+
+

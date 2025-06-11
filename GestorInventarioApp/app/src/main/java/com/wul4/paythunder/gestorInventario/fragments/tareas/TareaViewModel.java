@@ -66,21 +66,5 @@ public class TareaViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getTareasCrear() { return tareasCrear; }
 
-    public void setCrearTareas(int size) {
-    }
-
-    public void settotalTareas(int size) {
-    }
-
-
-    public void setListarTareaHacer(int size) {
-    }
-
-    public void setListarTareaProceso(int size) {
-        
-    }
-
-    public void setListarTareaRealizada(int size) {
-    }
 }
 

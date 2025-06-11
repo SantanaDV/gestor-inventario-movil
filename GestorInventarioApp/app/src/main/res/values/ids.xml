@@ -16,22 +16,20 @@
     <item name="tarea_fragmentProceso" type="id"/>
     <item name="tarea_fragmentRealizadas" type="id"/>
     <item name="tvTitulo" type="id"/>
-    <item name="descripcion" type="id"/>
+    <item name="etDescripcion" type="id"/>
     <item name="etFechaFinalizacion" type="id"/>
+    <item name="etFechaAsignacion" type="id"/>
     <item name="tareas_por_hacer" type="id"/>
     <item name="tareas_en_proceso" type="id"/>
     <item name="tareas_realizadas" type="id"/>
-    <item name="recyclerViewTareas" type="id"/>
     <item name="tareaHacerFragment" type="id"/>
     <item name="tareaProcesoFragment" type="id"/>
     <item name="tareaRealizadaFragment" type="id"/>
     <item name= "containerTareasPorHacer" type="id"/>
     <item name= "containerTareasRealizadas" type="id"/>
     <item name= "containerTareasEnProceso" type="id"/>
-    <item name="fragment_tarea" type="id"/>
-    <item name="fragment_tarea_hacer" type="id"/>
-    <item name="fragment_tarea_proceso" type="id"/>
-    <item name="fragment_tarea_realizada" type="id"/>
+    <item name="btnGuardarTarea" type="id"/>
+
     <item name="btnPorHacer" type="id"/>
     <item name="btnEnProceso" type="id"/>
     <item name="btnRealizadas" type="id"/>
@@ -44,10 +42,7 @@
     <item name="tareaProceso" type="id"/>
     <item name="tareaRealizada" type="id"/>
     <item name="tareaHacer" type="id"/>
-    <item name="action_nav_tarea_to_tareaFragment" type="id"/>
-    <item name="action_nav_tarea_to_tareaRealizadaFragment" type="id"/>
-    <item name="action_nav_tarea_to_tareaProcesoFragment" type="id"/>
-    <item name="action_nav_tarea_to_tareaHacerFragment" type="id"/>
+
     <item name="action_nav_tarea_to_tareaBaseFragment" type="id"/>
     <item name="action_nav_inventario_to_inventarioFragment" type="id"/>
     <item name="action_nav_inventario_to_inventarioBaseFragment" type="id"/>
@@ -56,12 +51,17 @@
     <item name="action_nav_inventario_to_inventarioHacerFragment" type="id"/>
     <item name="btnCrearNuevaTarea" type="id"/>
     <item name="btnEliminarTarea" type="id"/>
-    <item name="btnGuardarTarea" type="id"/>
+    <item name="spCategoria" type="id"/>
     <item name="btnAbrirFromulario" type="id"/>
     <item name="containerBaseTarea" type="id"/>
+    <item name="spEstado" type="id"/>
+    <item name="spEmpleadoAsignado" type="id"/>
 
+    <item name="recyclerView" type="id"/>
+    <item name="recyclerViewHacer" type="id"/>
 
-    <!--    <item name="conexistencias" type="id"/>-->
-<!--    <item name="confaltantes" type="id"/>-->
+    <item name="recyclerViewProceso" type="id"/>
+    <item name="recyclerViewRealizadas" type="id"/>
+
 
 </resources>
