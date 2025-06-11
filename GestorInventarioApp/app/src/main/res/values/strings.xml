@@ -88,6 +88,12 @@
     <string name="desasignar">desasignar</string>
 
     <string name="menu_productos_estanteria">Productos por estantería</string>
+    <string name="asignar_productos">Asignar productos</string>
+    <string name="no_hay_productos_disponibles">No hay productos disponibles</string>
+    <string name="imagen_producto">Imagen</string>
+    <string name="menu_productos_disponibles">Productos Disponibles</string>
+    <string name="gestionar_usuarios">Gestionar usuarios</string>
+    <string name="eliminar_usuario">Eliminar usuario</string>
 
     <string name="simple_spinner_item">simple_spinner_item</string>
     <string name="crear_nueva_tarea">Abrir Formulario</string>

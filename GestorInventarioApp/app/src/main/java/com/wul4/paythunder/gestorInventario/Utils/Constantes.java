@@ -4,6 +4,7 @@ import android.view.View;
 
 public class Constantes {
     public static final String PREFERENCES_NAME = "preference";
+    public static final String TOKEN_KEY        = "token";
     public static final String MODO_KIOSCO = "modoKiosko";
     /** CAMBIAR EL NOMBRE DEL DIRECTORIO EN FUNCIÓN DE LA APP */
     public static final String LOGS_FOLFER_NAME = "PTHelloWorldLogs";

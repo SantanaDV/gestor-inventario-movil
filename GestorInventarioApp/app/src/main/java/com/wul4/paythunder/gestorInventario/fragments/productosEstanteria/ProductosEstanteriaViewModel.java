@@ -4,58 +4,37 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.wul4.paythunder.gestorInventario.interfaces.AlmacenApi;
 import com.wul4.paythunder.gestorInventario.response.ProductoResponse;
-import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ProductosEstanteriaViewModel extends ViewModel {
+    private final ProductosEstanteriaRepository repo = new ProductosEstanteriaRepository();
 
     private final MutableLiveData<List<ProductoResponse>> productos = new MutableLiveData<>();
-    private final AlmacenApi api;
+    private final MutableLiveData<Boolean> resultado   = new MutableLiveData<>();
 
-    public ProductosEstanteriaViewModel() {
-        api = ApiClient.getClient().create(AlmacenApi.class);
-    }
+    public LiveData<List<ProductoResponse>> getProductos() { return productos; }
+    public LiveData<Boolean> getResultado()           { return resultado; }
 
-    /** LiveData con los productos filtrados. */
-    public LiveData<List<ProductoResponse>> getProductos() {
-        return productos;
-    }
-
-    /**
-     * Carga todos los productos y, en cliente, filtra por idEstanteria.
-     * @param idEstanteria identificador de la estantería.
-     */
     public void loadProductos(int idEstanteria) {
-        api.getAllProductos().enqueue(new Callback<List<ProductoResponse>>() {
-            @Override
-            public void onResponse(Call<List<ProductoResponse>> call,
-                                   Response<List<ProductoResponse>> response) {
-                List<ProductoResponse> filtrados = new ArrayList<>();
-                if (response.isSuccessful() && response.body() != null) {
-                    for (ProductoResponse p : response.body()) {
-                        // Primero comprobamos que la estantería no sea null
-                        if (p.getEstanteria() != null && p.getEstanteria().getId() == idEstanteria) {
-                            // Opcional: asigna un nombre legible en el producto
-                            p.setPosicion("Estantería " + p.getEstanteria().getId());
-                            filtrados.add(p);
-                        }
-                    }
-                }
-                productos.setValue(filtrados);
-            }
+        repo.fetchProductosPorEstanteria(idEstanteria)
+                .observeForever(list -> productos.setValue(list));
+    }
 
-            @Override
-            public void onFailure(Call<List<ProductoResponse>> call, Throwable t) {
-                productos.setValue(new ArrayList<>());
-            }
-        });
+    public void editarBalda(int idProd, int idEstanteria, int balda) {
+        repo.actualizarBalda(idProd, idEstanteria, balda)
+                .observeForever(ok -> {
+                    resultado.setValue(ok);
+                    if (ok) loadProductos(idEstanteria);
+                });
+    }
+
+    public void eliminarDeEstanteria(int idProd, int idEstanteria) {
+        repo.desasignarProducto(idProd)
+                .observeForever(ok -> {
+                    resultado.setValue(ok);
+                    if (ok) loadProductos(idEstanteria);
+                });
     }
 }

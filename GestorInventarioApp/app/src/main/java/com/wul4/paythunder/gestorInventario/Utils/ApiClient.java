@@ -27,8 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static final String BASE_URL   = "http://10.110.4.43:8080/";
-    private static final String PREFS_NAME = "MyPrefs";
-    private static final String TOKEN_KEY  = "token";
 
     private static Retrofit retrofit = null;
 
@@ -45,8 +43,8 @@ public class ApiClient {
                     // Aquí ya usamos el contexto de la aplicación garantizado no-nulo
                     String token = MyApplication
                             .getInstance()
-                            .getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-                            .getString(TOKEN_KEY, "");
+                            .getSharedPreferences(Constantes.PREFERENCES_NAME, MODE_PRIVATE)
+                            .getString(Constantes.TOKEN_KEY, "");
 
                     Request original = chain.request();
                     Request.Builder builder = original.newBuilder();

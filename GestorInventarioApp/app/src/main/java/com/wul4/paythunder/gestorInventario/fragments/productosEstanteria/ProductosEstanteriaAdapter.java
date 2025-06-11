@@ -1,13 +1,15 @@
-// File: app/src/main/java/com/wul4/paythunder/gestorInventario/fragments/productosEstanteria/ProductosEstanteriaAdapter.java
+// .java
 package com.wul4.paythunder.gestorInventario.fragments.productosEstanteria;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 import com.wul4.paythunder.gestorInventario.databinding.ItemProductoEstanteriaBinding;
 import com.wul4.paythunder.gestorInventario.response.ProductoResponse;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
@@ -19,85 +21,96 @@ import java.util.List;
 public class ProductosEstanteriaAdapter
         extends RecyclerView.Adapter<ProductosEstanteriaAdapter.ViewHolder> {
 
+    public interface OnItemAction {
+        /** La estantería ya estaba asignada; querrá editar balda */
+        void onEditarBalda(ProductoResponse producto);
+        /** Quitar producto de la estantería */
+        void onEliminarDeEstanteria(ProductoResponse producto);
+    }
+
     private final List<ProductoResponse> datos = new ArrayList<>();
-    private final OnDesasignarListener listener;
+    private final OnItemAction actionListener;
 
-    public interface OnDesasignarListener {
-        void onDesasignar(ProductoResponse producto);
+    public ProductosEstanteriaAdapter(OnItemAction actionListener) {
+        this.actionListener = actionListener;
     }
 
-    public ProductosEstanteriaAdapter(OnDesasignarListener listener) {
-        this.listener = listener;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProductoEstanteriaBinding binding = ItemProductoEstanteriaBinding
-                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(binding);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(datos.get(position), listener);
-    }
-
-    @Override
-    public int getItemCount() {
-        return datos.size();
-    }
-
-    /** Actualiza la lista de datos y refresca el RecyclerView */
     public void setDatos(List<ProductoResponse> lista) {
         datos.clear();
         if (lista != null) datos.addAll(lista);
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ItemProductoEstanteriaBinding binding;
+    @NonNull @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemProductoEstanteriaBinding b = ItemProductoEstanteriaBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(b);
+    }
 
+    @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(datos.get(position));
+    }
+
+    @Override public int getItemCount() {
+        return datos.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private final ItemProductoEstanteriaBinding b;
         ViewHolder(ItemProductoEstanteriaBinding binding) {
             super(binding.getRoot());
-            this.binding = binding;
+            this.b = binding;
         }
-
-        void bind(ProductoResponse producto, OnDesasignarListener listener) {
-            // Construimos la URL completa igual que en ProductosFragment
-            String base = ApiClient.getClient().baseUrl().toString(); // p.ej. "http://10.110.4.43:8080/"
-            String url = base + "imagen/" + producto.getUrlImg();
-
-            // Carga con reintento
+        void bind(ProductoResponse p) {
+            // Carga de imagen
+            String url = ApiClient.getClient().baseUrl() + "imagen/" + p.getUrlImg();
             Utils.cargaDeImagenesConReintento(
-                    binding.getRoot().getContext(),
-                    binding.imgProducto,
-                    url,
-                    3
+                    b.getRoot().getContext(), b.imgProducto, url, 3
             );
 
-            // Resto de tu bind…
-            binding.tvNombre.setText(producto.getNombre());
-            binding.tvCantidad.setText("Cantidad: " + producto.getCantidad());
-            binding.chipEstado.setText(producto.getEstado());
-            int color = "activo".equalsIgnoreCase(producto.getEstado())
+            b.tvNombre.setText(p.getNombre());
+            b.tvCantidad.setText("Cant: " + p.getCantidad());
+            b.chipEstado.setText(p.getEstado());
+            int color = "activo".equalsIgnoreCase(p.getEstado())
                     ? android.R.color.holo_green_light
                     : android.R.color.holo_red_dark;
-            binding.chipEstado.setChipBackgroundColorResource(color);
+            b.chipEstado.setChipBackgroundColorResource(color);
 
-            if (producto.getCategoria() != null) {
-                binding.tvCategoria.setText("Categoría: " + producto.getCategoria().getDescripcion());
-            } else {
-                binding.tvCategoria.setText("Categoría: —");
-            }
+            b.tvCategoria.setText(
+                    p.getCategoria()!=null
+                            ? "Cat: "+p.getCategoria().getDescripcion()
+                            : "Cat: —"
+            );
+            b.tvBalda.setText(
+                    p.getBalda()!=null
+                            ? "Balda: "+p.getBalda()
+                            : "Balda: —"
+            );
 
-            if (producto.getBalda() != null) {
-                binding.tvBalda.setText("Balda: " + producto.getBalda());
-            } else {
-                binding.tvBalda.setText("Balda: —");
-            }
+            // **Short-click** en el botón para desasignar completo
+            b.btnAccion.setOnClickListener(v ->
+                    actionListener.onEliminarDeEstanteria(p)
+            );
 
-            binding.btnAccion.setOnClickListener(v -> listener.onDesasignar(producto));
+            // **Long-click** en toda la tarjeta → menú “Editar balda” / “Eliminar”
+            ((MaterialCardView)b.getRoot()).setOnLongClickListener(v -> {
+                androidx.appcompat.widget.PopupMenu popup =
+                        new androidx.appcompat.widget.PopupMenu(v.getContext(), v);
+                popup.getMenu().add("Editar balda");
+                popup.getMenu().add("Eliminar de estantería");
+                popup.setOnMenuItemClickListener(item -> {
+                    String title = item.getTitle().toString();
+                    if (title.equals("Editar balda")) {
+                        actionListener.onEditarBalda(p);
+                    } else {
+                        actionListener.onEliminarDeEstanteria(p);
+                    }
+                    return true;
+                });
+                popup.show();
+                return true;
+            });
         }
     }
 }

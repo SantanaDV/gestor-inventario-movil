@@ -137,9 +137,18 @@ public class RegisterActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                                 }
                             }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "La contraseña debe contener solo letras, numeros y más de 6 caracteres", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "El email no es valido", Toast.LENGTH_SHORT).show();
                 }
+            }else{
+                Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             }
         });
     }

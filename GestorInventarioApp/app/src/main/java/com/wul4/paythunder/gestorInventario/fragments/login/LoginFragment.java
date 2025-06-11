@@ -1,6 +1,8 @@
 package com.wul4.paythunder.gestorInventario.fragments.login;
 
 
+import static com.wul4.paythunder.gestorInventario.utils.Constantes.PREFERENCES_NAME;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,11 +18,13 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wul4.paythunder.gestorInventario.R;
+import com.wul4.paythunder.gestorInventario.entities.Usuario;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
 import com.wul4.paythunder.gestorInventario.utils.SimpleTextWatcher;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiAuth;
@@ -65,7 +69,7 @@ public class LoginFragment extends Fragment {
                 // Aquí no hacemos nada, evitando que se ejecute la acción de retroceso
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         // Obtenemos las referencias a los elementos de la interfaz
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
@@ -100,7 +104,7 @@ public class LoginFragment extends Fragment {
 
 
         //Obtenemos las preferencias compartidas
-        preferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        preferences = requireActivity().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         //Obtenemos del shared preferences las credenciales guardadas
         String emailGuardado = preferences.getString("email", "");
@@ -193,6 +197,7 @@ public class LoginFragment extends Fragment {
 
                     // Guardar token
                     preferences.edit().putString("token", token).apply();
+                    preferences.edit().putString("rol", response.body().getRol()).apply();
 
                     // Guardar email/contraseña si está marcado
                     if (cbRememberMe.isChecked()) {
@@ -202,11 +207,28 @@ public class LoginFragment extends Fragment {
                         preferences.edit().remove("email").apply();
                         preferences.edit().remove("password").apply();
                     }
-
-                    // Ir al home
-                    NavController navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.nav_home);
-
+                    apiAuth.getPerfil(loginRequest.getEmail())
+                            .enqueue(new Callback<Usuario>() {
+                                @Override
+                                public void onResponse(Call<Usuario> c2, Response<Usuario> r2) {
+                                    if (r2.isSuccessful() && r2.body() != null) {
+                                        String rol = r2.body().getRol();     // asumo que Usuario tiene getRol()
+                                        // 3) Guardar rol
+                                        preferences.edit()
+                                                .putString("rol", rol)
+                                                .apply();
+                                    }
+                                    // 4) Navegar al Home aún si r2 falla:
+                                    NavController nav = Navigation.findNavController(view);
+                                    nav.navigate(R.id.nav_home, null, popUpToLogin());
+                                }
+                                @Override
+                                public void onFailure(Call<Usuario> c2, Throwable t2) {
+                                    // no poder leer perfil no debe impedir el login
+                                    NavController nav = Navigation.findNavController(view);
+                                    nav.navigate(R.id.nav_home);
+                                }
+                            });
                 } else {
                     Toast.makeText(getContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
@@ -224,6 +246,12 @@ public class LoginFragment extends Fragment {
 
             }
         });
+    }
+
+    private NavOptions popUpToLogin() {
+        return new NavOptions.Builder()
+                .setPopUpTo(R.id.loginFragment, true)
+                .build();
     }
 
 }

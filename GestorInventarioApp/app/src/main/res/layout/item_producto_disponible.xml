@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:strokeColor="@color/gray_light"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Imagen del producto -->
+        <ImageView
+            android:id="@+id/imgProductoDisponible"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/imagen_producto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Nombre del producto -->
+        <TextView
+            android:id="@+id/tvNombreDisponible"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/imgProductoDisponible"
+            app:layout_constraintTop_toTopOf="@id/imgProductoDisponible"
+            app:layout_constraintEnd_toStartOf="@id/checkBoxSeleccionar"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Detalles (cantidad, categoría, etc.) -->
+        <TextView
+            android:id="@+id/tvDetalleDisponible"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="@id/tvNombreDisponible"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreDisponible"
+            app:layout_constraintEnd_toEndOf="@id/tvNombreDisponible"
+            android:layout_marginTop="4dp"/>
+
+        <!-- CheckBox para seleccionar/des-seleccionar el producto -->
+        <CheckBox
+            android:id="@+id/checkBoxSeleccionar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tvNombreDisponible"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
