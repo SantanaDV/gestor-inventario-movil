@@ -1,13 +1,23 @@
 package com.wul4.paythunder.gestorInventario.utils.dto;
 
 public class ProductoCreacionDTO {
-    Integer cantidad;
-    Integer id_categoria;
-    String codigoQr;
-    String estado;
-    String nombre;
-     String url_img;
+    private Integer id_producto;
+    private Integer cantidad;
+    private Integer id_categoria;
+    private String codigoQr;
+    private String estado;
+    private String nombre;
+    private String url_img;
+    private String fechaCreacion;
 
+
+    public Integer getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(Integer id_producto) {
+        this.id_producto = id_producto;
+    }
     public Integer getCantidad() {
         return cantidad;
     }
@@ -15,6 +25,15 @@ public class ProductoCreacionDTO {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
 
     public String getCodigoQr() {
         return codigoQr;
