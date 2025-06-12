@@ -10,6 +10,7 @@ public class Producto implements Serializable {
     private String codigoQr;
     private String url_img;
     private Categoria categoria;
+    private String fechaCreacion;
 
     // Constructor vacío
     public Producto() {
@@ -27,6 +28,15 @@ public class Producto implements Serializable {
     }
 
     // Getters y setters
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     public int getId_producto() {
         return id_producto;
     }

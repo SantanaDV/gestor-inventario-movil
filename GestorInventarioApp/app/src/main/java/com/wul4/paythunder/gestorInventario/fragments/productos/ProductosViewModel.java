@@ -26,28 +26,35 @@ public class ProductosViewModel extends ViewModel {
     private final MutableLiveData<List<Producto>> productos = new MutableLiveData<>();
     private final MutableLiveData<List<Categoria>> categorias = new MutableLiveData<>();
     private final MutableLiveData<Producto> productoQR = new MutableLiveData<>();
-    private final MutableLiveData<Producto> resultadoCreacion  = new MutableLiveData<>();
+    private final MutableLiveData<Producto> resultadoCreacion = new MutableLiveData<>();
 
     public LiveData<List<Producto>> getProductos() {
         api.getProductos().enqueue(new Callback<List<Producto>>() {
-            @Override public void onResponse(Call<List<Producto>> c, Response<List<Producto>> r) {
-                productos.setValue(r.isSuccessful() && r.body()!=null
+            @Override
+            public void onResponse(Call<List<Producto>> c, Response<List<Producto>> r) {
+                productos.setValue(r.isSuccessful() && r.body() != null
                         ? r.body() : Collections.emptyList());
             }
-            @Override public void onFailure(Call<List<Producto>> c, Throwable t) {
+
+            @Override
+            public void onFailure(Call<List<Producto>> c, Throwable t) {
                 productos.setValue(Collections.emptyList());
             }
         });
         return productos;
     }
 
+
     public LiveData<List<Categoria>> getCategorias() {
         api.getCategorias().enqueue(new Callback<List<Categoria>>() {
-            @Override public void onResponse(Call<List<Categoria>> c, Response<List<Categoria>> r) {
-                categorias.setValue(r.isSuccessful()&&r.body()!=null
+            @Override
+            public void onResponse(Call<List<Categoria>> c, Response<List<Categoria>> r) {
+                categorias.setValue(r.isSuccessful() && r.body() != null
                         ? r.body() : Collections.emptyList());
             }
-            @Override public void onFailure(Call<List<Categoria>> c, Throwable t) {
+
+            @Override
+            public void onFailure(Call<List<Categoria>> c, Throwable t) {
                 categorias.setValue(Collections.emptyList());
             }
         });
@@ -58,13 +65,18 @@ public class ProductosViewModel extends ViewModel {
         return productoQR;
     }
 
-    /** Llama al endpoint /obtenerProductoQR/{qr} **/
+    /**
+     * Llama al endpoint /obtenerProductoQR/{qr}
+     **/
     public void fetchProductoPorQR(String qr) {
         api.getProductoPorQR(qr).enqueue(new Callback<Producto>() {
-            @Override public void onResponse(Call<Producto> c, Response<Producto> r) {
+            @Override
+            public void onResponse(Call<Producto> c, Response<Producto> r) {
                 productoQR.setValue(r.isSuccessful() ? r.body() : null);
             }
-            @Override public void onFailure(Call<Producto> c, Throwable t) {
+
+            @Override
+            public void onFailure(Call<Producto> c, Throwable t) {
                 productoQR.setValue(null);
             }
         });
@@ -78,17 +90,71 @@ public class ProductosViewModel extends ViewModel {
         api.crearProducto(productoJson,
                 imagenPart != null
                         ? imagenPart
-                        : MultipartBody.Part.createFormData("imagen","")
+                        : MultipartBody.Part.createFormData("imagen", "")
         ).enqueue(new Callback<Producto>() {
-            @Override public void onResponse(Call<Producto> c, Response<Producto> r) {
+            @Override
+            public void onResponse(Call<Producto> c, Response<Producto> r) {
                 resultadoCreacion.setValue(r.isSuccessful() ? r.body() : null);
             }
-            @Override public void onFailure(Call<Producto> c, Throwable t) {
+
+            @Override
+            public void onFailure(Call<Producto> c, Throwable t) {
                 resultadoCreacion.setValue(null);
                 // tu código aquí
             }
         });
     }
+
+    public void deleteProduct(int idProducto) {
+        api.borrarProducto(idProducto).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> c, Response<Void> r) {
+                // refrescar lista después de borrar
+                fetchAllProductos();
+            }
+
+            @Override
+            public void onFailure(Call<Void> c, Throwable t) {
+                // opcional: informar
+            }
+        });
+    }
+
+    public void updateProductApi(RequestBody productoJson, MultipartBody.Part imagenPart) {
+        api.actualizarProducto(productoJson,
+                imagenPart != null
+                        ? imagenPart
+                        : MultipartBody.Part.createFormData("imagen", "")
+        ).enqueue(new Callback<Producto>() {
+            @Override
+            public void onResponse(Call<Producto> c, Response<Producto> r) {
+                // al editar redescargamos lista
+                fetchAllProductos();
+            }
+
+            @Override
+            public void onFailure(Call<Producto> c, Throwable t) {
+
+            }
+        });
+    }
+
+    // Extrae la lógica de cargar productos en un método para reinvocarlo tras borrar/editar:
+    void fetchAllProductos() {
+        api.getProductos().enqueue(new Callback<List<Producto>>() {
+            @Override
+            public void onResponse(Call<List<Producto>> c, Response<List<Producto>> r) {
+                productos.setValue(r.isSuccessful() && r.body() != null
+                        ? r.body() : Collections.emptyList());
+            }
+
+            @Override
+            public void onFailure(Call<List<Producto>> c, Throwable t) {
+                productos.setValue(Collections.emptyList());
+            }
+        });
+    }
+
 }
 
 
