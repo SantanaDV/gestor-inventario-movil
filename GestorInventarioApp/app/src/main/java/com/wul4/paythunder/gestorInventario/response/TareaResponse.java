@@ -1,12 +1,16 @@
 package com.wul4.paythunder.gestorInventario.response;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
 import com.wul4.paythunder.gestorInventario.fragments.tareas.TareaAdapter;
 import com.wul4.paythunder.gestorInventario.fragments.tareas.TareaViewModel;
+import com.wul4.paythunder.gestorInventario.utils.dto.TareaCategoriaDTO;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiTarea;
 
 import java.util.List;
@@ -25,6 +29,7 @@ public class TareaResponse {
 
     private final TareaViewModel tareaViewModel;
     private final ApiTarea apiTarea;
+    TareaCategoriaDTO nuevaTarea = new TareaCategoriaDTO();
 
     public TareaResponse(TareaViewModel tareaViewModel, ApiTarea apiTarea) {
         this.tareaViewModel = tareaViewModel;
@@ -37,102 +42,114 @@ public class TareaResponse {
 
     }
 
-    private void fetchAllDataTareas() {
+    public void fetchAllDataTareas() {
 
-//        apiTarea.getCrearTareas().enqueue(new Callback<List<Tarea>>() {
-//
-//            @Override
-//            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    List<Tarea> tareasCrear = response.body();
-////                    tareaViewModel.setCrearTareas(tareasCrear.size());
-//                    tareaViewModel.getCrearTareas().postValue(tareasCrear);
-//                } else {
-//
-//                        tareaViewModel.getTareasCrear().postValue(null);
-//                    }
-//                }
-//
-//
-//            @Override
-//            public void onFailure(Call<List<Tarea>> call, Throwable t) {
-//
-//            }
-//        });
+            apiTarea.crearTarea(nuevaTarea).enqueue(new Callback<Tarea>() {
+                @Override
+                public void onResponse(@NonNull Call<Tarea> call, @NonNull Response<Tarea> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Tarea tareaCreada = response.body();
+                        Log.i("API", "Tarea creada: " + tareaCreada.getDescripcion());
+                        tareaViewModel.getTareasCrear().postValue(tareaCreada);
 
-            apiTarea.gettotalTareas().enqueue(new Callback<List<Tarea>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                        // Después de crear, recarga todas las tareas para refrescar la interfaz
+                        fetchAllDataTareas();
+                    } else {
+                        Log.e("API", "Error al crear tarea: " + response.code());
+                    }
+                }
 
-                    List<Tarea> tareasContadas = response.body();
+                @Override
+                public void onFailure(@NonNull Call<Tarea> call, @NonNull Throwable t) {
+                    Log.e("API", "Fallo de red al crear tarea", t);
+                }
+            });
+
+
+
+        apiTarea.gettotalTareas().enqueue(new Callback<List<Tarea>>() {
+        @Override
+        public void onResponse
+        (@NonNull Call < List < Tarea >> call, @NonNull Response < List < Tarea >> response){
+            if (response.isSuccessful() && response.body() != null) {
+
+                List<Tarea> tareasContadas = response.body();
 
 //                    tareaViewModel.settotalTareas(tareasContadas.size());
-                    tareaViewModel.getTotalTareas().postValue(tareasContadas);
-                }
+                tareaViewModel.getTotalTareas().postValue(tareasContadas);
             }
+        }
 
-            @Override
-            public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getTotalTareas().postValue(null);
+        @Override
+        public void onFailure (@NonNull Call < List < Tarea >> call, @NonNull Throwable t){
+            tareaViewModel.getTotalTareas().postValue(null);
+        }
+    });
+
+        apiTarea.getlistarTareaHacer().
+
+    enqueue(new Callback<List<Tarea>>() {
+        @Override
+        public void onResponse
+        (@NonNull Call < List < Tarea >> call, @NonNull Response < List < Tarea >> response){
+            if (response.isSuccessful() && response.body() != null) {
+
+                List<Tarea> tareasContadasHacer = response.body();
+
+                Log.d("API", "Tareas Hacer recibidas: " + tareasContadasHacer.size());
+
+                //tareaViewModel.setListarTareaHacer(tareasContadasHacer.size());
+                tareaViewModel.getListarTareaHacer().postValue(tareasContadasHacer);
+                if (tareasContadasHacer != null) TareaAdapter.setTareas(tareasContadasHacer);
             }
-        });
+        }
 
-        apiTarea.getlistarTareaHacer().enqueue(new Callback<List<Tarea>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+        @Override
+        public void onFailure (@NonNull Call < List < Tarea >> call, @NonNull Throwable t){
+            tareaViewModel.getListarTareaHacer().postValue(null);
+        }
+    });
 
-                    List<Tarea> tareasContadasHacer = response.body();
+        apiTarea.getListarTareaProceso().
 
-                    Log.d("API", "Tareas Hacer recibidas: " + tareasContadasHacer.size());
+    enqueue(new Callback<List<Tarea>>() {
+        @Override
+        public void onResponse
+        (@NonNull Call < List < Tarea >> call, @NonNull Response < List < Tarea >> response){
+            if (response.isSuccessful() && response.body() != null) {
 
-                    //tareaViewModel.setListarTareaHacer(tareasContadasHacer.size());
-                    tareaViewModel.getListarTareaHacer().postValue(tareasContadasHacer);
-                    if (tareasContadasHacer != null) TareaAdapter.setTareas(tareasContadasHacer);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getListarTareaHacer().postValue(null);
-            }
-        });
-
-        apiTarea.getListarTareaProceso().enqueue(new Callback<List<Tarea>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-
-                    List<Tarea> tareasContadasProceso = response.body();
+                List<Tarea> tareasContadasProceso = response.body();
 
 //                    tareaViewModel.setListarTareaProceso(tareasContadasProceso.size());
-                    tareaViewModel.getListarTareaProceso().postValue(tareasContadasProceso);
-                }
+                tareaViewModel.getListarTareaProceso().postValue(tareasContadasProceso);
             }
+        }
 
-            @Override
-            public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getListarTareaProceso().postValue(null);
-            }
-        });
+        @Override
+        public void onFailure (@NonNull Call < List < Tarea >> call, @NonNull Throwable t){
+            tareaViewModel.getListarTareaProceso().postValue(null);
+        }
+    });
 
-        apiTarea.getlistarTareaRealizada().enqueue(new Callback<List<Tarea>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Tarea>> call, @NonNull Response<List<Tarea>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+        apiTarea.getlistarTareaRealizada().
 
-                    List<Tarea> tareasContadasRealizadas = response.body();
+    enqueue(new Callback<List<Tarea>>() {
+        @Override
+        public void onResponse
+        (@NonNull Call < List < Tarea >> call, @NonNull Response < List < Tarea >> response){
+            if (response.isSuccessful() && response.body() != null) {
+
+                List<Tarea> tareasContadasRealizadas = response.body();
 
 //                    tareaViewModel.setListarTareaRealizada(tareasContadasRealizadas.size());
-                    tareaViewModel.getListarTareaRealizada().postValue(tareasContadasRealizadas);
-                }
+                tareaViewModel.getListarTareaRealizada().postValue(tareasContadasRealizadas);
             }
+        }
 
-            @Override
-            public void onFailure(@NonNull Call<List<Tarea>> call, @NonNull Throwable t) {
-                tareaViewModel.getListarTareaRealizada().postValue(null);
-            }
-        });
-    }
+        @Override
+        public void onFailure (@NonNull Call < List < Tarea >> call, @NonNull Throwable t){
+            tareaViewModel.getListarTareaRealizada().postValue(null);
+        }
+    });
+}
 }

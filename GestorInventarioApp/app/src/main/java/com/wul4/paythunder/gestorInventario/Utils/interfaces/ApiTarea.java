@@ -1,6 +1,7 @@
 package com.wul4.paythunder.gestorInventario.utils.interfaces;
 
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
+import com.wul4.paythunder.gestorInventario.utils.dto.TareaCategoriaDTO;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 /**
  * clase ApiTarea para manejar solicitudes de autenticación, desde la API REST.
@@ -19,15 +21,16 @@ public interface ApiTarea {
     @GET("api/tarea/totalTareas")
     Call<List<Tarea>> gettotalTareas();
 
-//    @GET("api/tarea/crearTarea")  // Endpoint para crear una nueva tarea, por ello utilizamos @POST en vez de @GET
-//    Call<Tarea>crearTarea(@Body Tarea nuevaTarea);  // Usamos @Body para enviar el objeto en el cuerpo
+
 
     @POST("api/tarea/eliminarTarea")
     Call<Tarea> eliminarTarea(@Body int id);
 
-    @POST("api/tarea/actualizarTarea")
-    Call<Tarea> actualizarTarea(Tarea id);
+//    @POST("api/tarea/actualizarTarea")
+//    Call<Tarea> actualizarTarea(Tarea id);
 
+    @PUT("api/tarea/{id}")
+    Call<Tarea> actualizarTarea(@Body TareaCategoriaDTO tarea);
 
 
 
@@ -39,6 +42,11 @@ public interface ApiTarea {
     Call<List<Tarea>> getlistarTareaHacer();
     @GET("api/tarea/listarTareaProceso")
     Call<List<Tarea>> getListarTareaProceso();
+
+
+
     @POST("api/tarea/crearTarea")
-    Call<Tarea> crearTarea(@Body Tarea tarea); // Usamos @Body para enviar el objeto en el cuerpo
+    Call<Tarea> crearTarea(TareaCategoriaDTO nuevaTarea);
+//    @POST("api/tarea/crearTarea")
+//    Call<Tarea> getCrearTarea(TareaCategoriaDTO tareaDTO);
 }

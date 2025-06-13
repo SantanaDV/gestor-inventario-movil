@@ -1,6 +1,6 @@
-package com.wul4.paythunder.gestorInventario.fragments.tareas;
+package com.wul4.paythunder.gestorInventario.fragments.tareas;// imports iguales
 
-import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,18 +17,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.wul4.paythunder.gestorInventario.R;
+import com.wul4.paythunder.gestorInventario.entities.Categoria;
 import com.wul4.paythunder.gestorInventario.entities.Tarea;
 import com.wul4.paythunder.gestorInventario.utils.ApiClient;
+import com.wul4.paythunder.gestorInventario.utils.dto.TareaCategoriaDTO;
 import com.wul4.paythunder.gestorInventario.utils.interfaces.ApiTarea;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class TareaBaseFragment extends Fragment {
 
@@ -36,65 +41,59 @@ public class TareaBaseFragment extends Fragment {
     private Spinner spEmpleadoAsignado, spEstado, spCategoria;
     private Button btnCrearNuevaTarea, btnEliminarTarea;
     private Tarea tareaActual;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    private List<Categoria> listaCategorias;
 
-    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tarea_base, container, false);
 
-    // inicializamos las vistas
         etDescripcion = view.findViewById(R.id.etDescripcion);
         spEstado = view.findViewById(R.id.spEstado);
         spEmpleadoAsignado = view.findViewById(R.id.spEmpleadoAsignado);
         spCategoria = view.findViewById(R.id.spCategoria);
         etFechaAsignacion = view.findViewById(R.id.etFechaAsignacion);
+        etFechaAsignacion.setOnClickListener(v -> mostrarDatePicker(etFechaAsignacion));
         etFechaFinalizacion = view.findViewById(R.id.etFechaFinalizacion);
+        etFechaFinalizacion.setOnClickListener(v -> mostrarDatePicker(etFechaFinalizacion));
         btnCrearNuevaTarea = view.findViewById(R.id.btnCrearNuevaTarea);
         btnEliminarTarea = view.findViewById(R.id.btnEliminarTarea);
 
-        if (etDescripcion == null) Log.e("TAREA", "etDescripcion es null");
-        if (spEstado == null) Log.e("TAREA", "spEstado es null");
-
-        if (spEmpleadoAsignado == null) Log.e("TAREA", "spEmpleadoAsignado es null");
-        if (spCategoria == null) Log.e("TAREA", "spCategoria es null");
-        if (etFechaAsignacion == null) Log.e("TAREA", "etFechaAsignacion es null");
-        if (etFechaFinalizacion == null) Log.e("TAREA", "etFechaFinalizacion es null");
-        if (btnCrearNuevaTarea == null) Log.e("TAREA", "btnCrearNuevaTarea es null");
-        if (btnEliminarTarea == null) Log.e("TAREA", "btnEliminarTarea es null");
-// Y así para los demás
-
+        cargarSpinners();
 
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("tarea_seleccionada")) {
             Tarea tarea = (Tarea) bundle.getSerializable("tarea_seleccionada");
-            if (tarea != null) {
-                mostrarTarea(tarea);
-            }
+            if (tarea != null) mostrarTarea(tarea);
         }
 
-
-        cargarSpinners();
-
-        btnCrearNuevaTarea.setOnClickListener(v -> {
-            try {
-                guardarTarea();
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        btnCrearNuevaTarea.setOnClickListener(v -> guardarTarea());
 
         btnEliminarTarea.setOnClickListener(v -> {
             if (tareaActual != null && tareaActual.getId() != 0) {
                 eliminarTarea(tareaActual.getId());
                 tareaActual = null;
             } else {
-                Toast.makeText(getContext(), "No hay tarea seleccionada para eliminar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "No hay tarea seleccionada para eliminar", Toast.LENGTH_SHORT).show();
             }
         });
+
         return view;
+    }
+
+    private void mostrarDatePicker(EditText editText) {
+        final Calendar calendario = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                requireContext(),
+                (view, year, month, dayOfMonth) -> {
+                    String fechaSeleccionada = String.format(Locale.getDefault(), "%02d/%02d/%d", dayOfMonth, month + 1, year);
+                    editText.setText(fechaSeleccionada);
+                },
+                calendario.get(Calendar.YEAR),
+                calendario.get(Calendar.MONTH),
+                calendario.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
     }
 
     public void mostrarTarea(Tarea tarea) {
@@ -103,12 +102,9 @@ public class TareaBaseFragment extends Fragment {
         etDescripcion.setText(tarea.getDescripcion());
         etFechaAsignacion.setText(tarea.getFecha_asignacion());
         etFechaFinalizacion.setText(tarea.getFecha_finalizacion());
-
-        // Setear valores a los spinners como hicimos antes
-        // Para seleccionar en los Spinners el valor correcto
         setSpinnerSelection(spEmpleadoAsignado, tarea.getEmpleadoAsignado());
-        setSpinnerSelection(spEstado, String.valueOf(tarea.getEstado()));
-        setSpinnerSelection(spCategoria, String.valueOf(tarea.getId_categoria()));
+        setSpinnerSelection(spEstado, tarea.getEstado());
+        setCategoriaSpinnerSelection(tarea.getId_categoria());
 
         btnEliminarTarea.setVisibility(View.VISIBLE);
     }
@@ -117,83 +113,130 @@ public class TareaBaseFragment extends Fragment {
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
         if (adapter != null) {
             int position = adapter.getPosition(value.toString());
-            if (position >= 0) {
-                spinner.setSelection(position);
+            if (position >= 0) spinner.setSelection(position);
+        }
+    }
 
+    private void setCategoriaSpinnerSelection(int idCategoria) {
+        for (int i = 0; i < listaCategorias.size(); i++) {
+            if (listaCategorias.get(i).getId() == idCategoria) {
+                spCategoria.setSelection(i + 1);
+                break;
             }
         }
     }
 
     private void cargarSpinners() {
-        // Carga los datos desde una lista o base de datos
-        // Por ejemplo:
-        ArrayAdapter<String> empleadosAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, new String[]{"Empleado 1", "Empleado 2"});
+        ArrayAdapter<String> empleadosAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, new String[]{"Empleado 1", "Empleado 2"});
+        empleadosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEmpleadoAsignado.setAdapter(empleadosAdapter);
 
-        ArrayAdapter<String> estadoAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, new String[]{"Pendiente", "En progreso", "Completado"});
+        ArrayAdapter<String> estadoAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, new String[]{"Pendiente", "En progreso", "Completado"});
+        estadoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEstado.setAdapter(estadoAdapter);
 
-        ArrayAdapter<String> categoriaAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, new String[]{"Urgente", "Normal", "Baja"});
+        listaCategorias = obtenerCategorias();
+        List<String> nombresCategorias = new ArrayList<>();
+        nombresCategorias.add("Seleccione una categoría");
+        for (Categoria categoria : listaCategorias) {
+            nombresCategorias.add(categoria.getNombre());
+        }
+
+        ArrayAdapter<String> categoriaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, nombresCategorias);
+        categoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategoria.setAdapter(categoriaAdapter);
     }
 
-    private void guardarTarea() throws ParseException {
-        String descripcion = etDescripcion.getText().toString();
-        String fecha_asignacion = etFechaAsignacion.getText().toString();
-        String fecha_finalizacion = etFechaFinalizacion.getText().toString();
+    private List<Categoria> obtenerCategorias() {
+        List<Categoria> lista = new ArrayList<>();
+        lista.add(new Categoria("Urgente", 1));
+        lista.add(new Categoria("Normal", 2));
+        lista.add(new Categoria("Baja", 3));
+        return lista;
+    }
+
+    private void guardarTarea() {
+        String descripcion = etDescripcion.getText().toString().trim();
+        String fechaAsignacionStr = etFechaAsignacion.getText().toString().trim();
+        String fechaFinalizacionStr = etFechaFinalizacion.getText().toString().trim();
         String empleado_asignado = spEmpleadoAsignado.getSelectedItem().toString();
+        String estado = spEstado.getSelectedItem().toString();
+        int posCategoria = spCategoria.getSelectedItemPosition();
 
-        // Usar índices como valores numéricos seguros
-        String estado = spEstado.getSelectedItem().toString();       // 0 = Pendiente, 1 = En progreso, 2 = Completado
-        int categoria = spCategoria.getSelectedItemPosition(); // según el orden en el spinner
-
-        fecha_asignacion = String.valueOf(dateFormat.parse(fecha_asignacion));
-        fecha_finalizacion = String.valueOf(dateFormat.parse(fecha_finalizacion));
-
-        Tarea tarea = new Tarea();
-        if (tareaActual != null) {
-            tarea.setId(tareaActual.getId());
+        if (descripcion.isEmpty() || fechaAsignacionStr.isEmpty() || fechaFinalizacionStr.isEmpty()) {
+            Toast.makeText(requireContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        tarea.setDescripcion(descripcion);
-        tarea.setEmpleado_asignado(empleado_asignado);
-        tarea.setEstadoTexto(estado);
-        tarea.setFecha_asignacion(fecha_asignacion);
-        tarea.setFecha_finalizacion(fecha_finalizacion);
-        tarea.setId_categoria(categoria);
+        if (posCategoria == 0) {
+            Toast.makeText(requireContext(), "Selecciona una categoría válida", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int idCategoria = listaCategorias.get(posCategoria - 1).getId();
+
+        SimpleDateFormat formatoBackend = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
+        SimpleDateFormat formatoVista = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        String fecha_asignacion, fecha_finalizacion;
+
+        try {
+            fecha_asignacion = formatoBackend.format(Objects.requireNonNull(formatoVista.parse(fechaAsignacionStr)));
+            fecha_finalizacion = formatoBackend.format(Objects.requireNonNull(formatoVista.parse(fechaFinalizacionStr)));
+        } catch (ParseException | NullPointerException e) {
+            Toast.makeText(requireContext(), "Error en el formato de fecha", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        TareaCategoriaDTO tareaDTO = new TareaCategoriaDTO();
+        if (tareaActual != null) tareaDTO.setId(tareaActual.getId());
+        tareaDTO.setDescripcion(descripcion);
+        tareaDTO.setEmpleado_asignado(empleado_asignado);
+        tareaDTO.setEstado(estado);
+        tareaDTO.setFecha_asignacion(fecha_asignacion);
+        tareaDTO.setFecha_finalizacion(fecha_finalizacion);
+        tareaDTO.setId_categoria(idCategoria);
 
         ApiTarea apiTarea = ApiClient.getClient().create(ApiTarea.class);
-
-        Call<Tarea> call;
-        if (tareaActual != null && tareaActual.getId() != 0) {
-            call = apiTarea.actualizarTarea(tarea);
-        } else {
-            call = apiTarea.crearTarea(tarea); // ahora sí puedes usarlo
-        }
-
+        Call<Tarea> call = apiTarea.crearTarea(tareaDTO);
         call.enqueue(new Callback<Tarea>() {
             @Override
-            public void onResponse(@NonNull Call<Tarea> call, @NonNull Response<Tarea> response) {
+            public void onResponse(Call<Tarea> call, Response<Tarea> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Tarea guardada con éxito", Toast.LENGTH_SHORT).show();
-                    tareaActual = response.body();
-                    btnEliminarTarea.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(getContext(), "Error al guardar tarea", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Tarea> call, @NonNull Throwable t) {
-//                Toast.makeText(getContext(), "Fallo de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Tarea> call, Throwable t) {
                 Log.e("API_ERROR", "Error al guardar tarea", t);
-                Toast.makeText(getContext(), "Fallo al guardar tarea. Ver logcat.", Toast.LENGTH_SHORT).show();
-
             }
         });
+
+//        Call<Tarea> call = (tareaActual != null && tareaActual.getId() != 0)
+//                ? apiTarea.actualizarTarea(tareaDTO)
+//                : apiTarea.getCrearTarea(tareaDTO);
+//
+//        call.enqueue(new Callback<Tarea>() {
+//            @Override
+//            public void onResponse(@NonNull Call<Tarea> call, @NonNull Response<Tarea> response) {
+//                if (response.isSuccessful()) {
+//                    Toast.makeText(requireContext(), "Tarea guardada con éxito", Toast.LENGTH_SHORT).show();
+//                    tareaActual = response.body();
+//                    btnEliminarTarea.setVisibility(View.VISIBLE);
+//                } else {
+//                    Toast.makeText(requireContext(), "Error al guardar tarea", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<Tarea> call, @NonNull Throwable t) {
+//                Log.e("API_ERROR", "Error al guardar tarea", t);
+//                Toast.makeText(requireContext(), "Fallo al guardar tarea. Ver logcat.", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void eliminarTarea(int id) {
@@ -204,18 +247,18 @@ public class TareaBaseFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<Tarea> call, @NonNull Response<Tarea> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Tarea eliminada con éxito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Tarea eliminada con éxito", Toast.LENGTH_SHORT).show();
                     tareaActual = null;
                     limpiarCampos();
                     btnEliminarTarea.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "Error al eliminar tarea", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Error al eliminar tarea", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Tarea> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Fallo de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Fallo de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -229,4 +272,3 @@ public class TareaBaseFragment extends Fragment {
         spCategoria.setSelection(0);
     }
 }
-

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -78,6 +79,24 @@ public class TareaHacerFragment extends Fragment {
                 tareaAdapter.setTareaList(tareas);
             }
         });
+
+        Button btnCrearTarea = view.findViewById(R.id.btnCrearTarea);
+        Button btnEliminarTarea = view.findViewById(R.id.btnEliminarTarea);
+
+// Al pulsar en Crear Tarea, abrimos el formulario vacío
+        btnCrearTarea.setOnClickListener(v -> {
+            Fragment tareaForm = new TareaBaseFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment_content_main, tareaForm)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+// Eliminar Tarea: puedes implementar lógica más adelante si seleccionas una desde el adapter
+        btnEliminarTarea.setOnClickListener(v ->
+                Toast.makeText(getContext(), "Funcionalidad de eliminar aún no implementada", Toast.LENGTH_SHORT).show());
+
     }
 
     private void cargarTareasPorHacer() {

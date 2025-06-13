@@ -15,8 +15,8 @@ public class TareaViewModel extends ViewModel {
     // LiveData para cada uno de los datos que quieres mostrar
 
     private final MutableLiveData<String> Text = new MutableLiveData<>();
-    private final MutableLiveData<List<Tarea>> crearTareas = new MutableLiveData<>();
-    private final MutableLiveData<Integer> tareasCrear = new MutableLiveData<>();
+    private final MutableLiveData<Tarea> crearTarea = new MutableLiveData<>();
+    private final MutableLiveData<Tarea> tareasCrear = new MutableLiveData<>();
 
     private final MutableLiveData<List<Tarea>> totalTareas = new MutableLiveData<>();
 
@@ -55,8 +55,8 @@ public class TareaViewModel extends ViewModel {
         return listarTareaProceso;
     }
 
-    public MutableLiveData<List<Tarea>> getCrearTareas() {
-        return crearTareas;
+    public MutableLiveData<Tarea> getCrearTarea() {
+        return crearTarea;
     }
 
     public MutableLiveData<List<Tarea>> getListarTareaRealizada() {
@@ -64,7 +64,8 @@ public class TareaViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<Integer> getTareasCrear() { return tareasCrear; }
+    public MutableLiveData<Tarea> getTareasCrear() { return tareasCrear; }
+
 
 }
 

@@ -23,8 +23,7 @@
     <string name="leer_nfc" translatable="false">Leer NFC</string>
     <string name="tarea_por_hacer" translatable="false">Tarea por Hacer</string>
     <string name="descripcion_de_la_tarea" translatable="false">Descripción de la tarea</string>
-    <string name="fecha_de_asignacion_yyyy_mm_dd" translatable="false">Fecha de asignación (YYYY-MM-DD)</string>
-    <string name="crearNuevaTarea" translatable="false">CREAR</string>
+    <string name="fechaFinalizacion" translatable="false">Fecha Finalización</string>
     <string name="eliminarNuevaTarea" translatable="false">ELIMINAR</string>
     <string name="fecha_de_asignacion" translatable="false">Fecha de asignación</string>
     <string name="estado_de_la_tarea" translatable="false">Estado de la tarea</string>

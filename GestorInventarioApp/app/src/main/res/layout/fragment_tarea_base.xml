@@ -57,13 +57,21 @@
             android:id="@+id/etFechaAsignacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fecha_de_asignacion_yyyy_mm_dd"
+            android:hint="@string/fecha_de_asignacion"
+            android:inputType="date"
+            android:layout_marginBottom="16dp" />
+        <!-- Fecha finalizacion -->
+        <EditText
+            android:id="@+id/etFechaFinalizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fechaFinalizacion"
             android:inputType="date"
             android:layout_marginBottom="16dp" />
 
         <!-- Botones -->
         <Button
-            android:id="@+id/btnGuardarTarea"
+            android:id="@+id/btnCrearNuevaTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btnGuardarTarea" />
